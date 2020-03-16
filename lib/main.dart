@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parent_app/screens/home_screen.dart';
+import 'package:parent_app/screens/redirect.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/user_state.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(ParentApp());
 
@@ -28,9 +27,9 @@ class ParentApp extends StatelessWidget {
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
           ],
-          home: HomeScreen(),
+          home: Redirect(),
           routes: <String, WidgetBuilder>{
-            '/home': (context) => HomeScreen(),
+            '/home': (context) => Redirect(),
             // 'buyer_home': (context) => BuyerHomeScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
