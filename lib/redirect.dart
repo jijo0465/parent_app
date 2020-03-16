@@ -6,7 +6,6 @@ import 'package:parent_app/states/login_state.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Redirect extends StatefulWidget {
   const Redirect({Key key}) : super(key: key);
 
@@ -15,7 +14,7 @@ class Redirect extends StatefulWidget {
 }
 
 class _RedirectState extends State<Redirect> {
-  bool _loginStatus=false;
+  bool _loginStatus = false;
 
   @override
   void initState() {
@@ -26,16 +25,16 @@ class _RedirectState extends State<Redirect> {
   Widget build(BuildContext context) {
     return Consumer<LoginState>(
         builder: (BuildContext context, LoginState value, Widget child) {
-      SharedPreferences.getInstance().then((prefs) {
-        _loginStatus = prefs.getBool('loggedIn');
-        if (_loginStatus == true) {
-        value.setStatus(Status.Authenticated);
+      if (_loginStatus!=null && !_loginStatus) {
+        SharedPreferences.getInstance().then((prefs) {
+          _loginStatus = prefs.getBool('loggedIn');
+          if (_loginStatus == true) {
+            value.setStatus(Status.Authenticated);
+          } else {
+            value.setStatus(Status.Unauthenticated);
+          }
+        });
       }
-      else
-      {
-        value.setStatus(Status.Unauthenticated);
-      }
-      });
       switch (value.status) {
         case Status.Uninitialized:
           return LoadingScreen();
@@ -50,6 +49,7 @@ class _RedirectState extends State<Redirect> {
           return HomeScreen();
           break;
       }
+      return Container();
     });
   }
 }

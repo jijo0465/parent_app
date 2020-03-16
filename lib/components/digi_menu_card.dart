@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MenuCard extends StatelessWidget {
-  const MenuCard(
+class DigiMenuCard extends StatelessWidget {
+  const DigiMenuCard(
       {Key key, this.menuIcon, this.title, this.subtitle, this.value})
       : super(key: key);
   final IconData menuIcon;
