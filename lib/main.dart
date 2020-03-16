@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parent_app/screens/redirect.dart';
+import 'package:parent_app/redirect.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/user_state.dart';
 import 'package:provider/provider.dart';
