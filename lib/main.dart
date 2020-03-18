@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parent_app/redirect.dart';
+import 'package:parent_app/screens/result_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/user_state.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class ParentApp extends StatelessWidget {
           home: Redirect(),
           routes: <String, WidgetBuilder>{
             '/home': (context) => Redirect(),
-            // 'buyer_home': (context) => BuyerHomeScreen(),
+            '/result': (context) => ResultScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

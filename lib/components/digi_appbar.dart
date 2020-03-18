@@ -76,7 +76,7 @@ class DigiAppbar extends StatelessWidget {
 class BackgroundClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    var roundnessFactor = 50.0;
+    var roundnessFactor = 35.0;
     var path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);
