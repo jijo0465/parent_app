@@ -1,11 +1,15 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class DigiSubjectBar extends StatelessWidget {
-  const DigiSubjectBar({Key key, this.index}) : super(key: key);
+  final VoidCallback onPressed;
+  const DigiSubjectBar({Key key, this.index, this.onPressed}) : super(key: key);
 
   final int index;
   static List<Map<String,String>> subjects = [
-    {'no':'0','sub':'Mathematics'},
+    {'no':'0','sub':'All'},
+    {'no':'1','sub':'Mathematics'},
     {'no':'1','sub':'English'},
     {'no':'2','sub':'Social'},
     {'no':'3','sub':'Science'},
@@ -16,9 +20,7 @@ class DigiSubjectBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector( 
-        onTap: (){
-            //Individual Subject Performance as per selection from Parent
-        },
+        onTap: onPressed,
         child:Container(
           width: 80,
           height: 80,
@@ -34,9 +36,9 @@ class DigiSubjectBar extends StatelessWidget {
               fontSize: 20,
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic),
-          textScaleFactor: 0.60,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.fade,
+            textScaleFactor: 0.60,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.fade,
         )));
   }
 }

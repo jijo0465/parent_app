@@ -15,7 +15,8 @@ class Redirect extends StatefulWidget {
 
 class _RedirectState extends State<Redirect> {
   bool _loginStatus = false;
-
+  // GetIt locator =  GetIt();
+  // LoginState loginState = locator<>();
   @override
   void initState() {
     super.initState();
