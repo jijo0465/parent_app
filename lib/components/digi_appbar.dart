@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:parent_app/states/parent_state.dart';
+import 'package:provider/provider.dart';
 
 class DigiAppbar extends StatelessWidget {
-  const DigiAppbar({Key key}) : super(key: key);
+  final VoidCallback onPressed;
+  const DigiAppbar({Key key, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +13,7 @@ class DigiAppbar extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.only(top: 35),
           color: Colors.blue[800],
-          height: 200,
+          height: 180,
           width: double.infinity,
           child: Column(
             children: <Widget>[
@@ -18,13 +21,20 @@ class DigiAppbar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
+                    child: IconButton(
+                      onPressed: onPressed,
+                      icon: Icon(Icons.dashboard),
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
                       padding: EdgeInsets.only(left: 12),
                       child: Text(
-                        'Christ Nagar Public School Nalanchira',
+                        'Christ Nagar',
                         style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 16,
                             color: Colors.white,
-                            fontWeight: FontWeight.w400),
+                            fontWeight: FontWeight.w300),
                       )),
                   Container(
                     padding: EdgeInsets.only(right: 12),
@@ -38,18 +48,20 @@ class DigiAppbar extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
-                height: 12,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
                       padding: EdgeInsets.only(left: 12),
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Hi Parent',
-                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      child: Consumer<ParentState>(
+                        builder: (BuildContext context, ParentState value,
+                            Widget child) {
+                          return Text(
+                            'Hi ${value.parentName} !',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          );
+                        },
                       )),
                   Container(
                     width: 40,
@@ -62,8 +74,7 @@ class DigiAppbar extends StatelessWidget {
                             'assets/images/sir.jpg',
                           ),
                         ),
-                        shape: BoxShape.circle
-                        ),
+                        shape: BoxShape.circle),
                   )
                 ],
               )
@@ -76,7 +87,7 @@ class DigiAppbar extends StatelessWidget {
 class BackgroundClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    var roundnessFactor = 35.0;
+    var roundnessFactor = 50.0;
     var path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);

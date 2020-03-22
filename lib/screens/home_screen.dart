@@ -1,10 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:parent_app/components/digi_appbar.dart';
+import 'package:parent_app/components/digi_drawer.dart';
 import 'package:parent_app/components/digi_menu_card.dart';
+import 'package:parent_app/screens/login_screen.dart';
 import 'package:parent_app/screens/result_screen.dart';
+import 'package:parent_app/states/login_state.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key key}) : super(key: key);
+class HomeScreen extends DrawerContent {
+  HomeScreen({Key key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+HiddenDrawerController drawerController;
+
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+    drawerController = HiddenDrawerController(
+      initialPage: HomePage(
+        title: 'main',
+      ),
+      items: [
+        DrawerItem(
+          text: Text('Home', style: TextStyle(color: Colors.white)),
+          icon: Icon(Icons.home, color: Colors.white),
+        ),
+        DrawerItem(
+          text: Text(
+            'SETTINGS',
+            style: TextStyle(color: Colors.white),
+          ),
+          icon: Icon(Icons.settings, color: Colors.white),
+          onPressed: () async {
+            await Navigator.of(context).pushNamed('/settings');
+            drawerController.close();
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<LoginState>(
+      builder: (BuildContext context, LoginState value, Widget child) {
+        if (value.status == Status.Unauthenticated) {
+          return LoginScreen();
+        } else {
+          return Scaffold(
+            body: HiddenDrawer(
+              controller: drawerController,
+              header: Container(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 66,
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              height: MediaQuery.of(context).size.width * 0.5,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(
+                                    'assets/images/sir.jpg',
+                                  ),
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Text(
+                              'Rachel green',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                            RaisedButton(
+                                child: Text('Signout'),
+                                onPressed: () {
+                                  value.signOut();
+                                })
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(flex: 34, child: Container())
+                  ],
+                ),
+              ),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Colors.blue[300], Colors.blue[800], Colors.blue],
+                  // tileMode: TileMode.repeated,
+                ),
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+class HomePage extends DrawerContent {
+  const HomePage({this.title, Key key}) : super(key: key);
+  final String title;
   @override
   static final List<IconData> _menuIcons = [
     Icons.accessibility_new,
@@ -22,79 +132,154 @@ class HomeScreen extends StatelessWidget {
     {'title': 'Tasks', 'subtitle': '8', 'value': 'Digital School Diary'},
     {'title': 'Due Date', 'subtitle': 'Jan 12', 'value': 'Pay School Fees'}
   ];
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  ScrollController _scrollController;
+  double _top = -120;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      double offset = _scrollController.offset;
+      double _h = 120;
+      print(offset);
+      if (offset<120) {
+        setState(() {
+          _top = offset-_h;
+          
+        });
+        print(_top);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     //return SliverAppBar()
     return Scaffold(
-        body: 
-        Column(children: [
-      DigiAppbar(),
-      Expanded(
-        child: GridView.count(
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          children: 
-            List.generate(6, (index){
-              return DigiMenuCard(
-                  onPressed: (){
-                    Navigator.of(context).pushNamed('/result');
-                  },
-                  menuIcon: _menuIcons[index], //_menuIcons(index),
-                  title: _menuInfo[index]['title'], //'Bus No',
-                  subtitle: _menuInfo[index]['subtitle'],
-                  value: _menuInfo[index]['value']);
-            }),
-        ),
-      )
-
-      // StaggeredGridView.countBuilder(
-      //   crossAxisCount: 2,
-      //   itemCount: _menuIcons.length,
-      //   reverse: true,
-      //   physics: ScrollPhysics(),
-      //   itemBuilder: (BuildContext context, int index) => new Container(
-      //       child: DigiMenuCard(
-      //           menuIcon: _menuIcons[index], //_menuIcons(index),
-      //           title: _menuInfo[index]['title'], //'Bus No',
-      //           subtitle: _menuInfo[index]['subtitle'],
-      //           value: _menuInfo[index]['value'])),
-      //   staggeredTileBuilder: (int index) => new StaggeredTile.count(1, 1),
-      //   //mainAxisSpacing: 5.0,
-      //   //crossAxisSpacing: 5.0,
-      //   shrinkWrap: true,
-      // ),
-      //   SliverGrid.count(
-      //     crossAxisCount: 2,
-      //     childAspectRatio: 4,
-      //     children:[DigiMenuCard(
-      //             menuIcon: _menuIcons[0], //_menuIcons(index),
-      //             title: _menuInfo[0]['title'], //'Bus No',
-      //             subtitle: _menuInfo[0]['subtitle'],
-      //             value: _menuInfo[0]['value']),
-      //             DigiMenuCard(
-      //             menuIcon: _menuIcons[1], //_menuIcons(index),
-      //             title: _menuInfo[1]['title'], //'Bus No',
-      //             subtitle: _menuInfo[1]['subtitle'],
-      //             value: _menuInfo[1]['value']),
-      //             DigiMenuCard(
-      //             menuIcon: _menuIcons[2], //_menuIcons(index),
-      //             title: _menuInfo[2]['title'], //'Bus No',
-      //             subtitle: _menuInfo[2]['subtitle'],
-      //             value: _menuInfo[2]['value']),
-      //             DigiMenuCard(
-      //             menuIcon: _menuIcons[3], //_menuIcons(index),
-      //             title: _menuInfo[3]['title'], //'Bus No',
-      //             subtitle: _menuInfo[3]['subtitle'],
-      //             value: _menuInfo[3]['value'])])
-    ]));
+        bottomNavigationBar: BottomNavigationBar(items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(icon: Icon(Icons.info), title: Text('About'))
+        ]),
+        body: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              controller: _scrollController,
+              child: Container(
+                child: Column(children: [
+                  DigiAppbar(
+                    onPressed: () {
+                      drawerController.open();
+                    },
+                  ),
+                  Container(
+                    height: 300,
+                    child: GridView.count(
+                      mainAxisSpacing: 12,
+                      scrollDirection: Axis.horizontal,
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      children: List.generate(6, (index) {
+                        return DigiMenuCard(
+                            imagePath: 'assets/images/sir.jpg',
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/result');
+                            },
+                            menuIcon:
+                                HomePage._menuIcons[index], //_menuIcons(index),
+                            title: HomePage._menuInfo[index]
+                                ['title'], //'Bus No',
+                            subtitle: HomePage._menuInfo[index]['subtitle'],
+                            value: HomePage._menuInfo[index]['value']);
+                      }),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  Container(
+                      padding: EdgeInsets.only(left: 12),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Digital School Diary',
+                        textAlign: TextAlign.start,
+                      )),
+                  SizedBox(height: 12),
+                  Container(
+                    height: 160,
+                    child: GridView.count(
+                      mainAxisSpacing: 5,
+                      scrollDirection: Axis.horizontal,
+                      crossAxisCount: 1,
+                      shrinkWrap: true,
+                      children: List.generate(6, (index) {
+                        return DigiMenuCard(
+                            imagePath: 'assets/images/sir.jpg',
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/result');
+                            },
+                            menuIcon:
+                                HomePage._menuIcons[index], //_menuIcons(index),
+                            title: HomePage._menuInfo[index]
+                                ['title'], //'Bus No',
+                            subtitle: HomePage._menuInfo[index]['subtitle'],
+                            value: HomePage._menuInfo[index]['value']);
+                      }),
+                    ),
+                  ),
+                  SizedBox(height: 120)
+                ]),
+              ),
+            ),
+            Positioned(
+                top: _top,
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: GestureDetector(
+                          onTap: () {
+                            drawerController.open();
+                          },
+                          child: Container(
+                            child: Icon(Icons.menu, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'DigiCampus',
+                        style: TextStyle(
+                            letterSpacing: 1,
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 30),
+                        child: Icon(
+                          Icons.notification_important,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.blue[800],
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(50),
+                          bottomRight: Radius.circular(50))),
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                ))
+          ],
+        ));
   }
-  // DigiMenuCard(
-  //     menuIcon: Icons.account_balance,
-  //     title: 'Bus No',
-  //     subtitle: '15',
-  //     value: 'Track School Bus'),
-  // DigiMenuCard(
-  //     menuIcon: Icons.add_box,
-  //     title: 'Bus No',
-  //     subtitle: '15',
-  //     value: 'Track School Bus'),}
 }

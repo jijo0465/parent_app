@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parent_app/redirect.dart';
 import 'package:parent_app/screens/result_screen.dart';
 import 'package:parent_app/states/login_state.dart';
-import 'package:parent_app/states/user_state.dart';
+import 'package:parent_app/states/parent_state.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(ParentApp());
@@ -14,8 +14,8 @@ class ParentApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<LoginState>(
               create: (_) => LoginState.instance()),
-          ChangeNotifierProvider<UserState>(
-              create: (_) => UserState.instance()),
+          ChangeNotifierProvider<ParentState>(
+              create: (_) => ParentState.instance()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
