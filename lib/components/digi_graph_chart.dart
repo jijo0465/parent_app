@@ -41,54 +41,68 @@ import 'package:charts_flutter/flutter.dart' as charts;
 //   final String year;
 //   final double sales;
 //
-class Charts extends StatelessWidget{
+class Charts extends StatelessWidget {
   final int index;
   Charts({Key key, this.index}) : super(key: key);
   List<charts.Series<MarksAnalysis, String>> seriesList;
   _createSampleData() {
-    var data = [[
-      new MarksAnalysis(1, 65,'Mid-\nTerm'),
-      new MarksAnalysis(2, 80,'Half\nYearly'),
-      new MarksAnalysis(3, 75,'Mid\nterm II'),
-      new MarksAnalysis(4, 70,'Quarterly'),
-      new MarksAnalysis(5, 88,'Model'),
-      new MarksAnalysis(6, 85, 'Final')],
-      [new MarksAnalysis(1, 80,'Mid\nTerm'),
-      new MarksAnalysis(2, 86,'Half\nYearly'),
-      new MarksAnalysis(3, 70,'Mid\nterm II'),
-      new MarksAnalysis(4, 75,'Quarterly'),
-      new MarksAnalysis(5, 80,'Model'),
-      new MarksAnalysis(6, 78,'Final')],
-      [new MarksAnalysis(1, 90,'Mid\nTerm'),
-      new MarksAnalysis(2, 80,'Half\nYearly'),
-      new MarksAnalysis(3, 65,'Mid\nterm II'),
-      new MarksAnalysis(4, 80,'Quarterly'),
-      new MarksAnalysis(5, 85,'Model'),
-      new MarksAnalysis(6, 96,'Final')],
-      [new MarksAnalysis(1, 70,'Mid\nTerm'),
-      new MarksAnalysis(2, 80,'Half\nYearly'),
-      new MarksAnalysis(3, 94,'Mid\nterm II'),
-      new MarksAnalysis(4, 78,'Quarterly'),
-      new MarksAnalysis(5, 88,'Model'),
-      new MarksAnalysis(6, 75,'Final')],
-      [new MarksAnalysis(1, 85,'Mid\nTerm'),
-      new MarksAnalysis(2, 45,'Half\nYearly'),
-      new MarksAnalysis(3, 75,'Mid\nterm II'),
-      new MarksAnalysis(4, 60,'Quarterly'),
-      new MarksAnalysis(5, 80,'Model'),
-      new MarksAnalysis(6, 70,'Final')],
-      [new MarksAnalysis(1, 70,'Mid\nTerm'),
-      new MarksAnalysis(2, 73,'Half\nYearly'),
-      new MarksAnalysis(3, 75,'Mid\nterm II'),
-      new MarksAnalysis(4, 75,'Quarterly'),
-      new MarksAnalysis(5, 80,'Model'),
-      new MarksAnalysis(6, 78,'Final')],
-      [new MarksAnalysis(1, 85,'Mid\nTerm'),
-      new MarksAnalysis(2, 80,'Half\nYearly'),
-      new MarksAnalysis(3, 60,'Mid\nterm II'),
-      new MarksAnalysis(4, 85,'Quarterly'),
-      new MarksAnalysis(5, 90,'Model'),
-      new MarksAnalysis(6, 88,'Final')]
+    var data = [
+      [
+        new MarksAnalysis(1, 65, 'Mid-\nTerm'),
+        new MarksAnalysis(2, 80, 'Half\nYearly'),
+        new MarksAnalysis(3, 75, 'Mid\nterm II'),
+        new MarksAnalysis(4, 70, 'Quarterly'),
+        new MarksAnalysis(5, 88, 'Model'),
+        new MarksAnalysis(6, 85, 'Final')
+      ],
+      [
+        new MarksAnalysis(1, 80, 'Mid\nTerm'),
+        new MarksAnalysis(2, 86, 'Half\nYearly'),
+        new MarksAnalysis(3, 70, 'Mid\nterm II'),
+        new MarksAnalysis(4, 75, 'Quarterly'),
+        new MarksAnalysis(5, 80, 'Model'),
+        new MarksAnalysis(6, 78, 'Final')
+      ],
+      [
+        new MarksAnalysis(1, 90, 'Mid\nTerm'),
+        new MarksAnalysis(2, 80, 'Half\nYearly'),
+        new MarksAnalysis(3, 65, 'Mid\nterm II'),
+        new MarksAnalysis(4, 80, 'Quarterly'),
+        new MarksAnalysis(5, 85, 'Model'),
+        new MarksAnalysis(6, 96, 'Final')
+      ],
+      [
+        new MarksAnalysis(1, 70, 'Mid\nTerm'),
+        new MarksAnalysis(2, 80, 'Half\nYearly'),
+        new MarksAnalysis(3, 94, 'Mid\nterm II'),
+        new MarksAnalysis(4, 78, 'Quarterly'),
+        new MarksAnalysis(5, 88, 'Model'),
+        new MarksAnalysis(6, 75, 'Final')
+      ],
+      [
+        new MarksAnalysis(1, 85, 'Mid\nTerm'),
+        new MarksAnalysis(2, 45, 'Half\nYearly'),
+        new MarksAnalysis(3, 75, 'Mid\nterm II'),
+        new MarksAnalysis(4, 60, 'Quarterly'),
+        new MarksAnalysis(5, 80, 'Model'),
+        new MarksAnalysis(6, 70, 'Final')
+      ],
+      [
+        new MarksAnalysis(1, 70, 'Mid\nTerm'),
+        new MarksAnalysis(2, 73, 'Half\nYearly'),
+        new MarksAnalysis(3, 75, 'Mid\nterm II'),
+        new MarksAnalysis(4, 75, 'Quarterly'),
+        new MarksAnalysis(5, 80, 'Model'),
+        new MarksAnalysis(6, 78, 'Final')
+      ],
+      [
+        new MarksAnalysis(1, 85, 'Mid\nTerm'),
+        new MarksAnalysis(2, 80, 'Half\nYearly'),
+        new MarksAnalysis(3, 60, 'Mid\nterm II'),
+        new MarksAnalysis(4, 85, 'Quarterly'),
+        new MarksAnalysis(5, 90, 'Model'),
+        new MarksAnalysis(6, 88, 'Final')
+      ]
     ];
     seriesList.add(charts.Series<MarksAnalysis, String>(
       id: 'Marks %',
@@ -107,7 +121,6 @@ class Charts extends StatelessWidget{
     return Container(
         child: charts.BarChart(
       seriesList,
-      //layoutConfig: ,
       animate: true,
       animationDuration: Duration(milliseconds: 400),
     ));
@@ -118,6 +131,6 @@ class Charts extends StatelessWidget{
 class MarksAnalysis {
   final int exam;
   final int totalPercent;
-  final String name; 
+  final String name;
   MarksAnalysis(this.exam, this.totalPercent, this.name);
 }

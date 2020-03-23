@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:parent_app/components/digi_appbar.dart';
 import 'package:parent_app/components/digi_drawer.dart';
 import 'package:parent_app/components/digi_menu_card.dart';
+import 'package:parent_app/components/digicampus_appbar.dart';
 import 'package:parent_app/screens/login_screen.dart';
-import 'package:parent_app/screens/result_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:provider/provider.dart';
 
@@ -115,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 class HomePage extends DrawerContent {
   const HomePage({this.title, Key key}) : super(key: key);
   final String title;
+  
   @override
   static final List<IconData> _menuIcons = [
     Icons.accessibility_new,
@@ -140,6 +141,7 @@ class HomePage extends DrawerContent {
 class _HomePageState extends State<HomePage> {
   ScrollController _scrollController;
   double _top = -120;
+  double _opacity = 0.0;
 
   @override
   void initState() {
@@ -148,20 +150,17 @@ class _HomePageState extends State<HomePage> {
     _scrollController.addListener(() {
       double offset = _scrollController.offset;
       double _h = 120;
-      print(offset);
-      if (offset<120) {
+      if (offset < 120) {
         setState(() {
-          _top = offset-_h;
-          
+          _top = offset - _h;
+          _opacity = offset/120;
         });
-        print(_top);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    //return SliverAppBar()
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
@@ -236,49 +235,16 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Positioned(
-                top: _top,
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30),
-                        child: GestureDetector(
-                          onTap: () {
-                            drawerController.open();
-                          },
-                          child: Container(
-                            child: Icon(Icons.menu, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'DigiCampus',
-                        style: TextStyle(
-                            letterSpacing: 1,
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 30),
-                        child: Icon(
-                          Icons.notification_important,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.blue[800],
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(50),
-                          bottomRight: Radius.circular(50))),
-                  height: 100,
-                  width: MediaQuery.of(context).size.width,
-                ))
+              top: _top,
+              child: Opacity(
+                opacity: _opacity,
+                child: DigiCampusAppbar(
+                    icon: Icons.menu,
+                    onDrawerTapped: (){
+                    drawerController.open();
+                  },),
+              ),
+            )
           ],
         ));
   }

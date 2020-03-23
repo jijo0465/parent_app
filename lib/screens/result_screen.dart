@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parent_app/components/digi_appbar.dart';
 import 'package:parent_app/components/digi_subject_bar.dart';
 import 'package:parent_app/components/digi_graph_chart.dart';
+import 'package:parent_app/components/digi_time_line.dart';
+import 'package:parent_app/components/digicampus_appbar.dart';
 
 enum Subjects { All, Mathematics, English, Social, Science, Malayalam, Hindi }
 
@@ -24,7 +27,19 @@ class _ResultScreenState extends State<ResultScreen> {
     'Hindi'
   ];
   String title = titleList.first;
-  int subjectIndex=0;
+  int subjectIndex = 0;
+  PageController _pageController = PageController(
+    initialPage: 0,
+  );
+
+  @override
+  void initState() {
+    _pageController.addListener(() {
+      print('gasd');
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,107 +49,177 @@ class _ResultScreenState extends State<ResultScreen> {
         //             backgroundColor: Colors.blue,
         //             color: Colors.black87,
         //             fontWeight: FontWeight.bold))),
-        body: Column(children: <Widget>[
-      DigiAppbar(),
-      Expanded(
-        child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
-          Container(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              //height: 500,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(7, (index) {
-                      return DigiSubjectBar(
-                        index: index,
-                        onPressed: () {
-                          title = titleList.elementAt(index);
-                          switch (index) {
-                            case 0:
-                              setState(() {
-                                selectedSubject = Subjects.All;
-                                subjectIndex=0;
-                              });
-                              break;
-                            case 1:
-                              setState(() {
-                                selectedSubject = Subjects.Mathematics;
-                                subjectIndex=1;
-                              });
-                              break;
-                            case 2:
-                              setState(() {
-                                selectedSubject = Subjects.English;
-                                subjectIndex=2;
-                              });
-                              break;
-                            case 3:
-                              setState(() {
-                                selectedSubject = Subjects.Social;
-                                subjectIndex=3;
-                              });
-                              break;
-                            case 4:
-                              setState(() {
-                                selectedSubject = Subjects.Science;
-                                subjectIndex=4;
-                              });
-                            break;
-                            case 5:
-                              setState(() {
-                                selectedSubject = Subjects.Malayalam;
-                                subjectIndex=5;
-                              });
-                            break;
-                            case 6:
-                              setState(() {
-                                selectedSubject = Subjects.Hindi;
-                                subjectIndex=6;
-                              });
-                            break;
-                          }
-                        },
-                      );
-                    }),
-                  ))),
-          Container(
-              margin: EdgeInsets.only(top: 10),
-              height: 30,
-              alignment: Alignment.topCenter,
-              child: Text(
-                title,
-                style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    backgroundColor: Colors.black26,
-                    color: Colors.deepPurpleAccent),
-              )),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            height: 250,
-            width: (MediaQuery.of(context).size.width) - 20,
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                child: Charts(index:subjectIndex)),
-            // decoration: BoxDecoration(
-            //     color: Colors.indigoAccent,
-            //     shape: BoxShape.rectangle,
-            //     border: Border.all(color: Colors.black87, width: 2.5)),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            height: 250,
-            width: (MediaQuery.of(context).size.width) - 20,
-            decoration: BoxDecoration(
-                color: Colors.indigoAccent,
-                shape: BoxShape.rectangle,
-                border: Border.all(color: Colors.black87, width: 2.5)),
-          )
-        ]),
-      )
-    ]));
+        body: Stack(
+      children: <Widget>[
+        PageView(
+          controller: _pageController,
+          scrollDirection: Axis.vertical,
+          children: <Widget>[
+            Container(
+              child: Column(children: <Widget>[
+                SizedBox(height: 120),
+                Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    //height: 500,
+                    width: MediaQuery.of(context).size.width,
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(7, (index) {
+                            return DigiSubjectBar(
+                              index: index,
+                              onPressed: () {
+                                title = titleList.elementAt(index);
+                                switch (index) {
+                                  case 0:
+                                    setState(() {
+                                      selectedSubject = Subjects.All;
+                                      subjectIndex = 0;
+                                    });
+                                    break;
+                                  case 1:
+                                    setState(() {
+                                      selectedSubject = Subjects.Mathematics;
+                                      subjectIndex = 1;
+                                    });
+                                    break;
+                                  case 2:
+                                    setState(() {
+                                      selectedSubject = Subjects.English;
+                                      subjectIndex = 2;
+                                    });
+                                    break;
+                                  case 3:
+                                    setState(() {
+                                      selectedSubject = Subjects.Social;
+                                      subjectIndex = 3;
+                                    });
+                                    break;
+                                  case 4:
+                                    setState(() {
+                                      selectedSubject = Subjects.Science;
+                                      subjectIndex = 4;
+                                    });
+                                    break;
+                                  case 5:
+                                    setState(() {
+                                      selectedSubject = Subjects.Malayalam;
+                                      subjectIndex = 5;
+                                    });
+                                    break;
+                                  case 6:
+                                    setState(() {
+                                      selectedSubject = Subjects.Hindi;
+                                      subjectIndex = 6;
+                                    });
+                                    break;
+                                }
+                              },
+                            );
+                          }),
+                        ))),
+                Container(
+                    margin: EdgeInsets.only(top: 10),
+                    height: 30,
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          backgroundColor: Colors.black26,
+                          color: Colors.deepPurpleAccent),
+                    )),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 10),
+                    height: 250,
+                    width: (MediaQuery.of(context).size.width) - 20,
+                    child: Charts(index: subjectIndex),
+                  ),
+                ),
+                SizedBox(height: 12),
+                GestureDetector(
+                  onTap: () {
+                    _pageController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.linear);
+                  },
+                  child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Colors.blue[800],
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50))),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '${selectedSubject.toString().replaceFirst('Subjects.', '')} History',
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      )),
+                ),
+              ]),
+            ),
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 120 - MediaQuery.of(context).padding.top,
+                  decoration: BoxDecoration(
+                      color: Colors.blue[800],
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(50),
+                          bottomRight: Radius.circular(50))),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          '${selectedSubject.toString().replaceFirst('Subjects.', '')} History',
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue[900]),
+                        ),
+                        Icon(Icons.arrow_drop_down_circle,color: Colors.blue[900])
+                      ],
+                    )),
+                SizedBox(height: 12),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue[300],
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50))),
+                  width: (MediaQuery.of(context).size.width),
+                  height: MediaQuery.of(context).size.height - 120 - 30 - 12,
+                  child: TimelinePage(
+                    title: 'Last Month Results',
+                    onDismissed: () {
+                      _pageController.animateToPage(0,
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.linear);
+                    },
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+        DigiCampusAppbar(
+          icon: Icons.close,
+          onDrawerTapped: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    ));
   }
 }

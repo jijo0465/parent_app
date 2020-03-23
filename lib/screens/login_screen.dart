@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return RaisedButton(
                         child: Text('Log in'),
                         onPressed: () async {
-                          value.setStatus(Status.Authenticating);
+                          // value.setStatus(Status.Authenticating);
 
                           Parent parent =
                               await DigiAuth().signIn(_id, _password);

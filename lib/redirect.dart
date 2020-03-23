@@ -26,16 +26,17 @@ class _RedirectState extends State<Redirect> {
   Widget build(BuildContext context) {
     return Consumer<LoginState>(
         builder: (BuildContext context, LoginState value, Widget child) {
-      if (_loginStatus!=null) {
+      if (_loginStatus!=null && value.status==Status.Uninitialized) {
         SharedPreferences.getInstance().then((prefs) {
           _loginStatus = prefs.getBool('loggedIn');
           if (_loginStatus == true) {
             value.setStatus(Status.Authenticated);
-          } else {
+          }else{
             value.setStatus(Status.Unauthenticated);
           }
         });
       }
+      print(value.status);
       switch (value.status) {
         case Status.Uninitialized:
           return LoadingScreen();
