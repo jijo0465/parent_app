@@ -44,7 +44,7 @@ class DigiCampusAppbar extends StatelessWidget {
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(50),
               bottomRight: Radius.circular(50))),
-      height: 100,
+      height: 120 - MediaQuery.of(context).padding.top,
       width: MediaQuery.of(context).size.width,
     );
   }

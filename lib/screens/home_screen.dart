@@ -188,7 +188,13 @@ class _HomePageState extends State<HomePage> {
                         return DigiMenuCard(
                             imagePath: 'assets/images/sir.jpg',
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/result');
+                              switch (index) {
+                                case 0: Navigator.of(context).pushNamed('/result');
+                                  break;
+                                case 1: Navigator.of(context).pushNamed('/attendance');
+                                  break;
+                              }
+                              
                             },
                             menuIcon:
                                 HomePage._menuIcons[index], //_menuIcons(index),

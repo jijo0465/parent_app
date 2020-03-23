@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parent_app/components/digi_appbar.dart';
+import 'package:parent_app/components/digi_screen_title.dart';
 import 'package:parent_app/components/digi_subject_bar.dart';
 import 'package:parent_app/components/digi_graph_chart.dart';
 import 'package:parent_app/components/digi_time_line.dart';
@@ -174,23 +175,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 SizedBox(
                   height: 12,
                 ),
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Text(
-                          '${selectedSubject.toString().replaceFirst('Subjects.', '')} History',
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue[900]),
-                        ),
-                        Icon(Icons.arrow_drop_down_circle,color: Colors.blue[900])
-                      ],
-                    )),
+                DigiScreenTitle(text:'${selectedSubject.toString().replaceFirst('Subjects.', '')} History'),
                 SizedBox(height: 12),
                 Container(
                   decoration: BoxDecoration(
