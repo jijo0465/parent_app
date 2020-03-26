@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:parent_app/components/digi_appbar.dart';
 import 'package:parent_app/components/digi_screen_title.dart';
 import 'package:parent_app/components/digi_subject_bar.dart';
 import 'package:parent_app/components/digi_graph_chart.dart';
 import 'package:parent_app/components/digi_time_line.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 enum Subjects { All, Mathematics, English, Social, Science, Malayalam, Hindi }
 
@@ -28,7 +28,10 @@ class _ResultScreenState extends State<ResultScreen> {
     'Hindi'
   ];
   String title = titleList.first;
+  //String percentTitle = titleList.first;
   int subjectIndex = 0;
+  double percentValue = 0.65;
+  double percentage;
   PageController _pageController = PageController(
     initialPage: 0,
   );
@@ -43,6 +46,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    percentage=percentValue*100;
     return Scaffold(
         // appBar: AppBar(
         //     title: Text('Result',
@@ -58,7 +62,30 @@ class _ResultScreenState extends State<ResultScreen> {
           children: <Widget>[
             Container(
               child: Column(children: <Widget>[
-                SizedBox(height: 120),
+                SizedBox(height: 100),
+                DigiScreenTitle(text: 'Mark History'),
+                SizedBox(height: 12),
+                Container(
+                    child: LinearPercentIndicator(
+                  percent: percentValue,
+                  center: Text(title+'\t:\t$percentage%',
+                      style: TextStyle(fontSize: 12.0)),
+                  width: MediaQuery.of(context).size.width-10,
+                  lineHeight: 15.0,
+                  animation: true,
+                  animationDuration: 600,
+                  backgroundColor: Colors.grey,
+                  progressColor: (percentValue >= 0.90)
+                      ? Colors.green[900]
+                      : (percentValue >= 0.80
+                          ? Colors.green[700]
+                          : (percentValue >= 0.70)
+                              ? Colors.orangeAccent
+                              : (percentValue >= 0.60)
+                                  ? Colors.yellow[400]
+                                  : Colors.red),
+                )),
+                SizedBox(height: 12),
                 Container(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     //height: 500,
@@ -70,6 +97,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           children: List.generate(7, (index) {
                             return DigiSubjectBar(
                               index: index,
+                              isSelected: index == subjectIndex,
                               onPressed: () {
                                 title = titleList.elementAt(index);
                                 switch (index) {
@@ -120,6 +148,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             );
                           }),
                         ))),
+                SizedBox(height: 12),
                 Container(
                     margin: EdgeInsets.only(top: 10),
                     height: 30,
@@ -129,15 +158,18 @@ class _ResultScreenState extends State<ResultScreen> {
                       style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
-                          backgroundColor: Colors.black26,
-                          color: Colors.deepPurpleAccent),
+                          //backgroundColor: Colors.black26,
+                          color: Colors.blue[900]),
                     )),
                 Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 10),
-                    height: 250,
-                    width: (MediaQuery.of(context).size.width) - 20,
-                    child: Charts(index: subjectIndex),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      height: 250,
+                      width: (MediaQuery.of(context).size.width) - 20,
+                      child: Charts(index: subjectIndex),
+                    ),
                   ),
                 ),
                 SizedBox(height: 12),
@@ -175,7 +207,9 @@ class _ResultScreenState extends State<ResultScreen> {
                 SizedBox(
                   height: 12,
                 ),
-                DigiScreenTitle(text:'${selectedSubject.toString().replaceFirst('Subjects.', '')} History'),
+                DigiScreenTitle(
+                    text:
+                        '${selectedSubject.toString().replaceFirst('Subjects.', '')} History'),
                 SizedBox(height: 12),
                 Container(
                   decoration: BoxDecoration(
@@ -203,7 +237,7 @@ class _ResultScreenState extends State<ResultScreen> {
           onDrawerTapped: () {
             Navigator.of(context).pop();
           },
-        )
+        ),
       ],
     ));
   }

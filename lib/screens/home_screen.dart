@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 class HomePage extends DrawerContent {
   const HomePage({this.title, Key key}) : super(key: key);
   final String title;
-  
+
   @override
   static final List<IconData> _menuIcons = [
     Icons.accessibility_new,
@@ -139,23 +139,31 @@ class HomePage extends DrawerContent {
 }
 
 class _HomePageState extends State<HomePage> {
-  ScrollController _scrollController;
+  // ScrollController _pageController;
   double _top = -120;
   double _opacity = 0.0;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
+    _scrollController =new ScrollController();
     _scrollController.addListener(() {
       double offset = _scrollController.offset;
       double _h = 120;
       if (offset < 120) {
         setState(() {
           _top = offset - _h;
-          _opacity = offset/120;
+          _opacity = offset / 120;
         });
       }
+      // else
+      // {
+      //   setState(() {
+      //     _top = offset + _h;
+      //     _opacity = offset * 120;
+      //   });
+      // }
     });
   }
 
@@ -166,93 +174,98 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
           BottomNavigationBarItem(icon: Icon(Icons.info), title: Text('About'))
         ]),
-        body: Stack(
-          children: <Widget>[
-            SingleChildScrollView(
+        body: Stack(children: <Widget>[
+          SingleChildScrollView(
               controller: _scrollController,
-              child: Container(
-                child: Column(children: [
-                  DigiAppbar(
-                    onPressed: () {
-                      drawerController.open();
-                    },
-                  ),
-                  Container(
-                    height: 300,
-                    child: GridView.count(
-                      mainAxisSpacing: 12,
-                      scrollDirection: Axis.horizontal,
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      children: List.generate(6, (index) {
-                        return DigiMenuCard(
-                            imagePath: 'assets/images/sir.jpg',
-                            onPressed: () {
-                              switch (index) {
-                                case 0: Navigator.of(context).pushNamed('/result');
-                                  break;
-                                case 1: Navigator.of(context).pushNamed('/attendance');
-                                  break;
-                                case 2: Navigator.of(context).pushNamed('/schoolbus');
-                              }
-                              
-                            },
-                            menuIcon:
-                                HomePage._menuIcons[index], //_menuIcons(index),
-                            title: HomePage._menuInfo[index]
-                                ['title'], //'Bus No',
-                            subtitle: HomePage._menuInfo[index]['subtitle'],
-                            value: HomePage._menuInfo[index]['value']);
-                      }),
+              scrollDirection: Axis.vertical,
+              child: Column(children: [
+                Container(
+                  child: Column(children: [
+                    DigiAppbar(
+                      onPressed: () {
+                        drawerController.open();
+                      },
                     ),
-                  ),
-                  SizedBox(height: 12),
-                  Container(
-                      padding: EdgeInsets.only(left: 12),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Digital School Diary',
-                        textAlign: TextAlign.start,
-                      )),
-                  SizedBox(height: 12),
-                  Container(
-                    height: 160,
-                    child: GridView.count(
-                      mainAxisSpacing: 5,
-                      scrollDirection: Axis.horizontal,
-                      crossAxisCount: 1,
-                      shrinkWrap: true,
-                      children: List.generate(6, (index) {
-                        return DigiMenuCard(
-                            imagePath: 'assets/images/sir.jpg',
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/result');
-                            },
-                            menuIcon:
-                                HomePage._menuIcons[index], //_menuIcons(index),
-                            title: HomePage._menuInfo[index]
-                                ['title'], //'Bus No',
-                            subtitle: HomePage._menuInfo[index]['subtitle'],
-                            value: HomePage._menuInfo[index]['value']);
-                      }),
+                    Container(
+                      height: 300,
+                      child: GridView.count(
+                        mainAxisSpacing: 12,
+                        scrollDirection: Axis.horizontal,
+                        crossAxisCount: 2,
+                        shrinkWrap: true,
+                        children: List.generate(6, (index) {
+                          return DigiMenuCard(
+                              imagePath: 'assets/images/sir.jpg',
+                              onPressed: () {
+                                switch (index) {
+                                  case 0:
+                                    Navigator.of(context).pushNamed('/result');
+                                    break;
+                                  case 1:
+                                    Navigator.of(context)
+                                        .pushNamed('/attendance');
+                                    break;
+                                  case 2:
+                                    Navigator.of(context)
+                                        .pushNamed('/schoolbus');
+                                }
+                              },
+                              menuIcon: HomePage
+                                  ._menuIcons[index], //_menuIcons(index),
+                              title: HomePage._menuInfo[index]
+                                  ['title'], //'Bus No',
+                              subtitle: HomePage._menuInfo[index]['subtitle'],
+                              value: HomePage._menuInfo[index]['value']);
+                        }),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 120)
-                ]),
+                    SizedBox(height: 12),
+                    Container(
+                        padding: EdgeInsets.only(left: 12),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Digital School Diary',
+                          textAlign: TextAlign.start,
+                        )),
+                    SizedBox(height: 12),
+                    Container(
+                      height: 160,
+                      child: GridView.count(
+                        mainAxisSpacing: 5,
+                        scrollDirection: Axis.horizontal,
+                        crossAxisCount: 1,
+                        shrinkWrap: true,
+                        children: List.generate(6, (index) {
+                          return DigiMenuCard(
+                              imagePath: 'assets/images/sir.jpg',
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/result');
+                              },
+                              menuIcon: HomePage
+                                  ._menuIcons[index], //_menuIcons(index),
+                              title: HomePage._menuInfo[index]
+                                  ['title'], //'Bus No',
+                              subtitle: HomePage._menuInfo[index]['subtitle'],
+                              value: HomePage._menuInfo[index]['value']);
+                        }),
+                      ),
+                    ),
+                    SizedBox(height: 120)
+                  ]),
+                ),
+              ])),
+          Positioned(
+            top: _top,
+            child: Opacity(
+              opacity: _opacity,
+              child: DigiCampusAppbar(
+                icon: Icons.menu,
+                onDrawerTapped: () {
+                  drawerController.open();
+                },
               ),
             ),
-            Positioned(
-              top: _top,
-              child: Opacity(
-                opacity: _opacity,
-                child: DigiCampusAppbar(
-                    icon: Icons.menu,
-                    onDrawerTapped: (){
-                    drawerController.open();
-                  },),
-              ),
-            )
-          ],
-        ));
+          )
+        ]));
   }
 }

@@ -63,18 +63,27 @@ class DigiAppbar extends StatelessWidget {
                           );
                         },
                       )),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    margin: EdgeInsets.only(right: 12),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage(
-                            'assets/images/sir.jpg',
-                          ),
-                        ),
-                        shape: BoxShape.circle),
+                  Hero(
+                    tag: 'studentdetails',
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/studentdetails');
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage(
+                                'assets/images/girl.jpg',
+                              ),
+                            ),
+                            shape: BoxShape.circle),
+                        //child:Image.asset('images/girl.jpg')
+                      ),
+                    ),
                   )
                 ],
               )
