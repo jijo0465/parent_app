@@ -4,6 +4,8 @@ import 'package:parent_app/screens/attendance_screen.dart';
 import 'package:parent_app/screens/result_screen.dart';
 import 'package:parent_app/screens/schoolbus_screen.dart';
 import 'package:parent_app/screens/student_details_screen.dart';
+import 'package:parent_app/screens/in_out_screen.dart';
+import 'package:parent_app/screens/timetable_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/parent_state.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,8 @@ class ParentApp extends StatelessWidget {
             '/attendance':(context) => AttendanceScreen(),
             '/schoolbus':(context) => SchoolBusScreen(),
             '/studentdetails':(context) => StudentDetailsScreen(),
+            '/inOut': (context) => InOutScreen(),
+            '/timetable': (context) => TimetableScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

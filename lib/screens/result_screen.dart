@@ -46,7 +46,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    percentage=percentValue*100;
+    percentage = percentValue * 100;
     return Scaffold(
         // appBar: AppBar(
         //     title: Text('Result',
@@ -63,14 +63,14 @@ class _ResultScreenState extends State<ResultScreen> {
             Container(
               child: Column(children: <Widget>[
                 SizedBox(height: 100),
-                DigiScreenTitle(text: 'Mark History'),
+                DigiScreenTitle(text: 'Academic Performances'),
                 SizedBox(height: 12),
                 Container(
                     child: LinearPercentIndicator(
                   percent: percentValue,
-                  center: Text(title+'\t:\t$percentage%',
+                  center: Text(title + '\t:\t$percentage%',
                       style: TextStyle(fontSize: 12.0)),
-                  width: MediaQuery.of(context).size.width-10,
+                  width: MediaQuery.of(context).size.width - 10,
                   lineHeight: 15.0,
                   animation: true,
                   animationDuration: 600,
@@ -180,16 +180,40 @@ class _ResultScreenState extends State<ResultScreen> {
                         curve: Curves.linear);
                   },
                   child: Container(
-                      height: 60,
+                      height: 45,
                       decoration: BoxDecoration(
                           color: Colors.blue[800],
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(50),
                               topRight: Radius.circular(50))),
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${selectedSubject.toString().replaceFirst('Subjects.', '')} History',
-                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15))),
+                        padding: EdgeInsets.only(left: 12, right: 12),
+                        height: 40,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                                '${selectedSubject.toString().replaceFirst('Subjects.', '')} History',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.red[300],
+                                )),
+                            RotatedBox(
+                              quarterTurns: 1,
+                              child: Icon(
+                                CupertinoIcons.forward,
+                                size: 18,
+                                color: Colors.red[300],
+                              ),
+                            )
+                          ],
+                        ),
                       )),
                 ),
               ]),

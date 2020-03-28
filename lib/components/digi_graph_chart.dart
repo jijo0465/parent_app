@@ -130,11 +130,13 @@ class Charts extends StatelessWidget {
       colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
       domainFn: (MarksAnalysis totalPercent, _) => totalPercent.name,
       measureFn: (MarksAnalysis totalPercent, _) => totalPercent.totalPercent,
+      labelAccessorFn: (MarksAnalysis totalPercent, _) =>
+          '${totalPercent.totalPercent.toString()}%',
       data: data.elementAt(index),
     ));
   }
 
-  void findAverage(){}
+  void findAverage() {}
 
   @override
   Widget build(BuildContext context) {
@@ -144,9 +146,16 @@ class Charts extends StatelessWidget {
     return Container(
         child: charts.BarChart(
       seriesList,
-      primaryMeasureAxis: charts.NumericAxisSpec(viewport: charts.NumericExtents(0.0,100.0)),
+      defaultRenderer: charts.BarRendererConfig(
+        
+          cornerStrategy: charts.ConstCornerStrategy(5),
+          barRendererDecorator: charts.BarLabelDecorator<String>(
+            labelPosition: charts.BarLabelPosition.outside,
+          )),
+      primaryMeasureAxis:
+          charts.NumericAxisSpec(viewport: charts.NumericExtents(0.0, 100.0)),
       domainAxis:
-          charts.OrdinalAxisSpec(viewport: charts.OrdinalViewport('AePS',5)),
+          charts.OrdinalAxisSpec(viewport: charts.OrdinalViewport('AePS', 5)),
       animate: true,
       animationDuration: Duration(milliseconds: 400),
       behaviors: [
@@ -160,7 +169,6 @@ class Charts extends StatelessWidget {
 
 /// Sample ordinal data type.
 class MarksAnalysis {
-  
   final int exam;
   final int totalPercent;
   final String name;

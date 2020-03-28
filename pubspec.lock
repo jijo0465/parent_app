@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  calendar_strip:
+    dependency: "direct main"
+    description:
+      name: calendar_strip
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   charcode:
     dependency: transitive
     description:
@@ -90,6 +97,18 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_cupertino_localizations:
+    dependency: transitive
+    description:
+      name: flutter_cupertino_localizations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -109,6 +128,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_timetable_view:
+    dependency: "direct main"
+    description:
+      name: flutter_timetable_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -143,7 +169,7 @@ packages:
     source: hosted
     version: "2.1.4"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -177,6 +203,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  month_picker_dialog:
+    dependency: "direct main"
+    description:
+      name: month_picker_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1"
   nested:
     dependency: transitive
     description:
@@ -226,6 +259,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.23.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -344,5 +384,5 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
-  dart: ">=2.5.0 <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"

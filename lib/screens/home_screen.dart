@@ -4,6 +4,7 @@ import 'package:parent_app/components/digi_drawer.dart';
 import 'package:parent_app/components/digi_menu_card.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
 import 'package:parent_app/screens/login_screen.dart';
+import 'package:parent_app/screens/student_details_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:provider/provider.dart';
 
@@ -140,21 +141,22 @@ class HomePage extends DrawerContent {
 
 class _HomePageState extends State<HomePage> {
   // ScrollController _pageController;
-  double _top = -120;
+  double _top = 0;
   double _opacity = 0.0;
+  double _height = 250.0;
   ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    _scrollController =new ScrollController();
+    _scrollController = new ScrollController();
     _scrollController.addListener(() {
       double offset = _scrollController.offset;
-      double _h = 120;
-      if (offset < 120) {
+      double _h = 240;
+      if (offset>120&&offset < 240) {
         setState(() {
           _top = offset - _h;
-          _opacity = offset / 120;
+          _opacity = offset / 240;
         });
       }
       // else
@@ -182,6 +184,42 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   child: Column(children: [
                     DigiAppbar(
+                      height: _height,
+                      onDragEnd: (_) {
+                        print(_height);
+                        if (_height < 550) {
+                          setState(() {
+                            _height = 250;
+                          });
+                        }
+                      },
+                      onDrag: (dragUpdateDetails) {
+                        //print(dragUpdateDetails.globalPosition.distance);
+                        //print(dragUpdateDetails.globalPosition.dy);
+                        print(dragUpdateDetails.primaryDelta);
+                        if (dragUpdateDetails.delta.dy > 0) {
+                          if (dragUpdateDetails.globalPosition.distance > 350) {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                transitionDuration: Duration(milliseconds: 400),
+                                pageBuilder: (_, __, ___) =>
+                                    StudentDetailsScreen(),
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              _height += dragUpdateDetails.delta.dy * 0.4;
+                            });
+                          }
+                        } else {
+                          if (_height > 251) {
+                            setState(() {
+                              _height += dragUpdateDetails.delta.dy;
+                            });
+                          }
+                        }
+                      },
                       onPressed: () {
                         drawerController.open();
                       },
@@ -208,6 +246,11 @@ class _HomePageState extends State<HomePage> {
                                   case 2:
                                     Navigator.of(context)
                                         .pushNamed('/schoolbus');
+                                    break;
+                                  case 3:
+                                    Navigator.of(context)
+                                        .pushNamed('/inOut');
+                                    break;
                                 }
                               },
                               menuIcon: HomePage
@@ -239,7 +282,7 @@ class _HomePageState extends State<HomePage> {
                           return DigiMenuCard(
                               imagePath: 'assets/images/sir.jpg',
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/result');
+                                Navigator.of(context).pushNamed('/timetable');
                               },
                               menuIcon: HomePage
                                   ._menuIcons[index], //_menuIcons(index),
