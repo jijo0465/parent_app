@@ -65,11 +65,13 @@ class DigiAppbar extends StatelessWidget {
                 Expanded(
                     child: Hero(tag: 'background', child: Container())),
                 Row(
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
                         padding: EdgeInsets.only(left: 12),
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.bottomLeft,
+                        height: 60,
                         child: Consumer<ParentState>(
                           builder: (BuildContext context, ParentState value,
                               Widget child) {
@@ -95,14 +97,14 @@ class DigiAppbar extends StatelessWidget {
                           );
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 60,
+                          height: 60,
                           margin: EdgeInsets.only(right: 12),
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.fill,
                                 image: AssetImage(
-                                  'assets/images/girl.jpg',
+                                  'assets/images/1001.jpg',
                                 ),
                               ),
                               shape: BoxShape.circle),

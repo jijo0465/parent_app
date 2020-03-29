@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parent_app/components/digi_screen_title.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
@@ -12,9 +15,31 @@ class AttendanceScreen extends StatefulWidget {
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
   CalendarController _calendarController;
+  Map<DateTime, List<bool>> _events;
+  bool isPresent = true;
+
   @override
   void initState() {
     _calendarController = CalendarController();
+    final _selectedDay = DateTime.now();
+
+    _events = {
+      _selectedDay.subtract(Duration(days: 30)): [true],
+      _selectedDay.subtract(Duration(days: 27)): [false],
+      _selectedDay.subtract(Duration(days: 20)): [true],
+      _selectedDay.subtract(Duration(days: 16)): [true],
+      _selectedDay.subtract(Duration(days: 10)): [true],
+      _selectedDay.subtract(Duration(days: 4)): [false],
+      _selectedDay.subtract(Duration(days: 2)): [false],
+      _selectedDay: [true],
+      _selectedDay.add(Duration(days: 1)): [true],
+      _selectedDay.add(Duration(days: 3)): [true],
+      _selectedDay.add(Duration(days: 7)): [true],
+      _selectedDay.add(Duration(days: 11)): [true],
+      _selectedDay.add(Duration(days: 17)): [true],
+      _selectedDay.add(Duration(days: 22)): [true],
+      _selectedDay.add(Duration(days: 26)): [true],
+      };
     super.initState();
   }
 
@@ -48,33 +73,130 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           ]),
         ),
       ),
-      TableCalendar(
-          calendarController: _calendarController,
-          formatAnimation: FormatAnimation.scale,
-          availableGestures: AvailableGestures.horizontalSwipe,
-          calendarStyle: CalendarStyle(
-            //outsideStyle:TextStyle(color:Colors.grey,fontStyle: FontStyle.italic) ,
-            selectedColor: Theme.of(context).primaryColor,
-          ),
-          builders: CalendarBuilders(
-            dayBuilder: (context, date, _data) => Container(
-                alignment: Alignment.center,
-                // decoration:
-                //     BoxDecoration(color: Colors.green, shape: BoxShape.circle),
-                child: Text(
-                  date.day.toString(),
-                  style: TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.w600),
-                )),
-          )),
       SizedBox(height: 12),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          RaisedButton(onPressed: () {}, child: Text('Request Leave')),
-          RaisedButton(onPressed: () {}, child: Text('Contact Teacher'))
-        ],
+      Expanded(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.blue[800],
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50), topRight: Radius.circular(50))),
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: TableCalendar(
+                  calendarController: _calendarController,
+                  events: _events,
+                  formatAnimation: FormatAnimation.scale,
+                  availableGestures: AvailableGestures.horizontalSwipe,
+                  calendarStyle: CalendarStyle(
+                      markersAlignment: Alignment.bottomRight,
+                      //outsideStyle:TextStyle(color:Colors.grey,fontStyle: FontStyle.italic) ,
+                      selectedColor: Theme.of(context).primaryColor,
+                      weekdayStyle: TextStyle(
+                        color: Colors.white,
+                      )),
+                  headerStyle: HeaderStyle(
+                      centerHeaderTitle: true,
+                      titleTextStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
+                      daysOfWeekStyle: DaysOfWeekStyle(
+                      weekdayStyle: TextStyle(color: Colors.blueGrey[100])),
+                      builders: CalendarBuilders(
+                          markersBuilder: (context, date, events, holidays) {
+                              final children = <Widget>[];
+                              if (events.isNotEmpty) {
+                                children.add(
+                                Positioned(
+                                right: 1,
+                                bottom: 1,
+                                child: _buildEventsMarker(date, events),
+                                ),
+                              );
+                          }
+
+          // if (holidays.isNotEmpty) {
+          //   children.add(
+          //     Positioned(
+          //       right: -2,
+          //       top: -2,
+          //       child: _buildHolidaysMarker(),
+          //     ),
+          //   );
+          // }
+
+                          return children;
+                        },
+                ),),
+                ),
+              
+              SizedBox(height: 12),
+              Container(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    RaisedButton(
+                        onPressed: () {}, child: Text('Message Teacher')),
+                    RaisedButton(
+                        onPressed: () {}, child: Text('Contact Teacher'))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+            ],
+          ),
+        ),
       ),
     ]));
+  }
+
+  Widget _buildEventsMarker(DateTime date, List events) {
+    if(events.first==true){
+    return Icon(
+      CupertinoIcons.check_mark_circled_solid,
+      size: 20.0,
+      color: Colors.green[300],
+    );}
+    else{
+      return Icon(
+        Icons.close,
+        size: 20,
+        color: Colors.red[600]
+      );
+    }
+    // AnimatedContainer(
+    // //   duration: const Duration(milliseconds: 300),
+    // //   decoration: BoxDecoration(
+    // //     shape: BoxShape.rectangle,
+    // //     color: _calendarController.isSelected(date)
+    // //         ? Colors.brown[500]
+    // //         : _calendarController.isToday(date) ? Colors.brown[300] : Colors.blue[400],
+    // //   ),
+    // //   width: 16.0,
+    // //   height: 16.0,
+    // //   child: Center(
+    // //     child: Text(
+    // //       '${events.length}',
+    // //       style: TextStyle().copyWith(
+    // //         color: Colors.white,
+    // //         fontSize: 12.0,
+    // //       ),
+    // //     ),
+    // //   ),
+    // // );
+    //       // duration: const Duration(milliseconds: 300),
+    //       // height: 3,
+    //       // width: 5,
+    //       // child: Icon(
+    //       //   Icons.check,
+    //       //   color: Colors.green,
+    //       //   size:5
+    //       // )
+    // );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parent_app/redirect.dart';
 import 'package:parent_app/screens/attendance_screen.dart';
+import 'package:parent_app/screens/fee_payment_screen.dart';
 import 'package:parent_app/screens/result_screen.dart';
 import 'package:parent_app/screens/schoolbus_screen.dart';
 import 'package:parent_app/screens/student_details_screen.dart';
@@ -42,6 +43,7 @@ class ParentApp extends StatelessWidget {
             '/studentdetails':(context) => StudentDetailsScreen(),
             '/inOut': (context) => InOutScreen(),
             '/timetable': (context) => TimetableScreen(),
+            '/feePayment': (context) => FeePaymentScreen()
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

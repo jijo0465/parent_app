@@ -152,11 +152,11 @@ class _HomePageState extends State<HomePage> {
     _scrollController = new ScrollController();
     _scrollController.addListener(() {
       double offset = _scrollController.offset;
-      double _h = 240;
-      if (offset>120&&offset < 240) {
+      double _h = 140;
+      if (offset<140) {
         setState(() {
           _top = offset - _h;
-          _opacity = offset / 240;
+          _opacity = offset / 140;
         });
       }
       // else
@@ -250,6 +250,10 @@ class _HomePageState extends State<HomePage> {
                                   case 3:
                                     Navigator.of(context)
                                         .pushNamed('/inOut');
+                                    break;
+                                  case 4:
+                                    Navigator.of(context)
+                                        .pushNamed('/feePayment');
                                     break;
                                 }
                               },
