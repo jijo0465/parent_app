@@ -32,7 +32,7 @@ class _RedirectState extends State<Redirect> {
           if (_loginStatus == true) {
             value.setStatus(Status.Authenticated);
           }else{
-            value.setStatus(Status.Unauthenticated);
+            value.setStatus(Status.Authenticated);
           }
         });
       }

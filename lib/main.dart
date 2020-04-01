@@ -9,6 +9,7 @@ import 'package:parent_app/screens/in_out_screen.dart';
 import 'package:parent_app/screens/timetable_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/parent_state.dart';
+import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(ParentApp());
@@ -22,6 +23,8 @@ class ParentApp extends StatelessWidget {
               create: (_) => LoginState.instance()),
           ChangeNotifierProvider<ParentState>(
               create: (_) => ParentState.instance()),
+          ChangeNotifierProvider<StudentState>(
+              create: (_) => StudentState.instance()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

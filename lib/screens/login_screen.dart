@@ -64,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               await DigiAuth().signIn(_id, _password);
                           if (parent != null) {
                             parentState.setParent(parent);
+                            // Student _student=
                             value.setStatus(Status.Authenticated);
                           }
                         });

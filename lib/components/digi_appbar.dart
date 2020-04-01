@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parent_app/screens/student_details_screen.dart';
 import 'package:parent_app/states/parent_state.dart';
+import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
 
 class DigiAppbar extends StatelessWidget {
@@ -9,16 +10,25 @@ class DigiAppbar extends StatelessWidget {
   final ValueChanged<DragEndDetails> onDragEnd;
   final ValueChanged<DragUpdateDetails> onDrag;
   final double height;
-  const DigiAppbar({Key key, this.onPressed, this.onDragEnd, this.onDrag, this.height}) : super(key: key);
+  final VoidCallback onStudentTapped;
+  const DigiAppbar(
+      {Key key,
+      this.onPressed,
+      this.onDragEnd,
+      this.onDrag,
+      this.height,
+      this.onStudentTapped})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onVerticalDragEnd: onDragEnd,
       onVerticalDragUpdate: onDrag,
       child: ClipPath(
           clipper: BackgroundClipper(),
-          child: Container(
+          child: AnimatedContainer(
             padding: EdgeInsets.only(top: 35),
             //color: Colors.blue[800],
             height: height,
@@ -26,9 +36,11 @@ class DigiAppbar extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/school.jpg'),
-                    fit: BoxFit.fill)
-                ),
+                    fit: BoxFit.fill)),
+            duration: Duration(milliseconds: 400),
+            curve: Curves.decelerate,
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               // mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Row(
@@ -62,65 +74,56 @@ class DigiAppbar extends StatelessWidget {
                     )
                   ],
                 ),
+                //Expanded(child: Hero(tag: 'background', child: Container())),
                 Expanded(
-                    child: Hero(tag: 'background', child: Container())),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                        padding: EdgeInsets.only(left: 12),
-                        alignment: Alignment.bottomLeft,
-                        height: 60,
-                        child: Consumer<ParentState>(
-                          builder: (BuildContext context, ParentState value,
-                              Widget child) {
-                            return Text(
-                              'Arjun Ajith',
-                              style: TextStyle(decoration: TextDecoration.none,
-                                  fontSize: 20, color: Colors.white),
-                            );
-                          },
-                        )),
-                    Hero(
-                      tag: 'studentdetails',
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              transitionDuration:
-                                  Duration(milliseconds: 400),
-                              pageBuilder: (_, __, ___) =>
-                                  StudentDetailsScreen(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 60,
-                          margin: EdgeInsets.only(right: 12),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: AssetImage(
-                                  'assets/images/1001.jpg',
+                  child: Consumer<StudentState>(
+                      builder: (context, studentState, _) {
+                    return studentState.selectedstudent == null
+                        ? Container()
+                        : Row(
+                            // mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                  padding: EdgeInsets.only(left: 12),
+                                  alignment: Alignment.bottomLeft,
+                                  height: 60,
+                                  child: Text(
+                                    studentState.selectedstudent.name,
+                                    style: TextStyle(
+                                        decoration: TextDecoration.none,
+                                        fontSize: 20,
+                                        color: Colors.white),
+                                  )),
+                              Hero(
+                                tag: studentState.selectedstudent.id.toString(),
+                                child: GestureDetector(
+                                  onTap: onStudentTapped,
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 12),
+                                    child: ClipOval(
+                                        child: Image.asset(
+                                            studentState.selectedstudent.photoUrl,
+                                            fit: BoxFit.fill)),
+                                    height: height/4.16,
+                                    width: height/4.16,
+                                  ),
                                 ),
-                              ),
-                              shape: BoxShape.circle),
-                          //child:Image.asset('images/girl.jpg')
-                        ),
-                      ),
-                    )
-                  ],
+                              )
+                            ],
+                          );
+                  }),
                 ),
-                RotatedBox(
-                  quarterTurns: 1,
-                  child: Container(
-                      child: Icon(
+                Container(
+                  // width: MediaQuery.of(context).size.width,
+                  child: RotatedBox(
+                    quarterTurns: 1,
+                    child: Icon(
                     CupertinoIcons.right_chevron,
                     color: Colors.white,
-                  )),
+                  ),
+                  ),
                 ),
                 SizedBox(height: 50)
               ],
