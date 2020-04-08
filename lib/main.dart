@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:parent_app/components/digi_chat.dart';
 import 'package:parent_app/redirect.dart';
 import 'package:parent_app/screens/attendance_screen.dart';
+import 'package:parent_app/screens/chat_screen.dart';
+import 'package:parent_app/screens/exams_screen.dart';
 import 'package:parent_app/screens/fee_payment_screen.dart';
 import 'package:parent_app/screens/result_screen.dart';
 import 'package:parent_app/screens/schoolbus_screen.dart';
@@ -46,7 +49,10 @@ class ParentApp extends StatelessWidget {
             '/studentdetails':(context) => StudentDetailsScreen(),
             '/inOut': (context) => InOutScreen(),
             '/timetable': (context) => TimetableScreen(),
-            '/feePayment': (context) => FeePaymentScreen()
+            '/feePayment': (context) => FeePaymentScreen(),
+            '/chat': (context) => ChatScreen(),
+            '/digiChat': (context) => DigiChat(),
+            '/exams': (context) => ExamScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

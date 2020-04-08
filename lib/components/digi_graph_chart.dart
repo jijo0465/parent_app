@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 // class Chart extends StatelessWidget {
@@ -127,7 +127,10 @@ class Charts extends StatelessWidget {
     ];
     seriesList.add(charts.Series<MarksAnalysis, String>(
       id: 'Marks %',
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+      colorFn: (_, __) => charts.MaterialPalette.deepOrange.shadeDefault,
+      fillColorFn: ((_, __) =>
+            charts.MaterialPalette.deepOrange.shadeDefault.lighter
+      ),
       domainFn: (MarksAnalysis totalPercent, _) => totalPercent.name,
       measureFn: (MarksAnalysis totalPercent, _) => totalPercent.totalPercent,
       labelAccessorFn: (MarksAnalysis totalPercent, _) =>
@@ -147,13 +150,12 @@ class Charts extends StatelessWidget {
         child: charts.BarChart(
       seriesList,
       defaultRenderer: charts.BarRendererConfig(
-        
           cornerStrategy: charts.ConstCornerStrategy(5),
           barRendererDecorator: charts.BarLabelDecorator<String>(
             labelPosition: charts.BarLabelPosition.outside,
           )),
       primaryMeasureAxis:
-          charts.NumericAxisSpec(viewport: charts.NumericExtents(0.0, 100.0)),
+          charts.NumericAxisSpec(viewport: charts.NumericExtents(0.0,100.0),tickProviderSpec: charts.BasicNumericTickProviderSpec(desiredTickCount: 5)),
       domainAxis:
           charts.OrdinalAxisSpec(viewport: charts.OrdinalViewport('AePS', 5)),
       animate: true,

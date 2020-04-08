@@ -34,11 +34,17 @@ class _InOutScreenState extends State<InOutScreen> {
       endDate = DateTime.now(),
       selectedDate = DateTime.now();
   CalendarController _calendarController;
+  double _height = 180;
   //Map _calendarFormats={CalendarFormat.week:''};
 
   @override
   void initState() {
     initializeDateFormatting();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        _height = 0;
+      });
+    });
     _calendarController = CalendarController();
     super.initState();
   }
@@ -69,11 +75,10 @@ class _InOutScreenState extends State<InOutScreen> {
         SizedBox(height: 12),
         DigiScreenTitle(text: 'Student In/Out Details'),
         Container(
-          height: 180,
           alignment: Alignment.center,
           child: TableCalendar(
             calendarController: _calendarController,
-            formatAnimation: FormatAnimation.scale,
+            formatAnimation: FormatAnimation.slide,
             availableGestures: AvailableGestures.horizontalSwipe,
             initialCalendarFormat: CalendarFormat.week,
             availableCalendarFormats: {
@@ -89,8 +94,12 @@ class _InOutScreenState extends State<InOutScreen> {
             ),
             headerStyle: HeaderStyle(
                 centerHeaderTitle: true,
+                formatButtonTextStyle: TextStyle(
+                  fontSize: 12,
+                  color: Colors.blueGrey
+                ),
                 titleTextStyle: TextStyle(
-                    fontSize: 20,
+                    fontSize: 17,
                     fontWeight: FontWeight.w600,
                     color: Colors.blue[800])),
             onHeaderTapped: (date) {
@@ -107,7 +116,14 @@ class _InOutScreenState extends State<InOutScreen> {
             onDaySelected: (date, list) {},
           ),
         ),
+        SizedBox(height: 6),
+        AnimatedPadding(
+          padding: EdgeInsets.only(top: _height),
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInSine,
+          ),
         Expanded(
+          flex: 1,
           child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

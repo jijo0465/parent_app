@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "213725799043",
+    "firebase_url": "https://digicampus-272106.firebaseio.com",
+    "project_id": "digicampus-272106",
+    "storage_bucket": "digicampus-272106.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213725799043:android:ad1e6e075388a531d6b1b6",
+        "android_client_info": {
+          "package_name": "com.monkmind.digicampus.parentapp.parent_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213725799043-eardmlt2m6qhiujlbmeaou0efsbfer0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFMQyVhE5v6ljhuJXWAUsZ4k7jmblWXoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213725799043-eardmlt2m6qhiujlbmeaou0efsbfer0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

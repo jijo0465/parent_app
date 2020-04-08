@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:parent_app/components/digi_appbar.dart';
 import 'package:parent_app/components/digi_drawer.dart';
 import 'package:parent_app/components/digi_menu_card.dart';
@@ -140,6 +141,16 @@ class HomePage extends DrawerContent {
     Icons.adjust,
     Icons.airplanemode_active
   ];
+
+  final List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
+    const StaggeredTile.count(6, 3),
+    const StaggeredTile.count(3, 3),
+    const StaggeredTile.count(3, 4),
+    const StaggeredTile.count(6, 4),
+    const StaggeredTile.count(4, 3),
+    const StaggeredTile.count(9, 3),
+  ];
+
   static final List<Map<String, String>> _menuInfo = [
     {'title': 'Academics', 'subtitle': '90%', 'value': 'Check Result'},
     {'title': 'Bus No', 'subtitle': '15', 'value': 'Track School Bus'},
@@ -163,6 +174,7 @@ class _HomePageState extends State<HomePage> {
   bool stateChanged = false;
   bool isLoading = true;
   Student selectedStudent;
+  int count = 6;
 
   @override
   void initState() {
@@ -172,12 +184,13 @@ class _HomePageState extends State<HomePage> {
     _scrollController.addListener(() {
       double offset = _scrollController.offset;
       double _h = 250;
-      if (_scrollController.offset <= _scrollController.position.minScrollExtent &&
-        !_scrollController.position.outOfRange) {
-          setState(() {
-            _height=250;
-          });
-        }
+      if (_scrollController.offset <=
+              _scrollController.position.minScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        setState(() {
+          _height = 250;
+        });
+      }
       // print("This is offset");
       // print(_scrollController.positions.last.pixels);
       // if (_height > 150) {
@@ -187,13 +200,13 @@ class _HomePageState extends State<HomePage> {
       // }
       if (offset < 250 && _height > 150) {
         setState(() {
-          _height =  _h - offset;
+          _height = _h - offset;
           //_opacity = offset / 140;
         });
         // print(offset);
-      }else{
+      } else {
         setState(() {
-          _height =  150;
+          _height = 150;
           //_opacity = offset / 140;
         });
       }
@@ -239,37 +252,23 @@ class _HomePageState extends State<HomePage> {
                 child:
                     Consumer<StudentState>(builder: (context, studentState, _) {
                   selectedStudent = studentState.selectedstudent;
-                  return Container(
-                      child: Column(children: <Widget>[
-                    DigiAppbar(
-                      onStudentTapped: () {
-                        isLoading = true;
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionDuration: Duration(milliseconds: 400),
-                            pageBuilder: (_, __, ___) => StudentDetailsScreen(),
-                          ),
-                        ).then((value) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        });
-                      },
-                      height: _height,
-                      onDragEnd: (_) {
-                        print(_height);
-                        if (_height < 550) {
-                          setState(() {
-                            _height = 250;
-                          });
-                        }
-                      },
-                      onDrag: (dragUpdateDetails) {
-                        // print(dragUpdateDetails.globalPosition.distance);
-                        // print(dragUpdateDetails.globalPosition.dy);
-                        if (dragUpdateDetails.delta.dy > 0) {
-                          if (dragUpdateDetails.globalPosition.distance > 350) {
+                  return Stack(
+                    children: <Widget>[
+                      Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            //gradient: RadialGradient(colors: [Colors.blue[100],Colors.blue[200],Colors.blue[300]])
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/blue_gradient.jpg'),
+                                fit: BoxFit.cover)),
+                      ),
+                      Container(
+                          child: Column(children: <Widget>[
+                        DigiAppbar(
+                          onStudentTapped: () {
+                            isLoading = true;
                             Navigator.push(
                               context,
                               PageRouteBuilder(
@@ -278,131 +277,188 @@ class _HomePageState extends State<HomePage> {
                                     StudentDetailsScreen(),
                               ),
                             ).then((value) {
-                              // setState(() {
-                              //   pageNo = StudentDetailsScreen.pageNo;
-                              // });
+                              setState(() {
+                                isLoading = false;
+                              });
                             });
-                          } else {
-                            print(dragUpdateDetails.globalPosition.distance /
-                                170);
-                            setState(() {
-                              _height += dragUpdateDetails.delta.dy *
-                                  log(dragUpdateDetails
-                                          .globalPosition.distance /
-                                      175);
-                            });
-                          }
-                        }
-                        // else {
-                        //   if (_height > 251) {
-                        //     setState(() {
-                        //       _height += dragUpdateDetails.delta.dy;
-                        //     });
-                        //   }
-                        // }
-                      },
-                      onPressed: () {
-                        drawerController.open();
-                      },
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        controller: _scrollController,
-                        child: Container(
-                          child: Column(children: [
-                            // SizedBox(
-                            //   height: _height<250?_height==150?0:250-_height:0,
-                            // ),
-                            AnimatedPadding(
-                              curve: Curves.linear,
-                              duration: Duration(milliseconds: 650),
-                              padding: EdgeInsets.only(top:_height<250?_height==150?0:250-_height:0),
-                              child: Container(
-                                height: 300,
-                                child: GridView.count(
-                                  mainAxisSpacing: 12,
-                                  scrollDirection: Axis.horizontal,
-                                  crossAxisCount: 2,
-                                  shrinkWrap: true,
-                                  children: List.generate(6, (index) {
-                                    return DigiMenuCard(
-                                        imagePath: 'assets/images/sir.jpg',
-                                        onPressed: () {
-                                          switch (index) {
-                                            case 0:
-                                              Navigator.of(context)
-                                                  .pushNamed('/result');
-                                              break;
-                                            case 1:
-                                              Navigator.of(context)
-                                                  .pushNamed('/attendance');
-                                              break;
-                                            case 2:
-                                              Navigator.of(context)
-                                                  .pushNamed('/schoolbus');
-                                              break;
-                                            case 3:
-                                              Navigator.of(context)
-                                                  .pushNamed('/inOut');
-                                              break;
-                                            case 4:
-                                              Navigator.of(context)
-                                                  .pushNamed('/feePayment');
-                                              break;
-                                          }
-                                        },
-                                        menuIcon: HomePage._menuIcons[
-                                            index], //_menuIcons(index),
-                                        title: HomePage._menuInfo[index]
-                                            ['title'], //'Bus No',
-                                        subtitle: HomePage._menuInfo[index]
-                                            ['subtitle'],
-                                        value: HomePage._menuInfo[index]
-                                            ['value']);
-                                  }),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 12),
-                            Container(
-                                padding: EdgeInsets.only(left: 12),
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Digital School Diary',
-                                  textAlign: TextAlign.start,
-                                )),
-                            SizedBox(height: 12),
-                            Container(
-                              height: 160,
-                              child: GridView.count(
-                                mainAxisSpacing: 5,
-                                scrollDirection: Axis.horizontal,
-                                crossAxisCount: 1,
-                                shrinkWrap: true,
-                                children: List.generate(6, (index) {
-                                  return DigiMenuCard(
-                                      imagePath: 'assets/images/sir.jpg',
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pushNamed('/timetable');
-                                      },
-                                      menuIcon: HomePage._menuIcons[
-                                          index], //_menuIcons(index),
-                                      title: HomePage._menuInfo[index]
-                                          ['title'], //'Bus No',
-                                      subtitle: HomePage._menuInfo[index]
-                                          ['subtitle'],
-                                      value: HomePage._menuInfo[index]
-                                          ['value']);
-                                }),
-                              ),
-                            ),
-                            SizedBox(height: 120)
-                          ]),
+                          },
+                          height: _height,
+                          onDragEnd: (_) {
+                            print(_height);
+                            if (_height < 550) {
+                              setState(() {
+                                _height = 250;
+                              });
+                            }
+                          },
+                          onDrag: (dragUpdateDetails) {
+                            // print(dragUpdateDetails.globalPosition.distance);
+                            // print(dragUpdateDetails.globalPosition.dy);
+                            if (dragUpdateDetails.delta.dy > 0) {
+                              if (dragUpdateDetails.globalPosition.distance >
+                                  350) {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    transitionDuration:
+                                        Duration(milliseconds: 400),
+                                    pageBuilder: (_, __, ___) =>
+                                        StudentDetailsScreen(),
+                                  ),
+                                ).then((value) {
+                                  // setState(() {
+                                  //   pageNo = StudentDetailsScreen.pageNo;
+                                  // });
+                                });
+                              } else {
+                                print(
+                                    dragUpdateDetails.globalPosition.distance /
+                                        170);
+                                setState(() {
+                                  _height += dragUpdateDetails.delta.dy *
+                                      log(dragUpdateDetails
+                                              .globalPosition.distance /
+                                          175);
+                                });
+                              }
+                            }
+                            // else {
+                            //   if (_height > 251) {
+                            //     setState(() {
+                            //       _height += dragUpdateDetails.delta.dy;
+                            //     });
+                            //   }
+                            // }
+                          },
+                          onPressed: () {
+                            drawerController.open();
+                          },
                         ),
-                      ),
-                    ),
-                  ]));
+                        Expanded(
+                          child: SingleChildScrollView(
+                            controller: _scrollController,
+                            child: Container(
+                              // decoration: BoxDecoration(
+                              //   gradient: SweepGradient(colors: [Colors.blue[100],Colors.blue[200],Colors.blue[300]])
+                              // ),
+                              child: Column(children: [
+                                // SizedBox(
+                                //   height: _height<250?_height==150?0:250-_height:0,
+                                // ),
+                                AnimatedPadding(
+                                  curve: Curves.linear,
+                                  duration: Duration(milliseconds: 650),
+                                  padding: EdgeInsets.only(
+                                      top: _height < 250
+                                          ? _height == 150 ? 0 : 250 - _height
+                                          : 0),
+                                  child: Container(
+                                    //height: 300,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: StaggeredGridView.countBuilder(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 5,
+                                      scrollDirection: Axis.vertical,
+                                      crossAxisCount: 9,
+                                      itemCount: 6,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemBuilder: (BuildContext context,
+                                              int index) =>
+                                          new DigiMenuCard(
+                                              imagePath:
+                                                  'assets/images/menu_$index.png',
+                                              onPressed: () {
+                                                switch (index) {
+                                                  case 0:
+                                                    Navigator.of(context)
+                                                        .pushNamed('/result');
+                                                    break;
+                                                  case 1:
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                            '/attendance');
+                                                    break;
+                                                  case 2:
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                            '/schoolbus');
+                                                    break;
+                                                  case 3:
+                                                    Navigator.of(context)
+                                                        .pushNamed('/inOut');
+                                                    break;
+                                                  case 4:
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                            '/feePayment');
+                                                    break;
+                                                  case 5:
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                            '/exams');
+                                                    break;
+                                                }
+                                              },
+                                              menuIcon: HomePage._menuIcons[
+                                                  index], //_menuIcons(index),
+                                              title: HomePage._menuInfo[index]
+                                                  ['title'], //'Bus No',
+                                              subtitle: HomePage
+                                                  ._menuInfo[index]['subtitle'],
+                                              value: HomePage._menuInfo[index]
+                                                  ['value']),
+                                      staggeredTileBuilder: (int index) =>
+                                          widget._staggeredTiles
+                                              .elementAt(index),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                Container(
+                                    padding: EdgeInsets.only(left: 12),
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Digital School Diary',
+                                      textAlign: TextAlign.start,
+                                    )),
+                                SizedBox(height: 12),
+                                Container(
+                                  height: 160,
+                                  //width: MediaQuery.of(context).size.width-6,
+                                  child: GridView.count(
+                                    mainAxisSpacing: 5,
+                                    scrollDirection: Axis.horizontal,
+                                    crossAxisCount: 1,
+                                    shrinkWrap: true,
+                                    children: List.generate(6, (index) {
+                                      return DigiMenuCard(
+                                          imagePath: 'assets/images/sir.jpg',
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pushNamed('/timetable');
+                                          },
+                                          menuIcon: HomePage._menuIcons[
+                                              index], //_menuIcons(index),
+                                          title: HomePage._menuInfo[index]
+                                              ['title'], //'Bus No',
+                                          subtitle: HomePage._menuInfo[index]
+                                              ['subtitle'],
+                                          value: HomePage._menuInfo[index]
+                                              ['value']);
+                                    }),
+                                  ),
+                                ),
+                                SizedBox(height: 120)
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ])),
+                    ],
+                  );
                 }),
               ));
   }

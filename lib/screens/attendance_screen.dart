@@ -17,9 +17,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   CalendarController _calendarController;
   Map<DateTime, List<bool>> _events;
   bool isPresent = true;
+  double _height = 600;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        _height = 0;
+      });
+    });
     _calendarController = CalendarController();
     final _selectedDay = DateTime.now();
 
@@ -39,7 +45,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       _selectedDay.add(Duration(days: 17)): [true],
       _selectedDay.add(Duration(days: 22)): [true],
       _selectedDay.add(Duration(days: 26)): [true],
-      };
+    };
     super.initState();
   }
 
@@ -74,17 +80,31 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
         ),
       ),
       SizedBox(height: 12),
+      AnimatedPadding(
+          padding: EdgeInsets.only(top: _height),
+          duration: Duration(milliseconds: 600)),
       Expanded(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.blue[800],
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.blue[400],
+                  Colors.blue[600],
+                  Colors.blue[800]
+                ],
+                // tileMode: TileMode.repeated,
+              ),
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50), topRight: Radius.circular(50))),
+                  topLeft: Radius.circular(34),
+                  topRight: Radius.circular(34))),
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: <Widget>[
               Expanded(
                 child: TableCalendar(
+                  // rowHeight: 30,
                   calendarController: _calendarController,
                   events: _events,
                   formatAnimation: FormatAnimation.scale,
@@ -97,41 +117,42 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         color: Colors.white,
                       )),
                   headerStyle: HeaderStyle(
+                      formatButtonTextStyle: TextStyle(fontSize: 12,color: Colors.greenAccent),
                       centerHeaderTitle: true,
                       titleTextStyle: TextStyle(
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: 17,
                           fontWeight: FontWeight.w600)),
-                      daysOfWeekStyle: DaysOfWeekStyle(
+                  daysOfWeekStyle: DaysOfWeekStyle(
                       weekdayStyle: TextStyle(color: Colors.blueGrey[100])),
-                      builders: CalendarBuilders(
-                          markersBuilder: (context, date, events, holidays) {
-                              final children = <Widget>[];
-                              if (events.isNotEmpty) {
-                                children.add(
-                                Positioned(
-                                right: 1,
-                                bottom: 1,
-                                child: _buildEventsMarker(date, events),
-                                ),
-                              );
-                          }
+                  builders: CalendarBuilders(
+                    markersBuilder: (context, date, events, holidays) {
+                      final children = <Widget>[];
+                      if (events.isNotEmpty) {
+                        children.add(
+                          Positioned(
+                            right: 1,
+                            bottom: 1,
+                            child: _buildEventsMarker(date, events),
+                          ),
+                        );
+                      }
 
-          // if (holidays.isNotEmpty) {
-          //   children.add(
-          //     Positioned(
-          //       right: -2,
-          //       top: -2,
-          //       child: _buildHolidaysMarker(),
-          //     ),
-          //   );
-          // }
+                      // if (holidays.isNotEmpty) {
+                      //   children.add(
+                      //     Positioned(
+                      //       right: -2,
+                      //       top: -2,
+                      //       child: _buildHolidaysMarker(),
+                      //     ),
+                      //   );
+                      // }
 
-                          return children;
-                        },
-                ),),
+                      return children;
+                    },
+                  ),
                 ),
-              
+              ),
               SizedBox(height: 12),
               Container(
                 alignment: Alignment.bottomCenter,
@@ -139,7 +160,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
-                        onPressed: () {}, child: Text('Message Teacher')),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/chat');
+                        },
+                        child: Text('Message Teacher')),
                     RaisedButton(
                         onPressed: () {}, child: Text('Contact Teacher'))
                   ],
@@ -156,18 +180,14 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Widget _buildEventsMarker(DateTime date, List events) {
-    if(events.first==true){
-    return Icon(
-      CupertinoIcons.check_mark_circled_solid,
-      size: 20.0,
-      color: Colors.green[300],
-    );}
-    else{
+    if (events.first == true) {
       return Icon(
-        Icons.close,
-        size: 20,
-        color: Colors.red[600]
+        CupertinoIcons.check_mark_circled_solid,
+        size: 20.0,
+        color: Colors.green[300],
       );
+    } else {
+      return Icon(Icons.close, size: 20, color: Colors.red[600]);
     }
     // AnimatedContainer(
     // //   duration: const Duration(milliseconds: 300),
