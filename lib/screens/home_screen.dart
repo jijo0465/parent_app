@@ -147,11 +147,11 @@ class HomePage extends DrawerContent {
     const StaggeredTile.count(5, 4),
     const StaggeredTile.count(5, 5),
     const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 6),
-    const StaggeredTile.count(5, 2),
-    const StaggeredTile.count(5, 6),
+    const StaggeredTile.count(5, 5),
     const StaggeredTile.count(5, 3),
+    const StaggeredTile.count(5, 5),
     const StaggeredTile.count(5, 3),
+    const StaggeredTile.count(10, 5),
   ];
 
   // static final List<Map<String, String>> _menuInfo = [
@@ -261,6 +261,11 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         height: double.infinity,
                         width: double.infinity,
+                        color: _diarySelected ?Colors.black.withOpacity(0.65) :null,
+                      ),
+                      Container(
+                        height: double.infinity,
+                        width: double.infinity,
                         decoration: BoxDecoration(
                             gradient: RadialGradient(colors: [
                           Colors.white10,
@@ -276,7 +281,9 @@ class _HomePageState extends State<HomePage> {
                       Container(
                           child: Column(children: <Widget>[
                         DigiAppbar(
-                          onStudentTapped: () {
+                          onStudentTapped: _diarySelected 
+                            ? null
+                            : () {
                             isLoading = true;
                             Navigator.push(
                               context,
@@ -292,7 +299,9 @@ class _HomePageState extends State<HomePage> {
                             });
                           },
                           height: _height,
-                          onDragEnd: (_) {
+                          onDragEnd: _diarySelected
+                            ? null 
+                            : (_) {
                             print(_height);
                             if (_height < 550) {
                               setState(() {
@@ -300,7 +309,9 @@ class _HomePageState extends State<HomePage> {
                               });
                             }
                           },
-                          onDrag: (dragUpdateDetails) {
+                          onDrag: _diarySelected 
+                            ? null
+                            :(dragUpdateDetails) {
                             // print(dragUpdateDetails.globalPosition.distance);
                             // print(dragUpdateDetails.globalPosition.dy);
                             if (dragUpdateDetails.delta.dy > 0) {
@@ -339,7 +350,9 @@ class _HomePageState extends State<HomePage> {
                             //   }
                             // }
                           },
-                          onPressed: () {
+                          onPressed: _diarySelected
+                            ?null
+                            :() {
                             drawerController.open();
                           },
                         ),
@@ -416,15 +429,21 @@ class _HomePageState extends State<HomePage> {
                                               case 6:
                                                 // Navigator.of(context)
                                                 //     .pushNamed('/timetable');
+                                                Navigator.of(context)
+                                                    .pushNamed('/events');
+                                                break;
+                                              case 7:
                                                 setState(() {
                                                   _diarySelected =
                                                       !_diarySelected;
                                                   print(_diarySelected);
+                                                  _scrollController.animateTo(
+                                                      _scrollController.position
+                                                          .maxScrollExtent,
+                                                      duration: Duration(
+                                                          milliseconds: 300),
+                                                      curve: Curves.linear);
                                                 });
-                                                break;
-                                              case 7:
-                                                Navigator.of(context)
-                                                    .pushNamed('/events');
                                                 break;
                                             }
                                         },
@@ -498,53 +517,74 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ])),
                       AnimatedPositioned(
-                        bottom: 10,
+                        bottom: 100,
                         duration: Duration(milliseconds: 300),
                         child: _diarySelected
                             ? BackdropFilter(
                                 filter:
                                     ImageFilter.blur(sigmaY: 2.5, sigmaX: 2.5),
-                                child: Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(12),
-                                    margin: EdgeInsets.only(left: 5),
-                                    width: (MediaQuery.of(context).size.width /
-                                            2) - 5,
-                                    height: 220,
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(12)),
-                                      color: Colors.white38,
+                                child: Column(
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _diarySelected = !_diarySelected;
+                                        });
+                                      },
+                                      child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          alignment: Alignment.topRight,
+                                          child: Icon(Icons.close,color: Colors.white)),
                                     ),
-                                    child: GridView.count(
-                                        mainAxisSpacing: 5,
-                                        crossAxisSpacing: 5,
-                                        // scrollDirection: Axis.horizontal,
-                                        crossAxisCount: 2,
-                                        shrinkWrap: false,
-                                        children: List.generate(4, (index) {
-                                          return DigiMenuCard(
-                                              imagePath:
-                                                  'assets/images/sir.jpg',
-                                              onPressed: () {
-                                                switch (index) {
-                                                  case 0:
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            '/timetable');
-                                                    break;
-                                                  case 1:
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            '/homeworks');
-                                                    break;
-                                                  case 2:
-                                                    Navigator.of(context)
-                                                        .pushNamed('/events');
-                                                    break;
-                                                }
-                                              });
-                                        }))))
+                                    Container(
+                                        // alignment: Alignment.center,
+                                         padding: EdgeInsets.all(12),
+                                        // margin: EdgeInsets.symmetric(horizontal: 40),
+                                        width:
+                                            MediaQuery.of(context).size.width -
+                                                40,
+                                        height: 280,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12)),
+                                          color: Colors.white38,
+                                        ),
+                                        child: GridView.count(
+                                            padding: EdgeInsets.all(0),
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            mainAxisSpacing: 5,
+                                            crossAxisSpacing: 5,
+                                            //scrollDirection: Axis.horizontal,
+                                            crossAxisCount: 2,
+                                            shrinkWrap: true,
+                                            children: List.generate(4, (index) {
+                                              return DigiMenuCard(
+                                                  imagePath:
+                                                      'assets/images/sir.jpg',
+                                                  onPressed: () {
+                                                    switch (index) {
+                                                      case 0:
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                '/timetable');
+                                                        break;
+                                                      case 1:
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                '/homeworks');
+                                                        break;
+                                                      case 2:
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                '/events');
+                                                        break;
+                                                    }
+                                                  });
+                                            }))),
+                                  ],
+                                ))
                             : Container(),
                       )
                     ],

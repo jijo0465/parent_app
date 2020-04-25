@@ -20,7 +20,7 @@ class DigiAuth{
         final body = json.decode(response.body);
         if(body['response']=='ok'){
           _prfs.setBool('loggedIn', true);
-          parent = Parent(body['teacher_id'],body['name']);
+          parent = Parent.fromMap(body);
         }
       }
     }).catchError((error) => print(error));
