@@ -9,7 +9,7 @@ class DigiAuth{
   Future<Parent> signIn(String parentId, String password) async {
     _prfs = await SharedPreferences.getInstance();
     Parent parent;
-    String url = 'http://10.0.2.2:8080/digicampus/teacher_auth';
+    String url = 'http://10.0.2.2:8080/digicampus/auth_api/parent_auth';
     Map<String, String> headers = {"Content-type": "application/json"};
     Map<String, dynamic> params = {"parentId":parentId,"password":password};
     String data = jsonEncode(params);
@@ -22,7 +22,6 @@ class DigiAuth{
           _prfs.setBool('loggedIn', true);
           parent = Parent(body['teacher_id'],body['name']);
         }
-        
       }
     }).catchError((error) => print(error));
 

@@ -3,6 +3,7 @@ import 'package:parent_app/components/digi_chat.dart';
 import 'package:parent_app/redirect.dart';
 import 'package:parent_app/screens/attendance_screen.dart';
 import 'package:parent_app/screens/chat_screen.dart';
+import 'package:parent_app/screens/events_screen.dart';
 import 'package:parent_app/screens/exams_screen.dart';
 import 'package:parent_app/screens/fee_payment_screen.dart';
 import 'package:parent_app/screens/result_screen.dart';
@@ -10,6 +11,7 @@ import 'package:parent_app/screens/schoolbus_screen.dart';
 import 'package:parent_app/screens/student_details_screen.dart';
 import 'package:parent_app/screens/in_out_screen.dart';
 import 'package:parent_app/screens/timetable_screen.dart';
+import 'package:parent_app/screens/homeworks_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/parent_state.dart';
 import 'package:parent_app/states/student_state.dart';
@@ -53,6 +55,8 @@ class ParentApp extends StatelessWidget {
             '/chat': (context) => ChatScreen(),
             '/digiChat': (context) => DigiChat(),
             '/exams': (context) => ExamScreen(),
+            '/homeworks': (context) => HomeworksScreen(),
+            '/events': (context) => EventsScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

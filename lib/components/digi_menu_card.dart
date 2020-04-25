@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 class DigiMenuCard extends StatelessWidget {
   const DigiMenuCard(
       {Key key,
-      this.menuIcon,
-      this.title,
-      this.subtitle,
-      this.value,
       this.onPressed,
       this.imagePath})
       : super(key: key);
-  final IconData menuIcon;
-  final String title, subtitle, value;
+  //final IconData menuIcon;
+  //final String title, subtitle, value;
   final VoidCallback onPressed;
   final String imagePath;
   @override
@@ -28,7 +24,7 @@ class DigiMenuCard extends StatelessWidget {
               image: AssetImage(
                 imagePath,
               ),
-              fit: BoxFit.fill),
+              fit: BoxFit.cover),
           // boxShadow: [
           //   BoxShadow(
           //     color: Colors.black54,

@@ -49,10 +49,10 @@ class TimetableScreen extends StatelessWidget {
     return [
       LaneEvents(
         lane: Lane(
-            height: 50,
-            width: 150,
             name: 'Monday',
             backgroundColor: Colors.blue[800],
+            height: 50,
+            width: 150,
             textStyle: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
@@ -61,25 +61,102 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Period 1\n',
               decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.blue[200],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
+              //backgroundColor: Colors.,
               start: TableEventTime(hour: 9, minute: 0),
-              end: TableEventTime(hour: 10, minute: 0),
+              end: TableEventTime(hour: 10, minute: 00),
               textStyle: TextStyle(
                   color: Colors.black,
-                  //fontSize: 16,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500)),
           TableEvent(
               title: 'Period 2\n',
               decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.red[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
-              //backgroundC
-              start: TableEventTime(hour: 10, minute: 01),
-              end: TableEventTime(hour: 11, minute: 0),
+              start: TableEventTime(hour: 10, minute: 00),
+              end: TableEventTime(hour: 11, minute: 00),
               textStyle: TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 00),
+              end: TableEventTime(hour: 11, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 3\n',
+              decoration: BoxDecoration(
+                  color: Colors.pink[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 15),
+              end: TableEventTime(hour: 12, minute: 15),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Lunch Break\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 12, minute: 15),
+              end: TableEventTime(hour: 13, minute: 00),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 4\n',
+              decoration: BoxDecoration(
+                  color: Colors.deepOrange[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 13, minute: 00),
+              end: TableEventTime(hour: 14, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 00),
+              end: TableEventTime(hour: 14, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 5\n',
+              decoration: BoxDecoration(
+                  color: Colors.green[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 15),
+              end: TableEventTime(hour: 15, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 6\n',
+              decoration: BoxDecoration(
+                  color: Colors.yellow[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 15, minute: 00),
+              end: TableEventTime(hour: 16, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500)),
         ],
       ),
@@ -97,7 +174,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Period 1\n',
               decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.blue[200],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               //backgroundColor: Colors.,
               start: TableEventTime(hour: 9, minute: 0),
@@ -109,7 +186,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Period 2\n',
               decoration: BoxDecoration(
-                  color: Colors.purpleAccent,
+                  color: Colors.red[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 10, minute: 00),
               end: TableEventTime(hour: 11, minute: 00),
@@ -120,7 +197,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Interval\n',
               decoration: BoxDecoration(
-                  color: Colors.yellow[100],
+                  color: Colors.blueGrey[200],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 11, minute: 00),
               end: TableEventTime(hour: 11, minute: 15),
@@ -131,7 +208,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Period 3\n',
               decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.pink[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 11, minute: 15),
               end: TableEventTime(hour: 12, minute: 15),
@@ -142,7 +219,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Lunch Break\n',
               decoration: BoxDecoration(
-                  color: Colors.yellow[100],
+                  color: Colors.blueGrey[200],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 12, minute: 15),
               end: TableEventTime(hour: 13, minute: 00),
@@ -153,7 +230,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Period 4\n',
               decoration: BoxDecoration(
-                  color: Colors.indigo,
+                  color: Colors.deepOrange[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 13, minute: 00),
               end: TableEventTime(hour: 14, minute: 00),
@@ -164,7 +241,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Interval\n',
               decoration: BoxDecoration(
-                  color: Colors.yellow[100],
+                  color: Colors.blueGrey[200],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 14, minute: 00),
               end: TableEventTime(hour: 14, minute: 15),
@@ -175,7 +252,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Period 5\n',
               decoration: BoxDecoration(
-                  color: Colors.cyan,
+                  color: Colors.green[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 14, minute: 15),
               end: TableEventTime(hour: 15, minute: 00),
@@ -186,7 +263,7 @@ class TimetableScreen extends StatelessWidget {
           TableEvent(
               title: 'Period 6\n',
               decoration: BoxDecoration(
-                  color: Colors.brown[400],
+                  color: Colors.yellow[100],
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               start: TableEventTime(hour: 15, minute: 00),
               end: TableEventTime(hour: 16, minute: 00),
@@ -208,12 +285,104 @@ class TimetableScreen extends StatelessWidget {
                 fontWeight: FontWeight.w500)),
         events: [
           TableEvent(
-              title: 'Period 1',
+              title: 'Period 1\n',
+              decoration: BoxDecoration(
+                  color: Colors.blue[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              //backgroundColor: Colors.,
               start: TableEventTime(hour: 9, minute: 0),
-              end: TableEventTime(hour: 10, minute: 0),
+              end: TableEventTime(hour: 10, minute: 00),
               textStyle: TextStyle(
                   color: Colors.black,
-                  //fontSize: 16,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 2\n',
+              decoration: BoxDecoration(
+                  color: Colors.red[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 10, minute: 00),
+              end: TableEventTime(hour: 11, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 00),
+              end: TableEventTime(hour: 11, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 3\n',
+              decoration: BoxDecoration(
+                  color: Colors.pink[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 15),
+              end: TableEventTime(hour: 12, minute: 15),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Lunch Break\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 12, minute: 15),
+              end: TableEventTime(hour: 13, minute: 00),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 4\n',
+              decoration: BoxDecoration(
+                  color: Colors.deepOrange[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 13, minute: 00),
+              end: TableEventTime(hour: 14, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 00),
+              end: TableEventTime(hour: 14, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 5\n',
+              decoration: BoxDecoration(
+                  color: Colors.green[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 15),
+              end: TableEventTime(hour: 15, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 6\n',
+              decoration: BoxDecoration(
+                  color: Colors.yellow[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 15, minute: 00),
+              end: TableEventTime(hour: 16, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500)),
         ],
       ),
@@ -229,12 +398,104 @@ class TimetableScreen extends StatelessWidget {
                 fontWeight: FontWeight.w500)),
         events: [
           TableEvent(
-              title: 'Period 1',
+              title: 'Period 1\n',
+              decoration: BoxDecoration(
+                  color: Colors.blue[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              //backgroundColor: Colors.,
               start: TableEventTime(hour: 9, minute: 0),
-              end: TableEventTime(hour: 10, minute: 0),
+              end: TableEventTime(hour: 10, minute: 00),
               textStyle: TextStyle(
                   color: Colors.black,
-                  //fontSize: 16,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 2\n',
+              decoration: BoxDecoration(
+                  color: Colors.red[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 10, minute: 00),
+              end: TableEventTime(hour: 11, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 00),
+              end: TableEventTime(hour: 11, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 3\n',
+              decoration: BoxDecoration(
+                  color: Colors.pink[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 15),
+              end: TableEventTime(hour: 12, minute: 15),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Lunch Break\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 12, minute: 15),
+              end: TableEventTime(hour: 13, minute: 00),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 4\n',
+              decoration: BoxDecoration(
+                  color: Colors.deepOrange[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 13, minute: 00),
+              end: TableEventTime(hour: 14, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 00),
+              end: TableEventTime(hour: 14, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 5\n',
+              decoration: BoxDecoration(
+                  color: Colors.green[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 15),
+              end: TableEventTime(hour: 15, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 6\n',
+              decoration: BoxDecoration(
+                  color: Colors.yellow[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 15, minute: 00),
+              end: TableEventTime(hour: 16, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500)),
         ],
       ),
@@ -250,35 +511,220 @@ class TimetableScreen extends StatelessWidget {
                 fontWeight: FontWeight.w500)),
         events: [
           TableEvent(
-              title: 'Period 1',
+              title: 'Period 1\n',
+              decoration: BoxDecoration(
+                  color: Colors.blue[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              //backgroundColor: Colors.,
               start: TableEventTime(hour: 9, minute: 0),
-              end: TableEventTime(hour: 10, minute: 0),
+              end: TableEventTime(hour: 10, minute: 00),
               textStyle: TextStyle(
                   color: Colors.black,
-                  //fontSize: 16,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 2\n',
+              decoration: BoxDecoration(
+                  color: Colors.red[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 10, minute: 00),
+              end: TableEventTime(hour: 11, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 00),
+              end: TableEventTime(hour: 11, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 3\n',
+              decoration: BoxDecoration(
+                  color: Colors.pink[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 15),
+              end: TableEventTime(hour: 12, minute: 15),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Lunch Break\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 12, minute: 15),
+              end: TableEventTime(hour: 13, minute: 00),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 4\n',
+              decoration: BoxDecoration(
+                  color: Colors.deepOrange[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 13, minute: 00),
+              end: TableEventTime(hour: 14, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 00),
+              end: TableEventTime(hour: 14, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 5\n',
+              decoration: BoxDecoration(
+                  color: Colors.green[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 15),
+              end: TableEventTime(hour: 15, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 6\n',
+              decoration: BoxDecoration(
+                  color: Colors.yellow[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 15, minute: 00),
+              end: TableEventTime(hour: 16, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500)),
         ],
       ),
       LaneEvents(
-          lane: Lane(
-              name: 'Satuday',
-              backgroundColor: Colors.blue[800],
-              height: 50,
-              width: 150,
+        lane: Lane(
+            name: 'Saturday',
+            backgroundColor: Colors.blue[800],
+            height: 50,
+            width: 150,
+            textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.w500)),
+        events: [
+          TableEvent(
+              title: 'Period 1\n',
+              decoration: BoxDecoration(
+                  color: Colors.blue[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              //backgroundColor: Colors.,
+              start: TableEventTime(hour: 9, minute: 0),
+              end: TableEventTime(hour: 10, minute: 00),
               textStyle: TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500)),
-          events: [
-            TableEvent(
-                title: 'Period 1',
-                start: TableEventTime(hour: 9, minute: 0),
-                end: TableEventTime(hour: 10, minute: 0),
-                textStyle: TextStyle(
-                    color: Colors.black,
-                    //fontSize: 16,
-                    fontWeight: FontWeight.w500)),
-          ]),
+          TableEvent(
+              title: 'Period 2\n',
+              decoration: BoxDecoration(
+                  color: Colors.red[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 10, minute: 00),
+              end: TableEventTime(hour: 11, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 00),
+              end: TableEventTime(hour: 11, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 3\n',
+              decoration: BoxDecoration(
+                  color: Colors.pink[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 11, minute: 15),
+              end: TableEventTime(hour: 12, minute: 15),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Lunch Break\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 12, minute: 15),
+              end: TableEventTime(hour: 13, minute: 00),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 4\n',
+              decoration: BoxDecoration(
+                  color: Colors.deepOrange[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 13, minute: 00),
+              end: TableEventTime(hour: 14, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Interval\n',
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 00),
+              end: TableEventTime(hour: 14, minute: 15),
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+              )),
+          TableEvent(
+              title: 'Period 5\n',
+              decoration: BoxDecoration(
+                  color: Colors.green[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 14, minute: 15),
+              end: TableEventTime(hour: 15, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+          TableEvent(
+              title: 'Period 6\n',
+              decoration: BoxDecoration(
+                  color: Colors.yellow[100],
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              start: TableEventTime(hour: 15, minute: 00),
+              end: TableEventTime(hour: 16, minute: 00),
+              textStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
+        ],
+      ),
     ];
   }
 }

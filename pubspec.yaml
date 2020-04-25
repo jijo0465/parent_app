@@ -50,6 +50,7 @@ dependencies:
   cloud_firestore: ^0.13.4+2
   firebase_storage: ^3.1.5
   flutter_swiper: ^1.1.6
+  after_layout: ^1.0.7+2
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,8 @@ flutter:
     - assets/images/menu_3.png
     - assets/images/menu_4.png
     - assets/images/menu_5.png
+    - assets/images/menu_6.png
+    - assets/images/menu_7.png
     - assets/images/schoolbus.png
     - assets/images/1001.jpg
     - assets/images/1002.jpg
@@ -85,6 +88,7 @@ flutter:
     - assets/images/2003.png
     - assets/images/school.jpg
     - assets/images/digi_campus_logo.png
+    - assets/images/ucevents.png
     - assets/sqlite/local_data_parent_app.db
 
   #   - images/a_dot_ham.jpeg

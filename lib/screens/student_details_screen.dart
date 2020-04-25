@@ -39,7 +39,7 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
   Widget build(BuildContext context) {
     StudentState state = Provider.of<StudentState>(context, listen: true);
     selectedStudent = state.selectedstudent;
-    String displayStudentId;
+    // String displayStudentId;
     return Scaffold(
         body: Stack(
       children: <Widget>[
