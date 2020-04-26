@@ -15,25 +15,27 @@ class Student {
       this.id,
       this.studentId,
       this.name,
-      this.parentName,
-      this.classTeacher,
-      this.grade,
-      this.bloodGroup,
+      //this.parentName,
+      //this.classTeacher,
+      //this.grade,
       this.dateOfBirth,
+      this.bloodGroup,
       this.photoUrl);
 
   factory Student.fromMap(Map<String, dynamic> value) {
     // print(value.toString());
     Student student = Student(
-        value['id'],
-        value['studentId'],
+        //value['id'],
+        value['student_id'],
+        value['student_id'],
         value['name'],
-        value['parentName'],
-        value['classTeacher'],
-        value['grade'],
-        value['bloodGroup'],
-        value['dateOfBirth'],
-        value['photoUrl']);
+        //value['parentName'],
+        //value['classTeacher'],
+        //value['grade'],
+        value['date_of_birth'],
+        value['blood_group'],
+        value['photo_url']);
+        //student.studentId = student.id;
     // student.id=value['id'];
     // student.id=value['student_id'];
     // student.name=value['name'];

@@ -430,7 +430,7 @@ class _HomePageState extends State<HomePage> {
                                                 // Navigator.of(context)
                                                 //     .pushNamed('/timetable');
                                                 Navigator.of(context)
-                                                    .pushNamed('/events');
+                                                    .pushNamed('/ratings');
                                                 break;
                                               case 7:
                                                 setState(() {
@@ -579,6 +579,11 @@ class _HomePageState extends State<HomePage> {
                                                         Navigator.of(context)
                                                             .pushNamed(
                                                                 '/events');
+                                                        break;
+                                                      case 3:
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                '/remarks');
                                                         break;
                                                     }
                                                   });

@@ -4,7 +4,7 @@ import 'package:parent_app/models/parent.dart';
 class ParentState with ChangeNotifier {
   Parent _parent;
 
-  ParentState.instance():_parent=Parent(0,'None',null,null,null,null);
+  ParentState.instance():_parent=Parent(0,'None',null,null,null,null,null,null,null);
 
   String get parentName => _parent.name;
 

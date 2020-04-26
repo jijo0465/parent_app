@@ -51,6 +51,7 @@ dependencies:
   firebase_storage: ^3.1.5
   flutter_swiper: ^1.1.6
   after_layout: ^1.0.7+2
+  flutter_rating_bar: ^3.0.1+1
 
 dev_dependencies:
   flutter_test:
