@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parent_app/components/digi_key_value_display.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
@@ -60,8 +61,8 @@ class _HomeworksScreenState extends State<HomeworksScreen> {
   // bool assignment = false;
   bool assignmentTapped = false;
   bool homeworksTapped = false;
-  Comparator<dynamic> dateComparator =
-      (a, b) => DateTime.parse(a['subdate']).compareTo(DateTime.parse(b['subdate']));
+  Comparator<dynamic> dateComparator = (a, b) =>
+      DateTime.parse(a['subdate']).compareTo(DateTime.parse(b['subdate']));
 
   @override
   void initState() {
@@ -88,155 +89,209 @@ class _HomeworksScreenState extends State<HomeworksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: <Widget>[
-            Container(
-                child: Column(
-              children: <Widget>[
-                DigiCampusAppbar(
-                  icon: Icons.close,
-                  onDrawerTapped: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      assignmentTapped = !assignmentTapped;
-                    });
-                  },
-                  child: Column(
-                    children: (assignments.isEmpty)
-                        ? <Widget> [Container()]
-                        : <Widget>[
-                            Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    gradient: LinearGradient(colors: [
-                                      Colors.blue[400],
-                                      Colors.blue[600],
-                                      Colors.blue[200]
-                                    ])),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      'Assignments',
-                                      style: TextStyle(
-                                          color: Colors.green[900],
-                                          fontSize: 20),
-                                    ),
-                                    SizedBox(
-                                        width: (MediaQuery.of(context)
-                                                .size
-                                                .width) /
-                                            3),
-                                    Icon(Icons.details,
-                                        color: Colors.green[600], size: 24)
-                                  ],
-                                )),
-                            Container(
-                                color: Colors.white,
-                                height: (assignmentTapped) ? null : 0,
-                                child: Column(
-                                  children: List.generate(
-                                      assignments.length,
-                                      (index) => new Card(
-                                            color: Colors.grey,
-                                            child: Column(
-                                              children: <Widget>[
-                                                DigiKeyValueDisplay(
-                                                    textKey: 'Subject ',
-                                                    textValue:
-                                                        ' ${assignments[index]['subject']}'),
-                                                DigiKeyValueDisplay(
-                                                    textKey: 'Topic ',
-                                                    textValue:
-                                                        ' ${assignments[index]['topic']}'),
-                                                DigiKeyValueDisplay(
-                                                    textKey: 'Submission Date ',
-                                                    textValue:
-                                                        ' ${assignments[index]['subdate']}'),
-                                              ],
-                                            ),
-                                          )),
-                                ))
-                          ],
-                  ),
-                )
-              ],
-            )),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  homeworksTapped = !homeworksTapped;
-                });
-              },
-              child: Container(
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: <Widget>[
+              Container(
                   child: Column(
                 children: <Widget>[
+                  DigiCampusAppbar(
+                    icon: Icons.close,
+                    onDrawerTapped: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                   SizedBox(
                     height: 12,
                   ),
-                  Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(colors: [
-                            Colors.blue[400],
-                            Colors.blue[600],
-                            Colors.blue[200]
-                          ])),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Homeworks',
-                            style: TextStyle(
-                                color: Colors.green[900], fontSize: 20),
-                          ),
-                          SizedBox(
-                              width: (MediaQuery.of(context).size.width) / 3),
-                          Icon(Icons.details,
-                              color: Colors.green[600], size: 24)
-                        ],
-                      )),
-                  Container(
-                      height: (homeworksTapped) ? null : 0,
-                      color: Colors.black,
-                      child: Column(
-                          children: List.generate(
-                              homeworks.length,
-                              (index) => new Card(
-                                    color: Colors.grey,
-                                    child: Column(
-                                      children: <Widget>[
-                                        DigiKeyValueDisplay(
-                                            textKey: 'Subject ',
-                                            textValue:
-                                                ' ${homeworks[index]['subject']}'),
-                                        DigiKeyValueDisplay(
-                                            textKey: 'Topic ',
-                                            textValue:
-                                                ' ${homeworks[index]['topic']}'),
-                                        DigiKeyValueDisplay(
-                                            textKey: 'Submission Date ',
-                                            textValue:
-                                                ' ${homeworks[index]['subdate']}'),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        assignmentTapped = !assignmentTapped;
+                      });
+                    },
+                    child: Column(
+                      children: (assignments.isEmpty)
+                          ? <Widget>[Container()]
+                          : <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        gradient: LinearGradient(colors: [
+                                          Colors.blue[300],
+                                          Colors.blue[400],
+                                          Colors.blue[200]
+                                        ])),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Assignments',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
+                                        SizedBox(
+                                            width: (MediaQuery.of(context)
+                                                    .size
+                                                    .width) /
+                                                3),
+                                        Icon(CupertinoIcons.down_arrow,
+                                            color: Colors.white, size: 24)
                                       ],
-                                    ),
-                                  ))))
+                                    )),
+                              ),
+                              Container(
+                                  color: Colors.white,
+                                  height: (assignmentTapped) ? null : 0,
+                                  child: Column(
+                                    children: List.generate(
+                                        assignments.length,
+                                        (index) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: new Card(
+                                                elevation: 8,
+                                                color: Colors.grey[200],
+                                                child: IntrinsicHeight(
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        width: 60,
+                                                        color:
+                                                            Colors.orange[200],
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: <Widget>[
+                                                            Text(
+                                                              "12",
+                                                              style: TextStyle(
+                                                                  fontSize: 28),
+                                                            ),
+                                                            Text("Sep",style: TextStyle(fontSize: 16),)
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Column(
+                                                            children: <Widget>[
+                                                              DigiKeyValueDisplay(
+                                                                  textKey:
+                                                                      'Subject ',
+                                                                  textValue:
+                                                                      ' ${assignments[index]['subject']}'),
+                                                              DigiKeyValueDisplay(
+                                                                  textKey:
+                                                                      'Topic ',
+                                                                  textValue:
+                                                                      ' ${assignments[index]['topic']}'),
+                                                              DigiKeyValueDisplay(
+                                                                  textKey:
+                                                                      'Submission Date ',
+                                                                  textValue:
+                                                                      ' ${assignments[index]['subdate']}'),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            )),
+                                  ))
+                            ],
+                    ),
+                  )
                 ],
               )),
-            ),
-          ],
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    homeworksTapped = !homeworksTapped;
+                  });
+                },
+                child: Container(
+                    child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(colors: [
+                              Colors.blue[400],
+                              Colors.blue[600],
+                              Colors.blue[200]
+                            ])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Homeworks',
+                              style: TextStyle(
+                                  color: Colors.green[900], fontSize: 20),
+                            ),
+                            SizedBox(
+                                width: (MediaQuery.of(context).size.width) / 3),
+                            Icon(Icons.details,
+                                color: Colors.green[600], size: 24)
+                          ],
+                        )),
+                    Container(
+                        height: (homeworksTapped) ? null : 0,
+                        color: Colors.white,
+                        child: Column(
+                            children: List.generate(
+                                homeworks.length,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Card(
+                                        elevation: 12,
+                                        color: Colors.grey[100],
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              DigiKeyValueDisplay(
+                                                  textKey: 'Subject ',
+                                                  textValue:
+                                                      ' ${homeworks[index]['subject']}'),
+                                              DigiKeyValueDisplay(
+                                                  textKey: 'Topic ',
+                                                  textValue:
+                                                      ' ${homeworks[index]['topic']}'),
+                                              DigiKeyValueDisplay(
+                                                  textKey: 'Submission Date ',
+                                                  textValue:
+                                                      ' ${homeworks[index]['subdate']}'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ))))
+                  ],
+                )),
+              ),
+            ],
+          ),
         ),
       ),
     );

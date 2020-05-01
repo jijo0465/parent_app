@@ -18,13 +18,13 @@ class DigiMenuCard extends StatelessWidget {
         // height: 100,
         // width: 100,
         decoration: BoxDecoration(
-          color: Colors.blue[300],
+          // color: Colors.blue[300],
           borderRadius: new BorderRadius.circular(12),
           image: DecorationImage(
               image: AssetImage(
                 imagePath,
               ),
-              fit: BoxFit.cover),
+              fit: BoxFit.cover,
           // boxShadow: [
           //   BoxShadow(
           //     color: Colors.black54,
@@ -34,6 +34,6 @@ class DigiMenuCard extends StatelessWidget {
           // ],
         ),
       ),
-    );
+    ));
   }
 }

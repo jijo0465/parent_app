@@ -144,14 +144,14 @@ class HomePage extends DrawerContent {
   // ];
 
   final List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
+    const StaggeredTile.count(5, 6.5),
+    const StaggeredTile.count(5, 4.5),
+    const StaggeredTile.count(5, 5),
+    const StaggeredTile.count(5, 5),
     const StaggeredTile.count(5, 4),
     const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 5),
     const StaggeredTile.count(5, 3),
-    const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 3),
-    const StaggeredTile.count(10, 5),
+    const StaggeredTile.count(10, 4),
   ];
 
   // static final List<Map<String, String>> _menuInfo = [
@@ -261,7 +261,9 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         height: double.infinity,
                         width: double.infinity,
-                        color: _diarySelected ?Colors.black.withOpacity(0.65) :null,
+                        color: _diarySelected
+                            ? Colors.black.withOpacity(0.65)
+                            : null,
                       ),
                       Container(
                         height: double.infinity,
@@ -281,80 +283,82 @@ class _HomePageState extends State<HomePage> {
                       Container(
                           child: Column(children: <Widget>[
                         DigiAppbar(
-                          onStudentTapped: _diarySelected 
-                            ? null
-                            : () {
-                            isLoading = true;
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                transitionDuration: Duration(milliseconds: 400),
-                                pageBuilder: (_, __, ___) =>
-                                    StudentDetailsScreen(),
-                              ),
-                            ).then((value) {
-                              setState(() {
-                                isLoading = false;
-                              });
-                            });
-                          },
+                          onStudentTapped: _diarySelected
+                              ? null
+                              : () {
+                                  isLoading = true;
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      transitionDuration:
+                                          Duration(milliseconds: 400),
+                                      pageBuilder: (_, __, ___) =>
+                                          StudentDetailsScreen(),
+                                    ),
+                                  ).then((value) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  });
+                                },
                           height: _height,
                           onDragEnd: _diarySelected
-                            ? null 
-                            : (_) {
-                            print(_height);
-                            if (_height < 550) {
-                              setState(() {
-                                _height = 250;
-                              });
-                            }
-                          },
-                          onDrag: _diarySelected 
-                            ? null
-                            :(dragUpdateDetails) {
-                            // print(dragUpdateDetails.globalPosition.distance);
-                            // print(dragUpdateDetails.globalPosition.dy);
-                            if (dragUpdateDetails.delta.dy > 0) {
-                              if (dragUpdateDetails.globalPosition.distance >
-                                  350) {
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    transitionDuration:
-                                        Duration(milliseconds: 400),
-                                    pageBuilder: (_, __, ___) =>
-                                        StudentDetailsScreen(),
-                                  ),
-                                ).then((value) {
-                                  // setState(() {
-                                  //   pageNo = StudentDetailsScreen.pageNo;
-                                  // });
-                                });
-                              } else {
-                                print(
-                                    dragUpdateDetails.globalPosition.distance /
-                                        170);
-                                setState(() {
-                                  _height += dragUpdateDetails.delta.dy *
-                                      log(dragUpdateDetails
+                              ? null
+                              : (_) {
+                                  print(_height);
+                                  if (_height < 550) {
+                                    setState(() {
+                                      _height = 250;
+                                    });
+                                  }
+                                },
+                          onDrag: _diarySelected
+                              ? null
+                              : (dragUpdateDetails) {
+                                  // print(dragUpdateDetails.globalPosition.distance);
+                                  // print(dragUpdateDetails.globalPosition.dy);
+                                  if (dragUpdateDetails.delta.dy > 0) {
+                                    if (dragUpdateDetails
+                                            .globalPosition.distance >
+                                        350) {
+                                      Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                          transitionDuration:
+                                              Duration(milliseconds: 400),
+                                          pageBuilder: (_, __, ___) =>
+                                              StudentDetailsScreen(),
+                                        ),
+                                      ).then((value) {
+                                        // setState(() {
+                                        //   pageNo = StudentDetailsScreen.pageNo;
+                                        // });
+                                      });
+                                    } else {
+                                      print(dragUpdateDetails
                                               .globalPosition.distance /
-                                          175);
-                                });
-                              }
-                            }
-                            // else {
-                            //   if (_height > 251) {
-                            //     setState(() {
-                            //       _height += dragUpdateDetails.delta.dy;
-                            //     });
-                            //   }
-                            // }
-                          },
+                                          170);
+                                      setState(() {
+                                        _height += dragUpdateDetails.delta.dy *
+                                            log(dragUpdateDetails
+                                                    .globalPosition.distance /
+                                                175);
+                                      });
+                                    }
+                                  }
+                                  // else {
+                                  //   if (_height > 251) {
+                                  //     setState(() {
+                                  //       _height += dragUpdateDetails.delta.dy;
+                                  //     });
+                                  //   }
+                                  // }
+                                },
                           onPressed: _diarySelected
-                            ?null
-                            :() {
-                            drawerController.open();
-                          },
+                              ? null
+                              : () {
+                                  drawerController.open();
+                                },
                         ),
                         Expanded(
                           child: SingleChildScrollView(
@@ -535,11 +539,12 @@ class _HomePageState extends State<HomePage> {
                                           width:
                                               MediaQuery.of(context).size.width,
                                           alignment: Alignment.topRight,
-                                          child: Icon(Icons.close,color: Colors.white)),
+                                          child: Icon(Icons.close,
+                                              color: Colors.white)),
                                     ),
                                     Container(
                                         // alignment: Alignment.center,
-                                         padding: EdgeInsets.all(12),
+                                        padding: EdgeInsets.all(12),
                                         // margin: EdgeInsets.symmetric(horizontal: 40),
                                         width:
                                             MediaQuery.of(context).size.width -

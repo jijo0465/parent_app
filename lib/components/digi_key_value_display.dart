@@ -14,11 +14,11 @@ class DigiKeyValueDisplay extends StatelessWidget {
             child: Container(
                 alignment: Alignment.topRight,
                 child: Text(textKey,
-                    style: TextStyle(color: textColor)))),
+                    style: TextStyle(color: textColor,fontSize: 16)))),
         Container(child: Text(' :  ',
-                    style: TextStyle(color: textColor))),
+                    style: TextStyle(color: textColor,fontSize: 16))),
         Expanded(child: Container(child: Text(textValue,
-                    style: TextStyle(color: textColor))))
+                    style: TextStyle(color: textColor,fontSize: 16))))
       ],
     ));
   }
