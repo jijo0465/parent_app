@@ -22,7 +22,7 @@ class _RemarksScreenState extends State<RemarksScreen> {
 
   Map<String, dynamic> remarkDetails = {
     "id": 001,
-    "remarks": "Classil mulli vachu!!",
+    "remarks": "Doesn't submit assignments",
     "teacher": teacher
   };
   @override
@@ -51,30 +51,42 @@ class _RemarksScreenState extends State<RemarksScreen> {
               SizedBox(height: 12),
               Expanded(
                 child: ListView.builder(itemCount: remark.length,itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 5,
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Container(child: Text('${index + 1}.')),
-                                Container(
-                                    child: Text('${remark[index].remarks}',
-                                        overflow: TextOverflow.ellipsis))
-                              ],
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 5,
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
                             children: <Widget>[
                               Container(
-                                  child: Text('Remark from ${remark[index].teacher.name}')),
+                                child: Row(
+                                  children: <Widget>[
+                                    // Container(child: Text('${index + 1}.')),
+                                    Container(
+                                        child: Text('${remark[index].remarks}',style: TextStyle(fontSize: 17),
+                                            overflow: TextOverflow.ellipsis))
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 8,),
+                             
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                          '22/01/2012')),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                      child: Text('Remark From : ${remark[index].teacher.name}')),
+                                ],
+                              )
                             ],
-                          )
-                        ],
+                          ),
+                        ),
                       ),
                     ),
                   );

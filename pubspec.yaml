@@ -53,6 +53,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   after_layout: ^1.0.7+2
   flutter_rating_bar: ^3.0.1+1
+  page_turn: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,8 @@ flutter:
   assets:
     - assets/images/blue_gradient.jpg
     - assets/images/sir.jpg
+    - assets/images/diary.png
+    - assets/images/diary_header.png
     - assets/images/menu_0.png
     - assets/images/menu_1.png
     - assets/images/menu_2.png
@@ -81,6 +84,11 @@ flutter:
     - assets/images/menu_5.png
     - assets/images/menu_6.png
     - assets/images/menu_7.png
+    - assets/images/menu_8.png
+    - assets/images/menu_9.png
+    - assets/images/menu_10.png
+    - assets/images/menu_11.png
+    - assets/images/menu_12.png
     - assets/images/schoolbus.png
     - assets/images/1001.jpg
     - assets/images/1002.jpg

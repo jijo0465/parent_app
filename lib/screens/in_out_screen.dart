@@ -30,9 +30,9 @@ class InOutScreen extends StatefulWidget {
 }
 
 class _InOutScreenState extends State<InOutScreen> {
-  DateTime startDate = DateTime(2019, 05, 15),
-      endDate = DateTime.now(),
-      selectedDate = DateTime.now();
+  DateTime startDate = DateTime(2019, 05, 15);
+  DateTime endDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
   CalendarController _calendarController;
   double _height = 180;
   //Map _calendarFormats={CalendarFormat.week:''};

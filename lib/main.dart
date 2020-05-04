@@ -3,6 +3,7 @@ import 'package:parent_app/components/digi_chat.dart';
 import 'package:parent_app/redirect.dart';
 import 'package:parent_app/screens/attendance_screen.dart';
 import 'package:parent_app/screens/chat_screen.dart';
+import 'package:parent_app/screens/diary_screen.dart';
 import 'package:parent_app/screens/events_screen.dart';
 import 'package:parent_app/screens/exams_screen.dart';
 import 'package:parent_app/screens/fee_payment_screen.dart';
@@ -47,6 +48,7 @@ class ParentApp extends StatelessWidget {
           home: Redirect(),
           routes: <String, WidgetBuilder>{
             '/home': (context) => Redirect(),
+            '/diary': (context) => DiaryScreen(),
             '/result': (context) => ResultScreen(),
             '/attendance':(context) => AttendanceScreen(),
             '/schoolbus':(context) => SchoolBusScreen(),
