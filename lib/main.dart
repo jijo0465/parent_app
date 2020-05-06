@@ -10,6 +10,7 @@ import 'package:parent_app/screens/fee_payment_screen.dart';
 import 'package:parent_app/screens/remarks_screen.dart';
 import 'package:parent_app/screens/ratings_screen.dart';
 import 'package:parent_app/screens/result_screen.dart';
+import 'package:parent_app/screens/school_diary_screen.dart';
 import 'package:parent_app/screens/schoolbus_screen.dart';
 import 'package:parent_app/screens/student_details_screen.dart';
 import 'package:parent_app/screens/in_out_screen.dart';
@@ -48,7 +49,7 @@ class ParentApp extends StatelessWidget {
           home: Redirect(),
           routes: <String, WidgetBuilder>{
             '/home': (context) => Redirect(),
-            '/diary': (context) => DiaryScreen(),
+            '/diary': (context) => SchoolDiaryScreen(),
             '/result': (context) => ResultScreen(),
             '/attendance':(context) => AttendanceScreen(),
             '/schoolbus':(context) => SchoolBusScreen(),

@@ -68,7 +68,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       ),
       SizedBox(height: 12),
       DigiScreenTitle(text: 'Attendance'),
-      SizedBox(height: 12),
+      SizedBox(height: 8),
       Card(
         child: Container(
           padding: EdgeInsets.all(12),
@@ -79,7 +79,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           ]),
         ),
       ),
-      SizedBox(height: 12),
+      SizedBox(height: 8),
       AnimatedPadding(
           padding: EdgeInsets.only(top: _height),
           duration: Duration(milliseconds: 600)),
@@ -153,7 +153,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 8),
               Container(
                 alignment: Alignment.bottomCenter,
                 child: Row(
@@ -170,7 +170,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 ),
               ),
               SizedBox(
-                height: 12,
+                height: 8,
               ),
             ],
           ),

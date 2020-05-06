@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -54,6 +54,7 @@ dependencies:
   after_layout: ^1.0.7+2
   flutter_rating_bar: ^3.0.1+1
   page_turn: ^1.0.0
+  date_picker_timeline: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,8 @@ flutter:
     - assets/images/sir.jpg
     - assets/images/diary.png
     - assets/images/diary_header.png
+    - assets/images/diary_0.png
+    - assets/images/diary_1.png
     - assets/images/menu_0.png
     - assets/images/menu_1.png
     - assets/images/menu_2.png
