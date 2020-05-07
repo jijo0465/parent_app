@@ -18,6 +18,8 @@ class Grade {
   Grade(this._id, this._standard, this._division, this._totalStrength,
       this._classTeacher, this._asstClassTeacher);
 
+  Grade.empty() {}
+
   setId(int id) {
     this._id = id;
   }

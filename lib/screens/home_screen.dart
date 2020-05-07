@@ -475,6 +475,9 @@ class _HomePageState extends State<HomePage> {
                                                   case 9:
                                                     Navigator.of(context).pushNamed('/timetable');
                                                     break;
+                                                  case 10:
+                                                    Navigator.of(context).pushNamed('/classroom');
+                                                    break;
                                                   // case 10:
                                                   //   Navigator.of(context).pushNamed('/')
                                                   // case 7:
