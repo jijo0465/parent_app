@@ -19,13 +19,18 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
   // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   // var _key;
   // ListModel<int> _list;
+  final TextEditingController _textFieldController =
+      new TextEditingController();
   Student _selectedStudent;
   List<Widget> discussionListWidget = [];
   List<DocumentSnapshot> _items;
+  List<Map<String, dynamic>> commentData = [];
   DocumentSnapshot addItem;
   Grade grade = Grade.empty();
   int id = 4001;
   int widgetIndex;
+  Firestore firestore = Firestore.instance;
+  Color color = Colors.grey;
 
   @override
   void initState() {
@@ -39,6 +44,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
   void dispose() {
     // TODO: implement dispose
     discussionListWidget.clear();
+
     super.dispose();
   }
 
@@ -49,7 +55,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
     return Scaffold(
         body: Column(children: <Widget>[
       Container(
-        height: 300,
+        height: 100,
         width: double.infinity,
         color: Colors.black,
       ),
@@ -69,35 +75,79 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
           ),
         ),
       ),
-      SizedBox(height: 12,),
-      Container(
-        height: 40,
-        width: MediaQuery.of(context).size.width - 40,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20)),
-        child: TextField(
-          textAlignVertical: TextAlignVertical.center,
-          textAlign: TextAlign.start,
-          cursorColor: Colors.blue,
-          decoration: InputDecoration(
-            hintText: 'add to discussions...',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),  
-          ),
-          autofocus: true,
-          onSubmitted: (text){
-            print('submit');
-            _addToDiscussions(text);
-            text = '';
-          },
-        ),      
+      SizedBox(
+        height: 12,
       ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            height: 40,
+            width: MediaQuery.of(context).size.width - 60,
+            // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            child: TextField(
+              onChanged: (text) {
+                if (text == '') {
+                  setState(() {
+                    color = Colors.grey;
+                  });
+                } else {
+                  setState(() {
+                    color = Colors.deepOrange[300];
+                  });
+                }
+              },
+              controller: _textFieldController,
+              // textAlignVertical: TextAlignVertical.center,
+              textAlign: TextAlign.start,
+              cursorColor: Colors.blue,
+              decoration: InputDecoration(
+                hintText: 'add to discussions...',
+                contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _addToDiscussions(_textFieldController.text);
+                    _textFieldController.clear();
+                  },
+                  icon: Icon(Icons.camera_alt),
+                  color: Colors.blue,
+                ),
+              ),
+
+              // autofocus: true,
+              // onSubmitted: (text) {
+              //   // print(text);
+              //   _addToDiscussions(text);
+              //   _textFieldController.clear();
+              //   // text = '';
+              // },
+            ),
+          ),
+          Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.grey[300]),
+              child: GestureDetector(
+                child: Icon(Icons.send, color: color),
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  _addToDiscussions(_textFieldController.text);
+                  _textFieldController.clear();
+                  setState(() {
+                    color = Colors.grey;
+                  });
+                },
+              ))
+        ],
+      ),
+      SizedBox(height: 12),
       StreamBuilder<QuerySnapshot>(
           // key: _key,
-          stream: Firestore.instance
-              .collection('classroom_${grade.id}')
-              .snapshots(),
+          stream: firestore.collection('classroom_${grade.id}').snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData)
@@ -110,17 +160,19 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
             else {
               _items = snapshot.data.documents;
               listItem(_items);
-              print('item: ${_items[0]}');
+              // print('item: ${_items[0]}');
               // setState(() {
               // AnimatedList.of(context).insertItem(0);
               // Future.delayed(Duration(milliseconds: 200))
               //     .then((value) => _listKey.currentState.insertItem(0));
 
               // });
-              // return listItem(_items[0]);
+              // return listItem(_items[0]);'
+              // commentData.addAll(_items[0]['']['']);
               return Expanded(
                   child: SingleChildScrollView(
-                      child: Column(children: discussionListWidget.reversed.toList())
+                      child: Column(
+                          children: discussionListWidget.reversed.toList())
                       // child: listItem(_items[0]['disussion'])
                       ));
             }
@@ -130,7 +182,13 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
 
   listItem(List<DocumentSnapshot> item) {
     for (; widgetIndex < item[0]['disussion'].length; widgetIndex++) {
-      print('itemval: ${item[0]['disussion'][widgetIndex]['comment']}');
+      commentData.insert(widgetIndex, {
+        'comment': item[0]['disussion'][widgetIndex]['comment'],
+        'date': item[0]['disussion'][widgetIndex]['date']
+      });
+
+      print(commentData[widgetIndex]['comment']);
+      // print('itemval: ${item[0]['disussion'][widgetIndex]['comment']}');
       discussionListWidget.add(Column(children: <Widget>[
         Container(
           height: 50,
@@ -144,10 +202,10 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: 
-                      // AssetImage(''),
-                        NetworkImage(
-                          'https://www.sean-christopher.com/seanchristopher/wp-content/uploads/2014/10/hotforteacher.png'),
+                      image:
+                          // AssetImage(''),
+                          NetworkImage(
+                              'https://www.sean-christopher.com/seanchristopher/wp-content/uploads/2014/10/hotforteacher.png'),
                       fit: BoxFit.fill),
                 ),
               ),
@@ -165,25 +223,31 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
           ),
         ),
         Divider(
-          color: Colors.black,
-          thickness: 2,
+          indent: 5,
+          endIndent: 5,
+          color: Colors.black38,
+          // thickness: 2,
         )
       ]));
     }
   }
 
-  _addToDiscussions(String text)
-  {
-    widgetIndex++;
-    Firestore.instance.runTransaction((transaction) async {
-    await transaction.update(Firestore.instance.collection('classroom_${grade.id}').document('session_1'), {
-        'disussion' : {
-          [widgetIndex] : {
-            'comment': text,
-            'date': DateTime.now().toUtc(),
-          }
-        }
-      });
+  _addToDiscussions(String text) async {
+    var comment = [
+      {'comment': text, 'date': DateTime.now().toUtc()}
+    ];
+    DocumentReference documentReference =
+        firestore.collection('classroom_${grade.id}').document('Session_1');
+    firestore.runTransaction((transaction) async {
+      await transaction.update(
+          documentReference, {'disussion': FieldValue.arrayUnion(comment)});
     });
+    // documentReference.get().then((doc){
+    //   if(doc.exists){
+    //     documentReference.updateData({'disussion':FieldValue.arrayUnion(comment)});
+    //   }else{
+    //     documentReference.setData({'disussion':FieldValue.arrayUnion(comment)});
+    //   }
+    // });
   }
 }
