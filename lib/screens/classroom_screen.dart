@@ -60,19 +60,12 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
         color: Colors.black,
       ),
       SizedBox(height: 12),
-      Container(
-        height: 40,
-        width: MediaQuery.of(context).size.width - 40,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.blue),
-        alignment: Alignment.center,
-        child: Text(
-          'Discussions',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          ),
+      Text(
+        'Discussions',
+        textAlign: TextAlign.left,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
         ),
       ),
       SizedBox(
