@@ -5,7 +5,57 @@ import 'package:parent_app/components/digicampus_appbar.dart';
 class ClassroomScreen extends StatefulWidget {
   const ClassroomScreen({Key key}) : super(key: key);
 
-  static List<Map<String, dynamic>> timeTableList = [
+  @override
+  _ClassroomScreenState createState() => _ClassroomScreenState();
+}
+
+class _ClassroomScreenState extends State<ClassroomScreen> {
+  ScrollController _scrollController = new ScrollController();
+  // ScrollController _controller2;
+  // double iconOffset;
+  // double offset;
+  // bool watchLive;
+
+  // @override
+  // void initState() {
+  //   _controller1.addListener(() {
+  //     setState(() {
+  //       _controller1.notifyListeners();
+  //     });
+  //     // offset = _controller1.offset;
+  //     // setState(() {
+  //     //   _controller2.animateTo(offset,
+  //     //       duration: Duration(microseconds: 400), curve: null);
+  //     //   _controller2.notifyListeners();
+  //     //   print(offset);
+  //     // });
+  //   });
+  //   super.initState();
+  // }
+
+  // @override
+  // void initState() {
+  //   // iconOffset = 50.0;
+  //   // watchLive = false;
+  //   super.initState();
+  // }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Widget dateTiles(int i) {
+    DateFormat _dateFormat = DateFormat.yMMMd();
+    DateFormat _dateFormatDay = DateFormat.E();
+    var date = DateTime.now().subtract(Duration(days: i));
+    int hrs = 11;
+    // print(hrs);
+    // int mts = date.minute;
+    String formattedDay = _dateFormatDay.format(date);
+    String formattedDate = _dateFormat.format(date);
+    List<Map<String, dynamic>> timeTableList = [
     {
       '0': 'Period 1',
       '1': 'Period 2',
@@ -47,76 +97,26 @@ class ClassroomScreen extends StatefulWidget {
       '5': 'Period 6',
     }
   ];
-
-  @override
-  _ClassroomScreenState createState() => _ClassroomScreenState();
-}
-
-class _ClassroomScreenState extends State<ClassroomScreen> {
-  ScrollController _scrollController = new ScrollController();
-  // ScrollController _controller2;
-  double iconOffset;
-  // double offset;
-  bool watchLive;
-
-  // @override
-  // void initState() {
-  //   _controller1.addListener(() {
-  //     setState(() {
-  //       _controller1.notifyListeners();
-  //     });
-  //     // offset = _controller1.offset;
-  //     // setState(() {
-  //     //   _controller2.animateTo(offset,
-  //     //       duration: Duration(microseconds: 400), curve: null);
-  //     //   _controller2.notifyListeners();
-  //     //   print(offset);
-  //     // });
-  //   });
-  //   super.initState();
-  // }
-
-  @override
-  void initState() {
-    iconOffset = 50.0;
-    watchLive = false;
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  Widget dateTiles(int i) {
-    DateFormat _dateFormat = DateFormat.yMMMd();
-    DateFormat _dateFormatDay = DateFormat.E();
-    var date = DateTime.now();
-    int hrs = date.hour;
-    int mts = date.minute;
-    String formattedDay = _dateFormatDay.format(date);
-    String formattedDate = _dateFormat.format(date.subtract(Duration(days: i)));
     Map<String, dynamic> timeTable;
     print(formattedDay);
     switch (formattedDay) {
       case 'Mon':
-        timeTable = ClassroomScreen.timeTableList[0];
+        timeTable = timeTableList[0];
         break;
       case 'Tue':
-        timeTable = ClassroomScreen.timeTableList[1];
+        timeTable = timeTableList[1];
         break;
       case 'Wed':
-        timeTable = ClassroomScreen.timeTableList[2];
+        timeTable = timeTableList[2];
         break;
       case 'Thu':
-        timeTable = ClassroomScreen.timeTableList[3];
+        timeTable = timeTableList[3];
         break;
       case 'Fri':
-        timeTable = ClassroomScreen.timeTableList[4];
+        timeTable = timeTableList[4];
         break;
       default:
-        timeTable = ClassroomScreen.timeTableList[2];
+        timeTable = timeTableList[2];
     }
     print('num: ${timeTable['0']}');
 
@@ -169,22 +169,13 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
                         child: Row(
                             children: List.generate(6, (index) {
                           // print(timeTable['$index'].toString());
-                          if(hrs == (15+index) && i == 0) {
-                            setState(() {
-                              watchLive = true;
-                            });
-                          }
-                          else
-                            setState(() {
-                              watchLive = false;
-                            });
-                            
                           return Row(
                             children: <Widget>[
                               GestureDetector(
                                 behavior: HitTestBehavior.translucent,
                                 onTap: (){
-                                  watchLive
+                                  print(hrs);
+                                  hrs == (9+index) && i == 0
                                   ? Navigator.of(context).pushNamed('/live')
                                   : Navigator.of(context).pushNamed('/discussions');
                                 },
@@ -215,7 +206,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
                                             textAlign: TextAlign.center,
                                             overflow: TextOverflow.clip,
                                           ),
-                                          hrs == (15+index) && i == 0
+                                          hrs == (9+index) && i == 0
                                           ?Align(
                                             alignment: Alignment.bottomRight,
                                             child: IntrinsicWidth(
@@ -223,7 +214,9 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                 children: <Widget>[
                                                   Icon(Icons.my_location,color: Colors.red[800],),
-                                                  Text('Live')
+                                                  SizedBox(width: 8,),
+                                                  Text('Live' ,style: TextStyle(color: Colors.red[900],fontWeight: FontWeight.w700),),
+                                                  SizedBox(width: 8,),
                                                 ],
                                               ),
                                             ),

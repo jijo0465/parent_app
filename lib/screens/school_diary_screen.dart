@@ -16,8 +16,8 @@ class SchoolDiaryScreen extends StatefulWidget {
 class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
     with TickerProviderStateMixin {
   final _pageTurnController = GlobalKey<PageTurnState>();
-  DatePickerController _datePickerController = DatePickerController();
-  CalendarController _calendarController;
+  // DatePickerController _datePickerController = DatePickerController();
+  // CalendarController _calendarController;
   // AnimationController _animationController;
 
   Image diaryImage;
@@ -79,7 +79,7 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
   int i;
   DateTime startDate;
   // DateTime endDate;
-  DateTime selectedDate;
+  DateTime selectedDate = DateTime.now()..subtract(Duration(days: 3));
   // double x;
   // double x1;
   // double x2;
@@ -89,7 +89,7 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
   Duration duration = Duration(milliseconds: 300);
   int diaryPage;
   // int tweenFlag = 3;
-  bool isUnavailableDay = false;
+  // bool isUnavailableDay = false;
   Comparator<dynamic> dateComparator =
       (a, b) => DateTime.parse(a['1']).compareTo(DateTime.parse(b['1']));
   // List<Widget> childrenPages = <Widget>[];
@@ -97,27 +97,28 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
 
   @override
   void initState() {
+
     initializeDateFormatting();
     diaryImage = Image.asset('assets/images/diary_1.png');
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _calendarController = CalendarController();
-    // _animationController = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 350),
-    // );
-    // _animationController.forward();
-    startDate = DateTime(2019, 05, 15);
-    // endDate = DateTime.now().add(Duration(days: 2));
-    selectedDate = DateTime.now();
-    // date = selectedDate;
-    diaryPage = selectedDate.day % 6;
-    print(diaryPage);
+      // _calendarController = CalendarController();
+      // _animationController = AnimationController(
+      //   vsync: this,
+      //   duration: const Duration(milliseconds: 350),
+      // );
+      // _animationController.forward();
+      startDate = DateTime(2019, 05, 15);
+      // endDate = DateTime.now().add(Duration(days: 2));
+      selectedDate = DateTime.now().subtract(Duration(days: 3));
+      // date = selectedDate;
+      diaryPage = selectedDate.day % 6;
+      print(diaryPage);
 
-    subjectList.sort(dateComparator);
-    print(diary);
-    setState(() {
-      diary = Map<String, dynamic>.from(subjectList.elementAt(diaryPage));
-    });
+      subjectList.sort(dateComparator);
+      print(diary);
+      setState(() {
+        diary = Map<String, dynamic>.from(subjectList.elementAt(diaryPage));
+      });
     });
     // x = 0;
     // y = 0;
@@ -133,13 +134,13 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
     precacheImage(diaryImage.image, context);
   }
 
-  @override
-  void dispose() {
-    _calendarController.dispose();
-    // _animationController.dispose();
-    // _pageTurnController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _calendarController.dispose();
+  //   // _animationController.dispose();
+  //   _pageTurnController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -153,63 +154,49 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
                 Navigator.of(context).pop();
               },
             ),
-            SizedBox(height: 12),
-            Container(
-              // height: 50,
-              margin: EdgeInsets.only(left:20,right:20),
-              child: DatePicker(
-                selectedDate,
-                // initialSelectedDate: selectedDate,
-                controller: _datePickerController,
-                width: 60,
-                height: 80,
-                selectedTextColor: Colors.white,
-                selectionColor: Colors.red[300],
-                onDateChange: (date) {
-                  // setState(() {
-                  // selectedDate = date;
-                  // diaryPage = date.day % 6;
-                    _animateDiaryPages(date);
-                  // _pageTurnController.currentState.goToPage(diaryPage);
-                  // diary = Map<String, dynamic>.from(
-                  //     subjectList
-                  //         .elementAt(diaryPage));
-                  // print(diaryPage);
-                // });
-                },
-              )
-            ),
+            SizedBox(height: 20),
+            // Container(
+            //   // height: 50,
+            //   margin: EdgeInsets.only(left:20,right:20),
+            //   child: DatePicker(
+            //     selectedDate,
+            //     // initialSelectedDate: selectedDate,
+            //     controller: _datePickerController,
+            //     width: 60,
+            //     height: 80,
+            //     selectedTextColor: Colors.white,
+            //     selectionColor: Colors.red[300],
+            //     onDateChange: (date) {
+            //       // setState(() {
+            //       // selectedDate = date;
+            //       // diaryPage = date.day % 6;
+            //         _animateDiaryPages(date);
+            //       // _pageTurnController.currentState.goToPage(diaryPage);
+            //       // diary = Map<String, dynamic>.from(
+            //       //     subjectList
+            //       //         .elementAt(diaryPage));
+            //       // print(diaryPage);
+            //     // });
+            //     },
+            //   )
+            // ),
             Expanded(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    // alignment: Alignment.topLeft,
-                    // height: 500,
-                    // width: 20,
-                    child: Image(
-                      image: diaryImage.image,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Container(
-                    height: 410,
-                    width: MediaQuery.of(context).size.width - 90,
-                    margin: EdgeInsets.only(top:55,left: 60, right: 30),
-                    child: PageTurn(
-                        cutoff: 0.7,
-                        duration: Duration(milliseconds: 700),
-                        initialIndex: selectedDate.day%6,
-                        key: _pageTurnController,
-                        backgroundColor: Color(0xffcdbc86),
-                        showDragCutoff: false,
-                        // lastPage: Container(
-                        //     child: Center(
-                        //         child: Text('Last Page!'))),
-                        children: <Widget>[
-                          for (var i = 1; i < 6; i++) _diaryPages(i)
-                        ]),
-                  ),
-                ],
+              child: Container(
+                padding: EdgeInsets.only(left:8,right: 8),
+                child: PageTurn(
+                  
+                    cutoff: 0.3,
+                    duration: Duration(milliseconds: 700),
+                    // initialIndex: 3,
+                    key: _pageTurnController,
+                    backgroundColor: Color(0xffcdbc86),
+                    showDragCutoff: false,
+                    // lastPage: Container(
+                    //     child: Center(
+                    //         child: Text('Last Page!'))),
+                    children: <Widget>[
+                      for (var i = 1; i < 6; i++) _diaryPages(i)
+                    ]),
               ),
             ),
             SizedBox(height: 12)
@@ -219,200 +206,76 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
     );
   }
 
-  _animateDiaryPages(DateTime date) {
-    setState(() {
-      diaryPage = date.day % 6;
-    if(date.month < selectedDate.month) {
-      for(i=0;i<3;i++)  {
-        _pageTurnController.currentState.previousPage();  }
-        _pageTurnController.currentState.goToPage(diaryPage+1);
-        _pageTurnController.currentState.previousPage();
-     } 
-    else if(date.month > selectedDate.month) {
-      for(i=0;i<3;i++)  {
-        _pageTurnController.currentState.nextPage();  }
-        _pageTurnController.currentState.goToPage(diaryPage-1);
-        _pageTurnController.currentState.nextPage();
-    }
-    else {
-      if(date.day > selectedDate.day)
-      {
-        if(date.day - selectedDate.day <5) {
-          for(i=0; i<date.day - selectedDate.day; i++)  {
-            _pageTurnController.currentState.nextPage();  }
-        }
-        else {
-          for(i=0;i<3;i++)  {
-            _pageTurnController.currentState.nextPage();  }
-            _pageTurnController.currentState.goToPage(diaryPage-1);
-            _pageTurnController.currentState.nextPage();
-        }
-      }
-      else {
-        if(date.day - selectedDate.day > -5) {
-          for(i=0; i<selectedDate.day - date.day; i++)  {
-            _pageTurnController.currentState.previousPage();  }
-        }
-        else {
-          for(i=0;i<3;i++)  {
-            _pageTurnController.currentState.previousPage();  }
-            _pageTurnController.currentState.goToPage(diaryPage+1);
-            _pageTurnController.currentState.previousPage();
-        }
-      }
-    } 
-    selectedDate = date;
-    });
-  }
-
-  // Widget _animateDiary(var i) {
-  //   return i == 0
-  //       ? Container(
-  //           // margin: EdgeInsets.only(left: 12),
-  //           padding: EdgeInsets.all(12),
-  //           width: MediaQuery.of(context).size.width,
-  //           height: 500,
-  //           child: Image(
-  //             image: AssetImage('assets/images/diary_0.png'),
-  //             fit: BoxFit.fill,
-  //           ),
-  //         )
-  //       : _diaryPages();
-  // }
-
   Widget _diaryPages(int i) {
+    print(i);
+    selectedDate = selectedDate.add(Duration(days: 1));
     return Container(
-      color: Color(0xffcdbc86),
-      // height: 500,
-      // width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(top: 20,left: 30, right: 30),
+      padding: EdgeInsets.all(12),
       child: Column(
         children: <Widget>[
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
+          Row(
+            children: <Widget>[
+              Expanded(child: Container()),
+              Container(
+                alignment: Alignment.center,
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
                     color: Colors.redAccent,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
-                    backgroundBlendMode: BlendMode.overlay
-                  ),
-                  child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Text(selectedDate.month == 1 
-                        ? 'JAN' 
-                        : selectedDate.month == 2 ? 'FEB'
-                        : selectedDate.month == 3 ? 'MAR'
-                        : selectedDate.month == 4 ? 'APR'
-                        : selectedDate.month == 5 ? 'MAY'
-                        : selectedDate.month == 6 ? 'JUN'
-                        : selectedDate.month == 7 ? 'JUL'
-                        : selectedDate.month == 8 ? 'AUG'
-                        : selectedDate.month == 9 ? 'SEP'
-                        : selectedDate.month == 10 ? 'OCT'
-                        : selectedDate.month == 11 ? 'NOV'
-                        : 'DEC',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
-                        ),),
-                        // textScaleFactor: 2,),
-                      Text(
-                        '${selectedDate.day}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                        ),
-                        textScaleFactor: 3,
+                    backgroundBlendMode: BlendMode.overlay),
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      selectedDate.month == 1
+                          ? 'JAN'
+                          : selectedDate.month == 2
+                              ? 'FEB'
+                              : selectedDate.month == 3
+                                  ? 'MAR'
+                                  : selectedDate.month == 4
+                                      ? 'APR'
+                                      : selectedDate.month == 5
+                                          ? 'MAY'
+                                          : selectedDate.month == 6
+                                              ? 'JUN'
+                                              : selectedDate.month == 7
+                                                  ? 'JUL'
+                                                  : selectedDate.month == 8
+                                                      ? 'AUG'
+                                                      : selectedDate.month == 9
+                                                          ? 'SEP'
+                                                          : selectedDate
+                                                                      .month ==
+                                                                  10
+                                                              ? 'OCT'
+                                                              : selectedDate
+                                                                          .month ==
+                                                                      11
+                                                                  ? 'NOV'
+                                                                  : 'DEC',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
                       ),
-                    ],
-                  ),
-
-                )
-              ],
-            ),
-            // width: double.infinity,
-            // height: 150,
-            // padding: EdgeInsets.all(12),
-            // margin: EdgeInsets.only(left: 20, right: 60),
-            // child: TableCalendar(
-            //   dayHitTestBehavior: HitTestBehavior.translucent,
-            //   daysOfWeekStyle: DaysOfWeekStyle(
-            //       weekdayStyle: TextStyle(
-            //           color: Colors.black, fontWeight: FontWeight.bold),
-            //       weekendStyle: TextStyle(
-            //           color: Colors.red, fontWeight: FontWeight.bold)),
-            //   // rowHeight: 0.25,
-            //   // simpleSwipeConfig: ,
-            //   // dayHitTestBehavior: null,
-            //   calendarController: _calendarController,
-            //   formatAnimation: FormatAnimation.slide,
-            //   // availableGestures: AvailableGestures.all,
-            //   initialCalendarFormat: CalendarFormat.week,
-            //   availableCalendarFormats: {
-            //     CalendarFormat.week: 'Week',
-            //     CalendarFormat.twoWeeks: '2 Weeks'
-            //   },
-            //   calendarStyle: CalendarStyle(
-            //     weekdayStyle: TextStyle(
-            //       color: Colors.black,
-            //     ),
-            //     outsideStyle: TextStyle(
-            //       color: Colors.grey,
-            //       fontStyle: FontStyle.italic,
-            //       decorationStyle: TextDecorationStyle.dotted,
-            //     ),
-            //     selectedColor: Theme.of(context).primaryColor,
-            //     highlightSelected: true,
-            //     selectedStyle:
-            //         TextStyle(color: Colors.red[300], fontSize: 16),
-            //     todayColor: Colors.blue[800],
-            //   ),
-            //   headerVisible: false,
-            //   headerStyle: HeaderStyle(
-            //       // centerHeaderTitle: true,
-            //       formatButtonTextStyle:
-            //           TextStyle(fontSize: 12, color: Colors.white),
-            //       titleTextStyle: TextStyle(
-            //           fontSize: 17,
-            //           fontWeight: FontWeight.w600,
-            //           color: Colors.white)),
-            //   onHeaderTapped: (date) {
-            //     showMonthPicker(
-            //             context: context,
-            //             initialDate: date,
-            //             firstDate: startDate,
-            //             lastDate: endDate)
-            //         .then((date) {
-            //       selectedDate = date;
-            //       //updateCalendar();
-            //     });
-            //   },
-            //   onDaySelected: (date, list) {
-            //     print('object');
-            //     setState(() {
-            //       selectedDate = date;
-            //       diaryPage = date.day % 6;
-            //       _pageTurnController.currentState.goToPage(diaryPage);
-            //       // diary = Map<String, dynamic>.from(
-            //       //     subjectList
-            //       //         .elementAt(diaryPage));
-            //       // print(diaryPage);
-            //     });
-            //   },
-            //   onUnavailableDaySelected: () {
-            //     setState(() {
-            //       isUnavailableDay = true;
-            //     });
-            //   },
-            // ),
+                    ),
+                    // textScaleFactor: 2,),
+                    Text(
+                      '${selectedDate.day}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      textScaleFactor: 3,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: Container(

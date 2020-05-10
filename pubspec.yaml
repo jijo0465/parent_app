@@ -55,6 +55,8 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   page_turn: ^1.0.0
   date_picker_timeline: ^1.2.0
+  video_player: ^0.10.10
+  webview_flutter: ^0.3.21
 
 dev_dependencies:
   flutter_test:
@@ -103,6 +105,7 @@ flutter:
     - assets/images/school.jpg
     - assets/images/digi_campus_logo.png
     - assets/images/ucevents.png
+    - assets/videos/smartschool.mp4
     - assets/sqlite/local_data_parent_app.db
 
   #   - images/a_dot_ham.jpeg

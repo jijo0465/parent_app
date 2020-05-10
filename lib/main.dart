@@ -10,6 +10,7 @@ import 'package:parent_app/screens/discussions_screen.dart';
 import 'package:parent_app/screens/events_screen.dart';
 import 'package:parent_app/screens/exams_screen.dart';
 import 'package:parent_app/screens/fee_payment_screen.dart';
+import 'package:parent_app/screens/live_screen.dart';
 import 'package:parent_app/screens/remarks_screen.dart';
 import 'package:parent_app/screens/ratings_screen.dart';
 import 'package:parent_app/screens/result_screen.dart';
@@ -69,6 +70,7 @@ class ParentApp extends StatelessWidget {
             '/ratings': (context) => RatingsScreen(),
             '/classroom': (context) => ClassroomScreen(),
             '/discussions': (context) => DiscussionsScreen(),
+            '/live': (context) => LiveScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

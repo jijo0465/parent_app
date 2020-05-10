@@ -139,10 +139,6 @@ class _DiaryScreenState extends State<DiaryScreen>
   Widget _newPage(int index) {
     diary = Map<String, dynamic>.from(subjectList.elementAt(index));
     return Container(
-      color: Color(0xffdad6ca),
-      height: 550,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(left: 30, right: 70),
       child: Column(
         children: <Widget>[
           Container(

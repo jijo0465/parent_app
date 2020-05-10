@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
   int pageNo = 0;
   //double _schoolImageHeight = 0.0;
   //double _opacity = 0.0;
-  double _height = 250.0;
+  double _height = 240.0;
   ScrollController _scrollController;
   bool stateChanged = false;
   bool isLoading = true;
@@ -211,22 +211,22 @@ class _HomePageState extends State<HomePage> {
     _scrollController = new ScrollController();
     _scrollController.addListener(() {
       double offset = _scrollController.offset;
-      double _h = 250;
+      double _h = 240;
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {
         setState(() {
-          _height = 250;
+          _height = 240;
         });
       }
       // print("This is offset");
       // print(_scrollController.positions.last.pixels);
-      // if (_height > 150) {
+      // if (_height > 140) {
       //   setState(() {
       //     _height -= _scrollController.offset * 0.1 ;
       //   });
       // }
-      if (offset < 250 && _height > 150) {
+      if (offset < 240 && _height > 140) {
         setState(() {
           _height = _h - offset;
           //_opacity = offset / 140;
@@ -234,7 +234,7 @@ class _HomePageState extends State<HomePage> {
         // print(offset);
       } else {
         setState(() {
-          _height = 150;
+          _height = 140;
           //_opacity = offset / 140;
         });
       }
@@ -285,7 +285,16 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         height: double.infinity,
                         width: double.infinity,
-                        decoration: BoxDecoration(color: Colors.grey[300]
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                          Colors.blue[100],
+                          Colors.blue[100],
+                          Colors.blue[300],
+                          Colors.blue[400]
+                        ])
                             // image: DecorationImage(
                             //     image: AssetImage(
                             //         'assets/images/blue_gradient.jpg'),
@@ -313,9 +322,9 @@ class _HomePageState extends State<HomePage> {
                           height: _height,
                           onDragEnd: (_) {
                             print(_height);
-                            if (_height < 550) {
+                            if (_height < 600) {
                               setState(() {
-                                _height = 250;
+                                _height = 240;
                               });
                             }
                           },
@@ -339,9 +348,6 @@ class _HomePageState extends State<HomePage> {
                                   // });
                                 });
                               } else {
-                                print(
-                                    dragUpdateDetails.globalPosition.distance /
-                                        170);
                                 setState(() {
                                   _height += dragUpdateDetails.delta.dy *
                                       log(dragUpdateDetails
@@ -371,14 +377,14 @@ class _HomePageState extends State<HomePage> {
                               // ),
                               child: Column(children: [
                                 // SizedBox(
-                                //   height: _height<250?_height==150?0:250-_height:0,
+                                //   height: _height<240?_height==140?0:240-_height:0,
                                 // ),
                                 AnimatedPadding(
                                   curve: Curves.linear,
                                   duration: Duration(milliseconds: 650),
                                   padding: EdgeInsets.only(
-                                      top: _height < 250
-                                          ? _height == 150 ? 0 : 250 - _height
+                                      top: _height < 240
+                                          ? _height == 140 ? 0 : 240 - _height
                                           : 0),
                                   child: Container(
                                     //height: 300,

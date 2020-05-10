@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:parent_app/components/digicampus_appbar.dart';
 import 'package:parent_app/models/grade.dart';
 import 'package:parent_app/models/student.dart';
 import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 class DiscussionsScreen extends StatefulWidget {
   // final Grade grade = Grade();
@@ -30,6 +33,7 @@ class _DiscussionsScreenState extends State<DiscussionsScreen> {
   int id = 4001;
   int widgetIndex;
   Firestore firestore = Firestore.instance;
+  VideoPlayerController _playerController;
   Color color = Colors.grey;
 
   @override
@@ -37,13 +41,22 @@ class _DiscussionsScreenState extends State<DiscussionsScreen> {
     // TODO: implement initState
     widgetIndex = 0;
     grade.setId(id);
+    _playerController =
+        VideoPlayerController.asset('assets/videos/smartschool.mp4')
+          ..initialize().then((_) {
+            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+            setState(() {
+              _playerController.play();
+            });
+          });
+
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     discussionListWidget.clear();
+    _playerController.dispose();
 
     super.dispose();
   }
@@ -53,11 +66,46 @@ class _DiscussionsScreenState extends State<DiscussionsScreen> {
     StudentState state = Provider.of<StudentState>(context, listen: true);
     _selectedStudent = state.selectedstudent;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomPadding: false,
         body: Column(children: <Widget>[
-      Container(
-        height: 100,
-        width: double.infinity,
-        color: Colors.black,
+          DigiCampusAppbar(
+        icon: Icons.close,
+        onDrawerTapped: () => Navigator.of(context).pop(),
+      ),
+      SingleChildScrollView(
+              child: Container(
+          height: 250,
+          width: double.infinity,
+          child: Stack(
+            children: <Widget>[
+              Center(
+                child: _playerController.value.initialized
+                    ? AspectRatio(
+                        aspectRatio: _playerController.value.aspectRatio,
+                        child: VideoPlayer(_playerController),
+                      )
+                    : Container(),
+              ),
+              Center(
+          child: FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                _playerController.value.isPlaying
+                    ? _playerController.pause()
+                    : _playerController.play();
+              });
+            },
+            child: Icon(
+              _playerController.value.isPlaying
+                  ? Icons.pause
+                  : Icons.play_arrow,
+            ),
+          ),
+        )
+            ],
+          ),
+        ),
       ),
       SizedBox(height: 12),
       Text(
@@ -200,7 +248,7 @@ class _DiscussionsScreenState extends State<DiscussionsScreen> {
                       image:
                           // AssetImage(''),
                           NetworkImage(
-                              'https://www.sean-christopher.com/seanchristopher/wp-content/uploads/2014/10/hotforteacher.png'),
+                              item[0]['disussion'][widgetIndex]['url']),
                       fit: BoxFit.fill),
                 ),
               ),
@@ -229,10 +277,10 @@ class _DiscussionsScreenState extends State<DiscussionsScreen> {
 
   _addToDiscussions(String text) async {
     var comment = [
-      {'comment': text, 'date': DateTime.now().toUtc()}
+      {'comment': text, 'date': DateTime.now().toUtc(),'url':'https://neatoday.org/wp-content/uploads/2016/08/young_student-e1472643979755.jpg'}
     ];
     DocumentReference documentReference =
-        firestore.collection('Discussions_${grade.id}').document('Session_1');
+        firestore.collection('classroom_${grade.id}').document('Session_1');
     firestore.runTransaction((transaction) async {
       await transaction.update(
           documentReference, {'disussion': FieldValue.arrayUnion(comment)});
