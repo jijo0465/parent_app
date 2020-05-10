@@ -144,18 +144,39 @@ class HomePage extends DrawerContent {
   // ];
 
   final List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
-    const StaggeredTile.count(5, 6.5),
     const StaggeredTile.count(5, 4.5),
     const StaggeredTile.count(5, 5),
+    const StaggeredTile.count(5, 5.5),
+    const StaggeredTile.count(5, 3.5),
+    const StaggeredTile.count(5, 5),
+    const StaggeredTile.count(5, 5.5),
+    const StaggeredTile.count(5, 4.5),
+    const StaggeredTile.count(5, 5.5),
+    const StaggeredTile.count(5, 4.5),
     const StaggeredTile.count(5, 5),
     const StaggeredTile.count(5, 4),
-    const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 3),
-    const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 5),
-    const StaggeredTile.count(5, 5),
+    const StaggeredTile.count(5, 4.5),
+    const StaggeredTile.count(5, 4),
+    const StaggeredTile.count(5, 3.5),
+    const StaggeredTile.count(5, 3.5),
+  ];
+
+  final List<String> menuInfo = const <String>[
+    'My ClassRoom',
+    'Digital School Diary',
+    'Student\nAttendance',
+    'Track Bus',
+    'Upcoming\nExams/Tests',
+    'Request Student\nPerformance List',
+    'Fee Payment',
+    'Student\nIn/Out Info',
+    'Student Remarks', //8
+    'HomeWorks &\nAssignments',
+    'School Event\nUpdates', //10
+    'TimeTable',
+    'School\nAdministrators', //12
+    'Fee Structure', //13
+    'Faculty Members', //14
   ];
 
   // static final List<Map<String, String>> _menuInfo = [
@@ -180,7 +201,6 @@ class _HomePageState extends State<HomePage> {
   ScrollController _scrollController;
   bool stateChanged = false;
   bool isLoading = true;
-  bool _diarySelected = false;
   Student selectedStudent;
   // int count = 8;
 
@@ -265,19 +285,7 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         height: double.infinity,
                         width: double.infinity,
-                        color: _diarySelected
-                            ? Colors.black.withOpacity(0.65)
-                            : null,
-                      ),
-                      Container(
-                        height: double.infinity,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            gradient: RadialGradient(colors: [
-                          Colors.white10,
-                          Colors.white,
-                          Colors.white24
-                        ])
+                        decoration: BoxDecoration(color: Colors.grey[300]
                             // image: DecorationImage(
                             //     image: AssetImage(
                             //         'assets/images/blue_gradient.jpg'),
@@ -287,89 +295,76 @@ class _HomePageState extends State<HomePage> {
                       Container(
                           child: Column(children: <Widget>[
                         DigiAppbar(
-                          onStudentTapped: _diarySelected
-                              ? null
-                              : () {
-                                  isLoading = true;
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      transitionDuration:
-                                          Duration(milliseconds: 400),
-                                      pageBuilder: (_, __, ___) =>
-                                          StudentDetailsScreen(),
-                                    ),
-                                  ).then((value) {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                  });
-                                },
+                          onStudentTapped: () {
+                            isLoading = true;
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                transitionDuration: Duration(milliseconds: 400),
+                                pageBuilder: (_, __, ___) =>
+                                    StudentDetailsScreen(),
+                              ),
+                            ).then((value) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            });
+                          },
                           height: _height,
-                          onDragEnd: _diarySelected
-                              ? null
-                              : (_) {
-                                  print(_height);
-                                  if (_height < 550) {
-                                    setState(() {
-                                      _height = 250;
-                                    });
-                                  }
-                                },
-                          onDrag: _diarySelected
-                              ? null
-                              : (dragUpdateDetails) {
-                                  // print(dragUpdateDetails.globalPosition.distance);
-                                  // print(dragUpdateDetails.globalPosition.dy);
-                                  if (dragUpdateDetails.delta.dy > 0) {
-                                    if (dragUpdateDetails
-                                            .globalPosition.distance >
-                                        350) {
-                                      Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                          transitionDuration:
-                                              Duration(milliseconds: 400),
-                                          pageBuilder: (_, __, ___) =>
-                                              StudentDetailsScreen(),
-                                        ),
-                                      ).then((value) {
-                                        // setState(() {
-                                        //   pageNo = StudentDetailsScreen.pageNo;
-                                        // });
-                                      });
-                                    } else {
-                                      print(dragUpdateDetails
+                          onDragEnd: (_) {
+                            print(_height);
+                            if (_height < 550) {
+                              setState(() {
+                                _height = 250;
+                              });
+                            }
+                          },
+                          onDrag: (dragUpdateDetails) {
+                            // print(dragUpdateDetails.globalPosition.distance);
+                            // print(dragUpdateDetails.globalPosition.dy);
+                            if (dragUpdateDetails.delta.dy > 0) {
+                              if (dragUpdateDetails.globalPosition.distance >
+                                  350) {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    transitionDuration:
+                                        Duration(milliseconds: 400),
+                                    pageBuilder: (_, __, ___) =>
+                                        StudentDetailsScreen(),
+                                  ),
+                                ).then((value) {
+                                  // setState(() {
+                                  //   pageNo = StudentDetailsScreen.pageNo;
+                                  // });
+                                });
+                              } else {
+                                print(
+                                    dragUpdateDetails.globalPosition.distance /
+                                        170);
+                                setState(() {
+                                  _height += dragUpdateDetails.delta.dy *
+                                      log(dragUpdateDetails
                                               .globalPosition.distance /
-                                          170);
-                                      setState(() {
-                                        _height += dragUpdateDetails.delta.dy *
-                                            log(dragUpdateDetails
-                                                    .globalPosition.distance /
-                                                175);
-                                      });
-                                    }
-                                  }
-                                  // else {
-                                  //   if (_height > 251) {
-                                  //     setState(() {
-                                  //       _height += dragUpdateDetails.delta.dy;
-                                  //     });
-                                  //   }
-                                  // }
-                                },
-                          onPressed: _diarySelected
-                              ? null
-                              : () {
-                                  drawerController.open();
-                                },
+                                          175);
+                                });
+                              }
+                            }
+                            // else {
+                            //   if (_height > 251) {
+                            //     setState(() {
+                            //       _height += dragUpdateDetails.delta.dy;
+                            //     });
+                            //   }
+                            // }
+                          },
+                          onPressed: () {
+                            drawerController.open();
+                          },
                         ),
                         Expanded(
                           child: SingleChildScrollView(
                             controller: _scrollController,
-                            physics: _diarySelected
-                                ? NeverScrollableScrollPhysics()
-                                : null,
                             child: Container(
                               // decoration: BoxDecoration(
                               //   gradient: SweepGradient(colors: [Colors.blue[100],Colors.blue[200],Colors.blue[300]])
@@ -388,127 +383,127 @@ class _HomePageState extends State<HomePage> {
                                   child: Container(
                                     //height: 300,
                                     width: MediaQuery.of(context).size.width,
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                            height: 200,
-                                            width: double.infinity,
-                                            padding: EdgeInsets.all(12),
-                                            child: GestureDetector(
-                                                behavior:
-                                                    HitTestBehavior.translucent,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Hero(
-                                                    tag: 'schoolDiary',
-                                                    child: Image(
-                                                        image: AssetImage(
-                                                            'assets/images/diary.png'),
-                                                        fit: BoxFit.cover),
-                                                  ),
-                                                ),
-                                                onTap: () =>
-                                                    Navigator.of(context)
-                                                        .pushNamed('/diary'))),
-                                        StaggeredGridView.countBuilder(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          mainAxisSpacing: 10,
-                                          crossAxisSpacing: 10,
-                                          scrollDirection: Axis.vertical,
-                                          crossAxisCount: 10,
-                                          itemCount: 12,
-                                          shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemBuilder: (BuildContext context,
-                                                  int index) =>
+                                    child: StaggeredGridView.countBuilder(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                      mainAxisSpacing: 10,
+                                      crossAxisSpacing: 10,
+                                      scrollDirection: Axis.vertical,
+                                      crossAxisCount: 10,
+                                      itemCount: 15,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemBuilder:
+                                          (BuildContext context, int index) =>
                                               new DigiMenuCard(
-                                            imagePath:
-                                                'assets/images/menu_$index.png',
-                                            onPressed: () {
-                                              if (_diarySelected)
-                                                setState(() {
-                                                  _diarySelected = false;
-                                                });
-                                              else
-                                                switch (index) {
-                                                  case 0:
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            '/attendance');
-                                                    break;
-                                                  case 1:
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            '/schoolbus');
-                                                    break;
-                                                  case 2:
-                                                    Navigator.of(context)
-                                                        .pushNamed('/exams');
-                                                    break;
-                                                  case 3:
-                                                    Navigator.of(context)
-                                                        .pushNamed('/result');
-                                                    break;
-                                                  case 4:
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            '/feePayment');
-                                                    break;
-                                                  case 5:
-                                                    Navigator.of(context)
-                                                        .pushNamed('/inOut');
-                                                    break;
-                                                  case 6:
-                                                    Navigator.of(context)
-                                                        .pushNamed('/remarks');
-                                                    // Navigator.of(context)
-                                                    //     .pushNamed('/ratings');
-                                                    break;
-                                                  case 7:
-                                                    Navigator.of(context)
-                                                          .pushNamed('/homeworks');
-                                                    break;
-
-                                                  case 9:
-                                                    Navigator.of(context).pushNamed('/timetable');
-                                                    break;
-                                                  case 10:
-                                                    Navigator.of(context).pushNamed('/classroom');
-                                                    break;
-                                                  // case 10:
-                                                  //   Navigator.of(context).pushNamed('/')
-                                                  // case 7:
-                                                  //   setState(() {
-                                                  //     _diarySelected =
-                                                  //         !_diarySelected;
-                                                  //     print(_diarySelected);
-                                                  //     _scrollController.animateTo(
-                                                  //         _scrollController.position
-                                                  //             .maxScrollExtent,
-                                                  //         duration: Duration(
-                                                  //             milliseconds: 300),
-                                                  //         curve: Curves.linear);
-                                                  //   });
-                                                    break;
-                                                }
-                                            },
-                                            // menuIcon: HomePage._menuIcons[
-                                            //     index], //_menuIcons(index),
-                                            // title: HomePage._menuInfo[index]
-                                            //     ['title'], //'Bus No',
-                                            // subtitle: HomePage
-                                            //     ._menuInfo[index]['subtitle'],
-                                            // value: HomePage._menuInfo[index]
-                                            //     ['value']
-                                          ),
-                                          staggeredTileBuilder: (int index) =>
-                                              widget._staggeredTiles
-                                                  .elementAt(index),
-                                        ),
-                                      ],
+                                        imagePath:
+                                            'assets/images/menu_$index.png',
+                                        text: widget.menuInfo.elementAt(index),
+                                        alignText: (index == 3 ||
+                                                index == 8 ||
+                                                index == 10 ||
+                                                index == 12 ||
+                                                index == 13 ||
+                                                index == 14)
+                                            ? true
+                                            : false,
+                                        textScale: (index == 0 ||
+                                                index == 1 ||
+                                                index == 2 ||
+                                                index == 3)
+                                            ? 1.1
+                                            : 0.85,
+                                        // begin: (index % 3 == 0)
+                                        //     ? Alignment.bottomLeft
+                                        //     : (index % 3 == 1)
+                                        //         ? Alignment.topRight
+                                        //         : Alignment.bottomRight,
+                                        // end: (index % 3 == 0)
+                                        //     ? Alignment.topRight
+                                        //     : (index % 3 == 1)
+                                        //         ? Alignment.bottomLeft
+                                        //         : Alignment.topLeft,
+                                        onPressed: () {
+                                          switch (index) {
+                                            case 0:
+                                              Navigator.of(context)
+                                                  .pushNamed('/classroom');
+                                              break;
+                                            case 1:
+                                              Navigator.of(context)
+                                                  .pushNamed('/diary');
+                                              break;
+                                            case 2:
+                                              Navigator.of(context)
+                                                  .pushNamed('/attendance');
+                                              break;
+                                            case 3:
+                                              Navigator.of(context)
+                                                  .pushNamed('/schoolbus');
+                                              break;
+                                            case 4:
+                                              Navigator.of(context)
+                                                  .pushNamed('/exams');
+                                              break;
+                                            case 5:
+                                              Navigator.of(context)
+                                                  .pushNamed('/result');
+                                              break;
+                                            case 6:
+                                              Navigator.of(context)
+                                                  .pushNamed('/feePayment');
+                                              break;
+                                            case 7:
+                                              Navigator.of(context)
+                                                  .pushNamed('/inOut');
+                                              break;
+                                            case 8:
+                                              Navigator.of(context)
+                                                  .pushNamed('/remarks');
+                                              // Navigator.of(context)
+                                              //     .pushNamed('/ratings');
+                                              break;
+                                            case 9:
+                                              Navigator.of(context)
+                                                  .pushNamed('/homeworks');
+                                              break;
+                                            case 10:
+                                              Navigator.of(context)
+                                                  .pushNamed('/events');
+                                              break;
+                                            case 11:
+                                              Navigator.of(context)
+                                                  .pushNamed('/timetable');
+                                              break;
+                                              // case 10:
+                                              //   Navigator.of(context).pushNamed('/')
+                                              // case 7:
+                                              //   setState(() {
+                                              //     _diarySelected =
+                                              //         !_diarySelected;
+                                              //     print(_diarySelected);
+                                              //     _scrollController.animateTo(
+                                              //         _scrollController.position
+                                              //             .maxScrollExtent,
+                                              //         duration: Duration(
+                                              //             milliseconds: 300),
+                                              //         curve: Curves.linear);
+                                              //   });
+                                              break;
+                                          }
+                                        },
+                                        // menuIcon: HomePage._menuIcons[
+                                        //     index], //_menuIcons(index),
+                                        // title: HomePage._menuInfo[index]
+                                        //     ['title'], //'Bus No',
+                                        // subtitle: HomePage
+                                        //     ._menuInfo[index]['subtitle'],
+                                        // value: HomePage._menuInfo[index]
+                                        //     ['value']
+                                      ),
+                                      staggeredTileBuilder: (int index) =>
+                                          widget._staggeredTiles
+                                              .elementAt(index),
                                     ),
                                   ),
                                 ),

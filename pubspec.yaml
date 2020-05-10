@@ -75,7 +75,6 @@ flutter:
   assets:
     - assets/images/blue_gradient.jpg
     - assets/images/sir.jpg
-    - assets/images/diary.png
     - assets/images/diary_header.png
     - assets/images/diary_0.png
     - assets/images/diary_1.png
@@ -92,6 +91,8 @@ flutter:
     - assets/images/menu_10.png
     - assets/images/menu_11.png
     - assets/images/menu_12.png
+    - assets/images/menu_13.png
+    - assets/images/menu_14.png
     - assets/images/schoolbus.png
     - assets/images/1001.jpg
     - assets/images/1002.jpg

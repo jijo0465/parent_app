@@ -156,7 +156,7 @@ class _HomeworksScreenState extends State<HomeworksScreen> {
                                         (index) => Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
-                                              child: new Card(
+                                              child: Card(
                                                 elevation: 8,
                                                 color: Colors.grey[200],
                                                 child: IntrinsicHeight(

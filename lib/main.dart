@@ -3,8 +3,10 @@ import 'package:parent_app/components/digi_chat.dart';
 import 'package:parent_app/redirect.dart';
 import 'package:parent_app/screens/attendance_screen.dart';
 import 'package:parent_app/screens/chat_screen.dart';
+// import 'package:parent_app/screens/class_screen.dart';
 import 'package:parent_app/screens/classroom_screen.dart';
 import 'package:parent_app/screens/diary_screen.dart';
+import 'package:parent_app/screens/discussions_screen.dart';
 import 'package:parent_app/screens/events_screen.dart';
 import 'package:parent_app/screens/exams_screen.dart';
 import 'package:parent_app/screens/fee_payment_screen.dart';
@@ -66,6 +68,7 @@ class ParentApp extends StatelessWidget {
             '/remarks': (context) => RemarksScreen(),
             '/ratings': (context) => RatingsScreen(),
             '/classroom': (context) => ClassroomScreen(),
+            '/discussions': (context) => DiscussionsScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

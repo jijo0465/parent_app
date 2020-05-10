@@ -1,246 +1,297 @@
+import 'package:dash_chat/dash_chat.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parent_app/models/grade.dart';
-import 'package:parent_app/models/student.dart';
-import 'package:parent_app/states/student_state.dart';
-import 'package:provider/provider.dart';
+import 'package:parent_app/components/digicampus_appbar.dart';
 
 class ClassroomScreen extends StatefulWidget {
-  // final Grade grade = Grade();
-  // final Student student;
-
   const ClassroomScreen({Key key}) : super(key: key);
+
+  static List<Map<String, dynamic>> timeTableList = [
+    {
+      '0': 'Period 1',
+      '1': 'Period 2',
+      '2': 'Period 3',
+      '3': 'Period 4',
+      '4': 'Period 5',
+      '5': 'Period 6',
+    },
+    {
+      '0': 'Period 1',
+      '1': 'Period 2',
+      '2': 'Period 3',
+      '3': 'Period 4',
+      '4': 'Period 5',
+      '5': 'Period 6',
+    },
+    {
+      '0': 'Period 1',
+      '1': 'Period 2',
+      '2': 'Period 3',
+      '3': 'Period 4',
+      '4': 'Period 5',
+      '5': 'Period 6',
+    },
+    {
+      '0': 'Period 1',
+      '1': 'Period 2',
+      '2': 'Period 3',
+      '3': 'Period 4',
+      '4': 'Period 5',
+      '5': 'Period 6',
+    },
+    {
+      '0': 'Period 1',
+      '1': 'Period 2',
+      '2': 'Period 3',
+      '3': 'Period 4',
+      '4': 'Period 5',
+      '5': 'Period 6',
+    }
+  ];
 
   @override
   _ClassroomScreenState createState() => _ClassroomScreenState();
 }
 
 class _ClassroomScreenState extends State<ClassroomScreen> {
-  // final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  // var _key;
-  // ListModel<int> _list;
-  final TextEditingController _textFieldController =
-      new TextEditingController();
-  Student _selectedStudent;
-  List<Widget> discussionListWidget = [];
-  List<DocumentSnapshot> _items;
-  List<Map<String, dynamic>> commentData = [];
-  DocumentSnapshot addItem;
-  Grade grade = Grade.empty();
-  int id = 4001;
-  int widgetIndex;
-  Firestore firestore = Firestore.instance;
-  Color color = Colors.grey;
+  ScrollController _scrollController = new ScrollController();
+  // ScrollController _controller2;
+  double iconOffset;
+  // double offset;
+  bool watchLive;
+
+  // @override
+  // void initState() {
+  //   _controller1.addListener(() {
+  //     setState(() {
+  //       _controller1.notifyListeners();
+  //     });
+  //     // offset = _controller1.offset;
+  //     // setState(() {
+  //     //   _controller2.animateTo(offset,
+  //     //       duration: Duration(microseconds: 400), curve: null);
+  //     //   _controller2.notifyListeners();
+  //     //   print(offset);
+  //     // });
+  //   });
+  //   super.initState();
+  // }
 
   @override
   void initState() {
-    // TODO: implement initState
-    widgetIndex = 0;
-    grade.setId(id);
+    iconOffset = 50.0;
+    watchLive = false;
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    discussionListWidget.clear();
-
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  Widget dateTiles(int i) {
+    DateFormat _dateFormat = DateFormat.yMMMd();
+    DateFormat _dateFormatDay = DateFormat.E();
+    var date = DateTime.now();
+    int hrs = date.hour;
+    int mts = date.minute;
+    String formattedDay = _dateFormatDay.format(date);
+    String formattedDate = _dateFormat.format(date.subtract(Duration(days: i)));
+    Map<String, dynamic> timeTable;
+    print(formattedDay);
+    switch (formattedDay) {
+      case 'Mon':
+        timeTable = ClassroomScreen.timeTableList[0];
+        break;
+      case 'Tue':
+        timeTable = ClassroomScreen.timeTableList[1];
+        break;
+      case 'Wed':
+        timeTable = ClassroomScreen.timeTableList[2];
+        break;
+      case 'Thu':
+        timeTable = ClassroomScreen.timeTableList[3];
+        break;
+      case 'Fri':
+        timeTable = ClassroomScreen.timeTableList[4];
+        break;
+      default:
+        timeTable = ClassroomScreen.timeTableList[2];
+    }
+    print('num: ${timeTable['0']}');
+
+    // List<Widget> _periods = [];
+    // for (int i = 0; i < 7; i++) _periods.add(periodWidgets(i, formattedDay));
+    return Container(
+        child: Column(children: [
+      Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+              elevation: 8,
+              color: Colors.grey[200],
+              child: IntrinsicHeight(
+                  child: Row(children: <Widget>[
+                Container(
+                  width: 60,
+                  color: Colors.orange[200],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        formattedDate.substring(
+                            4, (formattedDate[6] == ',') ? 6 : 5),
+                        style: TextStyle(fontSize: 28),
+                      ),
+                      Text(
+                        formattedDate.substring(0, 3),
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification scrollInfo) {
+                      print('scrolling.... ${scrollInfo.metrics.pixels}');
+                      _scrollController.jumpTo(scrollInfo.metrics.pixels);
+                      return false;
+                    },
+                    child: SingleChildScrollView(
+                      // controller: _scrollController,
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                          Colors.greenAccent[100],
+                          Colors.greenAccent[400]
+                        ])),
+                        child: Row(
+                            children: List.generate(6, (index) {
+                          // print(timeTable['$index'].toString());
+                          if(hrs == (15+index) && i == 0) {
+                            setState(() {
+                              watchLive = true;
+                            });
+                          }
+                          else
+                            setState(() {
+                              watchLive = false;
+                            });
+                            
+                          return Row(
+                            children: <Widget>[
+                              GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: (){
+                                  watchLive
+                                  ? Navigator.of(context).pushNamed('/live')
+                                  : Navigator.of(context).pushNamed('/discussions');
+                                },
+                                child: Container(
+                                    height: 80,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        gradient: i == 0
+                                            ? LinearGradient(colors: [
+                                                Colors.deepOrange[
+                                                    (index + 1) * 100],
+                                                Colors.deepOrange[
+                                                    100 + ((index + 1) * 100)]
+                                              ])
+                                            : null),
+                                    // color: Colors.deepOrange[100+(index*100)],
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            timeTable['$index'].toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.clip,
+                                          ),
+                                          hrs == (15+index) && i == 0
+                                          ?Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: IntrinsicWidth(
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: <Widget>[
+                                                  Icon(Icons.my_location,color: Colors.red[800],),
+                                                  Text('Live')
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                          :Container()
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                              VerticalDivider(
+                                thickness: 1,
+                                width: 1,
+                                color: Colors.white,
+                              )
+                            ],
+                          );
+                        })),
+                      ),
+                    ),
+                  ),
+                ),
+              ]))))
+    ]));
   }
 
   @override
   Widget build(BuildContext context) {
-    StudentState state = Provider.of<StudentState>(context, listen: true);
-    _selectedStudent = state.selectedstudent;
+    int hr;
+    List<Widget> _dateTileWidgets = [];
+    for (int i = 0; i < 20; i++) _dateTileWidgets.add(dateTiles(i));
     return Scaffold(
-        body: Column(children: <Widget>[
-      Container(
-        height: 100,
-        width: double.infinity,
-        color: Colors.black,
-      ),
-      SizedBox(height: 12),
-      Text(
-        'Discussions',
-        textAlign: TextAlign.left,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 16,
+        body: Column(
+      children: <Widget>[
+        DigiCampusAppbar(
+          icon: Icons.close,
+          onDrawerTapped: () {
+            Navigator.of(context).pop();
+          },
         ),
-      ),
-      SizedBox(
-        height: 12,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Container(
-            height: 40,
-            width: MediaQuery.of(context).size.width - 60,
-            // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child: TextField(
-              onChanged: (text) {
-                if (text == '') {
-                  setState(() {
-                    color = Colors.grey;
-                  });
-                } else {
-                  setState(() {
-                    color = Colors.deepOrange[300];
-                  });
-                }
-              },
-              controller: _textFieldController,
-              // textAlignVertical: TextAlignVertical.center,
-              textAlign: TextAlign.start,
-              cursorColor: Colors.blue,
-              decoration: InputDecoration(
-                hintText: 'add to discussions...',
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    _addToDiscussions(_textFieldController.text);
-                    _textFieldController.clear();
-                  },
-                  icon: Icon(Icons.camera_alt),
-                  color: Colors.blue,
-                ),
-              ),
-
-              // autofocus: true,
-              // onSubmitted: (text) {
-              //   // print(text);
-              //   _addToDiscussions(text);
-              //   _textFieldController.clear();
-              //   // text = '';
-              // },
-            ),
-          ),
-          Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: Colors.grey[300]),
-              child: GestureDetector(
-                child: Icon(Icons.send, color: color),
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  _addToDiscussions(_textFieldController.text);
-                  _textFieldController.clear();
-                  setState(() {
-                    color = Colors.grey;
-                  });
-                },
-              ))
-        ],
-      ),
-      SizedBox(height: 12),
-      StreamBuilder<QuerySnapshot>(
-          // key: _key,
-          stream: firestore.collection('classroom_${grade.id}').snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData)
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor),
-                ),
-              );
-            else {
-              _items = snapshot.data.documents;
-              listItem(_items);
-              // print('item: ${_items[0]}');
-              // setState(() {
-              // AnimatedList.of(context).insertItem(0);
-              // Future.delayed(Duration(milliseconds: 200))
-              //     .then((value) => _listKey.currentState.insertItem(0));
-
-              // });
-              // return listItem(_items[0]);'
-              // commentData.addAll(_items[0]['']['']);
-              return Expanded(
-                  child: SingleChildScrollView(
-                      child: Column(
-                          children: discussionListWidget.reversed.toList())
-                      // child: listItem(_items[0]['disussion'])
-                      ));
-            }
-          }),
-    ]));
-  }
-
-  listItem(List<DocumentSnapshot> item) {
-    for (; widgetIndex < item[0]['disussion'].length; widgetIndex++) {
-      commentData.insert(widgetIndex, {
-        'comment': item[0]['disussion'][widgetIndex]['comment'],
-        'date': item[0]['disussion'][widgetIndex]['date']
-      });
-
-      print(commentData[widgetIndex]['comment']);
-      // print('itemval: ${item[0]['disussion'][widgetIndex]['comment']}');
-      discussionListWidget.add(Column(children: <Widget>[
+        SizedBox(height: 12),
         Container(
+          margin: EdgeInsets.symmetric(horizontal: 10.0),
           height: 50,
-          width: MediaQuery.of(context).size.width * 5 / 6,
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: 40,
-                width: 40,
-                // margin: EdgeInsets.only(left: 20),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image:
-                          // AssetImage(''),
-                          NetworkImage(
-                              'https://www.sean-christopher.com/seanchristopher/wp-content/uploads/2014/10/hotforteacher.png'),
-                      fit: BoxFit.fill),
-                ),
-              ),
-              Expanded(
-                  child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(item[0]['disussion'][widgetIndex]['comment']),
-                ),
-              )),
-            ],
+          child: SingleChildScrollView(
+            // controller: _controller2,
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            child: Container(
+                height: 30,
+                color: Colors.grey[300],
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(left: 50),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Row(
+                    children: List.generate(8, (index) {
+                  hr = 9 + index;
+                  return Row(
+                    children: <Widget>[Text('$hr:00'), SizedBox(width: 65)],
+                  );
+                }))),
           ),
         ),
-        Divider(
-          indent: 5,
-          endIndent: 5,
-          color: Colors.black38,
-          // thickness: 2,
-        )
-      ]));
-    }
-  }
-
-  _addToDiscussions(String text) async {
-    var comment = [
-      {'comment': text, 'date': DateTime.now().toUtc()}
-    ];
-    DocumentReference documentReference =
-        firestore.collection('classroom_${grade.id}').document('Session_1');
-    firestore.runTransaction((transaction) async {
-      await transaction.update(
-          documentReference, {'disussion': FieldValue.arrayUnion(comment)});
-    });
-    // documentReference.get().then((doc){
-    //   if(doc.exists){
-    //     documentReference.updateData({'disussion':FieldValue.arrayUnion(comment)});
-    //   }else{
-    //     documentReference.setData({'disussion':FieldValue.arrayUnion(comment)});
-    //   }
-    // });
+        Expanded(
+            child: SingleChildScrollView(
+                child: Column(
+          children: _dateTileWidgets,
+        ))),
+      ],
+    ));
   }
 }
