@@ -44,7 +44,7 @@ class ParentApp extends StatelessWidget {
           theme: ThemeData(
               primaryColor: Theme.of(context).primaryColor,
               accentColor: Colors.deepOrange,
-              fontFamily: 'Montserrat'),
+              fontFamily: 'Poppins'),
           supportedLocales: const [Locale('en')],
           localizationsDelegates: [
             DefaultMaterialLocalizations.delegate,
