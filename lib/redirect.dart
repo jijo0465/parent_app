@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parent_app/screens/digi_home.dart';
 import 'package:parent_app/screens/home_screen.dart';
 import 'package:parent_app/screens/loading_screen.dart';
 import 'package:parent_app/screens/login_screen.dart';
@@ -48,7 +49,7 @@ class _RedirectState extends State<Redirect> {
           return LoadingScreen();
           break;
         case Status.Authenticated:
-          return HomeScreen();
+          return DigiHome();
           break;
       }
       return Container();

@@ -15,19 +15,19 @@ class ChatScreen extends StatelessWidget {
     List<Teacher> teachers = [
       Teacher(
           id: 2001,
-          name: "Bhanumathi",
+          name: "Rachel\nMathematics",
           contactNo: "9988667755",
-          photoUrl: "assets/images/2001.png"),
+          photoUrl: "assets/images/1001.jpg"),
       Teacher(
           id: 2002,
-          name: "Jagathamma",
+          name: "John\nPhysics",
           contactNo: "9966442255",
-          photoUrl: "assets/images/2002.png"),
+          photoUrl: "assets/images/sir.jpg"),
       Teacher(
           id: 2003,
-          name: "Malarr",
+          name: "Seema\nEnglish",
           contactNo: "9977887722",
-          photoUrl: "assets/images/2003.png"),
+          photoUrl: "assets/images/1001.jpg"),
     ];
     return Scaffold(
         body: Column(
@@ -57,8 +57,8 @@ class ChatScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://www.sean-christopher.com/seanchristopher/wp-content/uploads/2014/10/hotforteacher.png'),
+                                image: AssetImage(
+                                    teachers.elementAt(index).photoUrl),
                                 fit: BoxFit.fill),
                           ),
                         ),
