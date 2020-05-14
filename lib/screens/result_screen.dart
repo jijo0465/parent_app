@@ -23,7 +23,7 @@ class _ResultScreenState extends State<ResultScreen> {
   Subjects selectedSubject = Subjects.All;
   static List<String> titleList = [
     'Overall Performance',
-    'Mathematics',
+    'Maths',
     'English',
     'Social',
     'Science',
@@ -33,9 +33,9 @@ class _ResultScreenState extends State<ResultScreen> {
   String title = titleList.first;
   //String percentTitle = titleList.first;
   int subjectIndex = 0;
-  double percentValue = 0.65;
+  double percentValue = 0.95;
   double percentage;
-  bool showTimeline = false; 
+  bool showTimeline = false;
   bool isLoading = false;
   ScrollController _controller;
   @override
@@ -62,31 +62,35 @@ class _ResultScreenState extends State<ResultScreen> {
                   Container(
                     height: MediaQuery.of(context).size.height,
                     child: Column(children: <Widget>[
-                      AnimatedPadding(padding: EdgeInsets.only(top: showTimeline? 20 : 100 ), duration: Duration(milliseconds: 400)),
+                      AnimatedPadding(
+                          padding: EdgeInsets.only(
+                              top: showTimeline
+                                  ? 60 - MediaQuery.of(context).padding.top
+                                  : 100),
+                          duration: Duration(milliseconds: 400)),
                       DigiScreenTitle(text: 'Academic Performances'),
                       SizedBox(height: 12),
-                      Container(
-                        margin: EdgeInsets.only(left: 5),
-                          child: LinearPercentIndicator(
-                        percent: percentValue,
-                        center: Text(title + '\t:\t$percentage%',
-                            style: TextStyle(fontSize: 12.0)),
-                        width: MediaQuery.of(context).size.width - 10,
-                        lineHeight: 15.0,
-                        animation: true,
-                        animationDuration: 600,
-                        backgroundColor: Colors.grey,
-                        progressColor: (percentValue >= 0.90)
-                            ? Colors.green[900]
-                            : (percentValue >= 0.80
-                                ? Colors.green[700]
-                                : (percentValue >= 0.70)
-                                    ? Colors.orangeAccent
-                                    : (percentValue >= 0.60)
-                                        ? Colors.yellow[400]
-                                        : Colors.red),
-                      )),
-                      SizedBox(height: 12),
+                      // Container(
+                      //   margin: EdgeInsets.only(left: 5),
+                      //     child: LinearPercentIndicator(
+                      //   percent: 0.9,
+                      //   center: Text(title + '\t:\t$percentage%',
+                      //       style: TextStyle(fontSize: 12.0)),
+                      //   width: MediaQuery.of(context).size.width - 10,
+                      //   lineHeight: 15.0,
+                      //   animation: true,
+                      //   animationDuration: 600,
+                      //   backgroundColor: Colors.grey,
+                      //   progressColor: (percentValue >= 0.90)
+                      //       ? Colors.green[900]
+                      //       : (percentValue >= 0.80
+                      //           ? Colors.green[700]
+                      //           : (percentValue >= 0.70)
+                      //               ? Colors.orangeAccent
+                      //               : (percentValue >= 0.60)
+                      //                   ? Colors.yellow[400]
+                      //                   : Colors.red),
+                      // )),
                       Container(
                           padding: EdgeInsets.only(left: 10, right: 10),
                           //height: 500,
@@ -117,8 +121,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                           break;
                                         case 2:
                                           setState(() {
-                                            selectedSubject =
-                                                Subjects.English;
+                                            selectedSubject = Subjects.English;
                                             subjectIndex = 2;
                                           });
                                           break;
@@ -130,8 +133,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                           break;
                                         case 4:
                                           setState(() {
-                                            selectedSubject =
-                                                Subjects.Science;
+                                            selectedSubject = Subjects.Science;
                                             subjectIndex = 4;
                                           });
                                           break;
@@ -167,7 +169,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 color: Colors.blue[900]),
                           )),
                       Container(
-                        margin: EdgeInsets.only(top: 10,bottom: 10),
+                        margin: EdgeInsets.only(top: 10, bottom: 10),
                         height: 300,
                         width: (MediaQuery.of(context).size.width) - 20,
                         child: Charts(index: subjectIndex),
@@ -177,25 +179,34 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                   AnimatedPositioned(
                     duration: Duration(milliseconds: 400),
-                    top: showTimeline? 180 : MediaQuery.of(context).size.height - 48,
+                    top: showTimeline
+                        ? 180
+                        : MediaQuery.of(context).size.height - 48,
                     child: Column(
                       children: <Widget>[
                         GestureDetector(
                           onVerticalDragStart: (details) {
                             setState(() {
-                              showTimeline = !showTimeline; 
+                              showTimeline = !showTimeline;
                             });
                           },
                           onTap: () {
                             setState(() {
-                              showTimeline = !showTimeline; 
+                              showTimeline = !showTimeline;
                             });
                           },
                           child: Container(
                               height: 45,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                  color: Colors.blue[800],
+                                  gradient: LinearGradient(colors: [
+                                    Theme.of(context).primaryColor,
+                                    Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.9)
+                                  ],
+                                  begin: Alignment.center,
+                                  end: Alignment.bottomRight),
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(50),
                                       topRight: Radius.circular(50))),
@@ -215,14 +226,14 @@ class _ResultScreenState extends State<ResultScreen> {
                                     Text(
                                         '${selectedSubject.toString().replaceFirst('Subjects.', '')}',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           color: Colors.red[300],
                                         )),
                                     RotatedBox(
                                       quarterTurns: 1,
                                       child: Icon(
                                         CupertinoIcons.forward,
-                                        size: 18,
+                                        size: 16,
                                         color: Colors.red[300],
                                       ),
                                     )
@@ -231,10 +242,14 @@ class _ResultScreenState extends State<ResultScreen> {
                               )),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 20,bottom: 70),
+                          padding: EdgeInsets.only(left: 20, bottom: 70),
                           decoration: BoxDecoration(
-                            color: Colors.blue[800],
-                          ),
+                              gradient: LinearGradient(colors: [
+                            Theme.of(context).primaryColor.withOpacity(0.98),
+                            Theme.of(context).primaryColor.withOpacity(0.8)
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight)),
                           width: (MediaQuery.of(context).size.width),
                           height: MediaQuery.of(context).size.height -
                               120 -

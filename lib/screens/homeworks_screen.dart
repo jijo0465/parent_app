@@ -122,11 +122,13 @@ class _HomeworksScreenState extends State<HomeworksScreen> {
                                     height: 50,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        gradient: LinearGradient(colors: [
-                                          Colors.blue[300],
-                                          Colors.blue[400],
-                                          Colors.blue[200]
-                                        ])),
+                                        color: Theme.of(context).primaryColor
+                                        // gradient: LinearGradient(colors: [
+                                        //   Colors.blue[300],
+                                        //   Colors.blue[400],
+                                        //   Colors.blue[200]
+                                        // ])
+                                        ),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -232,29 +234,39 @@ class _HomeworksScreenState extends State<HomeworksScreen> {
                     SizedBox(
                       height: 12,
                     ),
-                    Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            gradient: LinearGradient(colors: [
-                              Colors.blue[400],
-                              Colors.blue[600],
-                              Colors.blue[200]
-                            ])),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'Homeworks',
-                              style: TextStyle(
-                                  color: Colors.green[900], fontSize: 20),
-                            ),
-                            SizedBox(
-                                width: (MediaQuery.of(context).size.width) / 3),
-                            Icon(Icons.details,
-                                color: Colors.green[600], size: 24)
-                          ],
-                        )),
+                    Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Theme.of(context).primaryColor
+                                        // gradient: LinearGradient(colors: [
+                                        //   Colors.blue[300],
+                                        //   Colors.blue[400],
+                                        //   Colors.blue[200]
+                                        // ])
+                                        ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          'Homeworks',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
+                                        SizedBox(
+                                            width: (MediaQuery.of(context)
+                                                    .size
+                                                    .width) /
+                                                3),
+                                        Icon(CupertinoIcons.down_arrow,
+                                            color: Colors.white, size: 24)
+                                      ],
+                                    )),
+                              ),
                     Container(
                         height: (homeworksTapped) ? null : 0,
                         color: Colors.white,

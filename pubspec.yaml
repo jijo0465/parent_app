@@ -57,6 +57,8 @@ dependencies:
   date_picker_timeline: ^1.2.0
   video_player: ^0.10.10
   webview_flutter: ^0.3.21
+  nima: ^1.0.5
+  syncfusion_flutter_gauges: ^18.1.48
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +77,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/menu/
+    - assets/images/events/
+    - assets/images/scholarships/
     - assets/images/blue_gradient.jpg
     - assets/images/sir.jpg
     - assets/images/diary_header.png
@@ -107,6 +112,8 @@ flutter:
     - assets/images/ucevents.png
     - assets/videos/smartschool.mp4
     - assets/sqlite/local_data_parent_app.db
+    - assets/animations/superman-podium.nma
+    - assets/animations/superman-podium.png
 
   #   - images/a_dot_ham.jpeg
 

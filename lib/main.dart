@@ -5,7 +5,11 @@ import 'package:parent_app/screens/attendance_screen.dart';
 import 'package:parent_app/screens/chat_screen.dart';
 // import 'package:parent_app/screens/class_screen.dart';
 import 'package:parent_app/screens/classroom_screen.dart';
-import 'package:parent_app/screens/diary_screen.dart';
+// import 'package:parent_app/screens/home_screen.dart';
+import 'package:parent_app/screens/my_school.dart';
+import 'package:parent_app/screens/student_360.dart';
+import 'package:parent_app/screens/value_education.dart';
+import 'package:parent_app/screens/scholarship_screen.dart';
 import 'package:parent_app/screens/discussions_screen.dart';
 import 'package:parent_app/screens/events_screen.dart';
 import 'package:parent_app/screens/exams_screen.dart';
@@ -42,7 +46,7 @@ class ParentApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              primaryColor: Theme.of(context).primaryColor,
+              primaryColor: Color(0xff00739e),
               accentColor: Colors.deepOrange,
               fontFamily: 'Poppins'),
           supportedLocales: const [Locale('en')],
@@ -53,6 +57,10 @@ class ParentApp extends StatelessWidget {
           home: Redirect(),
           routes: <String, WidgetBuilder>{
             '/home': (context) => Redirect(),
+            '/mySchool': (context) => MySchoolScreen(),
+            '/student_360': (context) => Student360Screen(), 
+            '/value_edu': (context) => ValueEducationScreen(),
+            '/scholarship': (context) => ScholarshipScreen(),
             '/diary': (context) => SchoolDiaryScreen(),
             '/result': (context) => ResultScreen(),
             '/attendance':(context) => AttendanceScreen(),

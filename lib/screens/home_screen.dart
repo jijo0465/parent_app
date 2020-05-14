@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
   double _height = 240.0;
   ScrollController _scrollController;
   bool stateChanged = false;
-  bool isLoading = true;
+  bool isLoading = false;
   Student selectedStudent;
   // int count = 8;
 
@@ -270,13 +270,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
           BottomNavigationBarItem(icon: Icon(Icons.info), title: Text('About'))
         ]),
-        body: isLoading
-            ? Container(
-                child: Center(
-                  child: CupertinoActivityIndicator(),
-                ),
-              )
-            : Container(
+        body: Container(
                 child:
                     Consumer<StudentState>(builder: (context, studentState, _) {
                   selectedStudent = studentState.selectedstudent;
@@ -305,7 +299,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column(children: <Widget>[
                         DigiAppbar(
                           onStudentTapped: () {
-                            isLoading = true;
+                            // isLoading = true;
                             Navigator.push(
                               context,
                               PageRouteBuilder(

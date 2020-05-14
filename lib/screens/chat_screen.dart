@@ -30,51 +30,72 @@ class ChatScreen extends StatelessWidget {
           photoUrl: "assets/images/1001.jpg"),
     ];
     return Scaffold(
-        body: Column(
-      children: <Widget>[
-        DigiCampusAppbar(),
-        Expanded(
-          child: ListView.builder(
-            itemCount: 3,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  // print(teachers.elementAt(index).name);
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (BuildContext context) {
-                    return DigiChat(teacher: teachers.elementAt(index),studentId:_studentId);
-                  }));
-                },
-                child: Card(
-                  child: Container(
-                    height: 80,
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    teachers.elementAt(index).photoUrl),
-                                fit: BoxFit.fill),
-                          ),
-                        ),
-                        SizedBox(width: 12,),
-                        Container(
-                          child: Text(teachers.elementAt(index).name),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              );
+        bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: Theme.of(context).primaryColor,
+            unselectedItemColor: Colors.grey,
+            currentIndex: 1,
+            onTap: (index) {
+              if (index == 0) Navigator.of(context).pop();
             },
-          ),
-        )
-      ],
-    ));
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home), title: Text('Home')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.message), title: Text('Chat')),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.info),
+                title: Text('About'),
+              ),
+            ]),
+        body: Column(
+          children: <Widget>[
+            DigiCampusAppbar(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      // print(teachers.elementAt(index).name);
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return DigiChat(
+                            teacher: teachers.elementAt(index),
+                            studentId: _studentId);
+                      }));
+                    },
+                    child: Card(
+                      child: Container(
+                        height: 80,
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        teachers.elementAt(index).photoUrl),
+                                    fit: BoxFit.fill),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Container(
+                              child: Text(teachers.elementAt(index).name),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ));
   }
 }

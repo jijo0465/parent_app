@@ -14,6 +14,7 @@ import 'package:parent_app/screens/student_details_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
+import 'student_profile_screen.dart';
 import 'dart:math';
 
 class DigiHome extends DrawerContent {
@@ -61,6 +62,24 @@ class _HomeScreenState extends State<DigiHome> with TickerProviderStateMixin {
           return LoginScreen();
         } else {
           return Scaffold(
+            bottomNavigationBar: BottomNavigationBar(
+                selectedItemColor: Theme.of(context).primaryColor,
+                unselectedItemColor: Colors.grey,
+                onTap: (index) {
+                  if (index == 1) Navigator.of(context).pushNamed('/chat');
+                },
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home,),
+                    title: Text('Home'),
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.message), title: Text('Chat')),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.info),
+                    title: Text('About'),
+                  ),
+                ]),
             body: HiddenDrawer(
               controller: drawerController,
               header: Container(
@@ -107,11 +126,15 @@ class _HomeScreenState extends State<DigiHome> with TickerProviderStateMixin {
               ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [Colors.blue[300], Colors.blue[800], Colors.blue],
-                  // tileMode: TileMode.repeated,
-                ),
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Theme.of(context).primaryColor.withOpacity(0.7),
+                      Theme.of(context).primaryColor.withOpacity(0.8),
+                      Theme.of(context).primaryColor
+                    ]
+                    // tileMode: TileMode.repeated,
+                    ),
               ),
             ),
           );
@@ -131,8 +154,7 @@ class HomePage extends DrawerContent {
 
 class _HomePageState extends State<HomePage> {
   int pageNo = 0;
-
-  double _height = 300.0;
+  double _height = 280.0;
   bool stateChanged = false;
   bool isLoading = true;
   Student selectedStudent;
@@ -151,10 +173,6 @@ class _HomePageState extends State<HomePage> {
     selectedStudent = state.selectedstudent;
 
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.info), title: Text('About'))
-        ]),
         body: isLoading
             ? Container(
                 child: Center(
@@ -169,8 +187,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       Container(
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
+                            gradient: LinearGradient(colors: [
                           Colors.grey[300],
                           Colors.grey[100],
                           Colors.grey[300]
@@ -253,11 +270,30 @@ class _HomePageState extends State<HomePage> {
                                   children: <Widget>[
                                     SizedBox(width: 12),
                                     HomeCard(
+                                      icon: Icon(
+                                        CupertinoIcons.profile_circled,
+                                        size: 35,
+                                        color: Color(0xff00739e),
+                                      ),
+                                      text: 'Evaluate Student 360',
+                                      isImportant: false,
                                       color: Colors.white.withOpacity(0.8),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/student_360');
+                                      },
                                     ),
                                     SizedBox(width: 0),
                                     HomeCard(
+                                      icon: Icon(Icons.view_carousel,
+                                          size: 35, color: Color(0xff00739e)),
+                                      text: 'Virtual Classroom',
+                                      isImportant: false,
                                       color: Colors.white.withOpacity(0.8),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/classroom');
+                                      },
                                     ),
                                     SizedBox(width: 8),
                                   ],
@@ -268,7 +304,38 @@ class _HomePageState extends State<HomePage> {
                                   children: <Widget>[
                                     SizedBox(width: 12),
                                     HomeCard(
+                                      icon: Icon(
+                                          CupertinoIcons.video_camera_solid,
+                                          size: 35,
+                                          color: Colors.white),
+                                      text: 'Live Class',
+                                      isImportant: true,
+                                      color: Colors.red[400],
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/live');
+                                      },
+                                    ),
+                                    HomeCard(
+                                      icon: Icon(CupertinoIcons.heart_solid,
+                                          size: 35, color: Colors.red[900]),
+                                      text: 'Value\nEducation',
+                                      isImportant: false,
                                       color: Colors.white.withOpacity(0.8),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/value_edu');
+                                      },
+                                    ),
+                                    HomeCard(
+                                      icon: Icon(Icons.school,
+                                          size: 35, color: Color(0xff00739e)),
+                                      text: 'My\nSchool',
+                                      isImportant: false,
+                                      color: Colors.white.withOpacity(0.8),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/mySchool');
+                                      },
                                     ),
                                     SizedBox(width: 12),
                                   ],
@@ -278,9 +345,27 @@ class _HomePageState extends State<HomePage> {
                                 child: Row(
                                   children: <Widget>[
                                     SizedBox(width: 12),
-                                    HomeCard(color: Colors.white.withOpacity(0.8)),
-                                    HomeCard(color: Colors.white.withOpacity(0.8)),
-                                    HomeCard(color: Colors.white.withOpacity(0.8)),
+                                    HomeCard(
+                                      icon: Icon(CupertinoIcons.eye_solid,
+                                          size: 40, color: Color(0xff00739e)),
+                                      text: 'Academic Reports',
+                                      isImportant: false,
+                                      color: Colors.white.withOpacity(0.8),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/result');
+                                      },
+                                    ),
+                                    HomeCard(
+                                      icon: Icon(Icons.accessibility_new,
+                                          size: 35, color: Color(0xff00739e)),
+                                      text: 'Scholorships',
+                                      isImportant: false,
+                                      color: Colors.white.withOpacity(0.8),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/scholarship');
+                                      },
+                                    ),
                                     SizedBox(
                                       width: 12,
                                     )

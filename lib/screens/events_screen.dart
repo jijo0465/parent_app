@@ -13,7 +13,7 @@ class _EventsScreenState extends State<EventsScreen> {
   final List<Map> eventsList = [
     {
       "create": "Event",
-      "name": "Mjiv sahfbgu asvhbszhv",
+      "name": "Annual Day 2020",
       "classes": "Java",
       "dateFrom": "2020-06-02",
       "dateTo": "2020-06-02",
@@ -21,7 +21,7 @@ class _EventsScreenState extends State<EventsScreen> {
     },
     {
       "create": "Event",
-      "name": "Mjiv sahfbgu asvhbszhv",
+      "name": "Karate Tournament",
       "classes": "Java",
       "dateFrom": "2020-05-05",
       "dateTo": "2020-05-07",
@@ -29,7 +29,7 @@ class _EventsScreenState extends State<EventsScreen> {
     },
     {
       "create": "Event",
-      "name": "Mjiv sahfbgu asvhbszhv",
+      "name": "Quiz Competition National Level Runners",
       "classes": "Java",
       "dateFrom": "2020-06-07",
       "dateTo": "2020-06-07",
@@ -37,7 +37,7 @@ class _EventsScreenState extends State<EventsScreen> {
     },
     {
       "create": "Event",
-      "name": "Mjiv sahfbgu asvhbszhv",
+      "name": "Football All Kerala Meet",
       "classes": "Java",
       "dateFrom": "2020-06-06",
       "dateTo": "2020-06-06",
@@ -45,28 +45,28 @@ class _EventsScreenState extends State<EventsScreen> {
     },
     {
       "create": "Event",
-      "name": "Mjiv sahfbgu asvhbszhv",
+      "name": "Arts Workshop",
       "classes": "Java",
       "dateFrom": "2020-06-08",
       "dateTo": "2020-06-10",
       "image": "assets/images/ucevents.png"
     },
-    {
-      "create": "Event",
-      "name": "Mjiv sahfbgu asvhbszhv",
-      "classes": "Java",
-      "dateFrom": "2020-06-12",
-      "dateTo": "2020-06-12",
-      "image": "assets/images/ucevents.png"
-    },
-    {
-      "create": "Event",
-      "name": "Mjiv sahfbgu asvhbszhv",
-      "classes": "Java",
-      "dateFrom": "2020-06-23",
-      "dateTo": "2020-06-23",
-      "image": "assets/images/ucevents.png"
-    }
+    // {
+    //   "create": "Event",
+    //   "name": "Mjiv sahfbgu asvhbszhv",
+    //   "classes": "Java",
+    //   "dateFrom": "2020-06-12",
+    //   "dateTo": "2020-06-12",
+    //   "image": "assets/images/ucevents.png"
+    // },
+    // {
+    //   "create": "Event",
+    //   "name": "Mjiv sahfbgu asvhbszhv",
+    //   "classes": "Java",
+    //   "dateFrom": "2020-06-23",
+    //   "dateTo": "2020-06-23",
+    //   "image": "assets/images/ucevents.png"
+    // }
   ];
   Comparator<dynamic> dateComparator = (a, b) =>
       DateTime.parse(a['dateFrom']).compareTo(DateTime.parse(b['dateFrom']));
@@ -108,7 +108,7 @@ class _EventsScreenState extends State<EventsScreen> {
                             (index) => Card(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
-                                color: Colors.blue[300],
+                                color: Theme.of(context).primaryColor.withOpacity(0.9),
                                 elevation: 5,
                                 child: Column(
                                   children: [
@@ -121,7 +121,7 @@ class _EventsScreenState extends State<EventsScreen> {
                                         width: double.infinity,
                                         child: Image(
                                           image: AssetImage(
-                                              "assets/images/ucevents.png"),
+                                              "assets/images/events/event_$index.jpg"),
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -148,7 +148,7 @@ class _EventsScreenState extends State<EventsScreen> {
                                               children: [
                                                 Icon(
                                                   Icons.date_range,
-                                                  color: Colors.blue,
+                                                  color: Theme.of(context).primaryColor,
                                                   size: 30,
                                                 ),
                                                 Column(
@@ -188,7 +188,7 @@ class _EventsScreenState extends State<EventsScreen> {
                                                               ['dateFrom'] !=
                                                           eventsList[index]
                                                               ['dateTo']
-                                                      ? Colors.blue
+                                                      ? Theme.of(context).primaryColor
                                                       : Colors.white,
                                                 ),
                                                 Column(
@@ -285,10 +285,10 @@ class _EventsScreenState extends State<EventsScreen> {
                                             MainAxisAlignment.spaceAround,
                                         children: <Widget>[
                                           Text(eventsList[index]['name'],
-                                              // textAlign: TextAlign.center,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 24,
+                                                color: Colors.white70,
+                                                fontSize: 22,
                                                 fontWeight: FontWeight.bold,
                                               )),
                                           Icon(

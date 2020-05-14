@@ -74,7 +74,7 @@ class _ExamScreenState extends State<ExamScreen> {
   //   super.initState();
   // }
 
-   void initState() {
+  void initState() {
     // TODO: implement initState
     List.generate(subjectList.length, (i) {
       isExamTapped.insert(i, false);
@@ -94,7 +94,7 @@ class _ExamScreenState extends State<ExamScreen> {
           Navigator.of(context).pop();
         },
       ),
-      SizedBox(height:20),
+      SizedBox(height: 20),
       DigiScreenTitle(text: 'Upcoming Examinations'),
       Expanded(child: timelineModel(TimelinePosition.Left))
     ])));
@@ -124,60 +124,66 @@ class _ExamScreenState extends State<ExamScreen> {
         },
         child: Card(
           elevation: 6,
-          margin: EdgeInsets.symmetric(vertical: i==0?0.0:16.0),
+          margin: EdgeInsets.symmetric(vertical: i == 0 ? 0.0 : 16.0),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           clipBehavior: Clip.antiAlias,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
-                height: 110,
-                width: 290,
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    // Image.network(doodle.doodle),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(exam['create'], style: textTheme.caption),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(
-                      exam['topic'],
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(
-                      exam['subject'],
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                  ],
+              IntrinsicHeight(
+                child: Container(
+                  // height: 110,
+                  // width: 290,
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      // Image.network(doodle.doodle),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(exam['create'], style: textTheme.caption),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        exam['topic'],
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                        exam['subject'],
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               AnimatedContainer(
                 duration: Duration(milliseconds: 400),
                 height: isExamTapped[i] && exam['testType'] == '1'
-                    ? (105.0*subjectList.length)
-                    : exam['testType'] == '0' 
-                    ? 0 
-                    : 20,
+                    ? (105.0 * subjectList.length)
+                    : exam['testType'] == '0' ? 0 : 20,
                 alignment: Alignment.bottomCenter,
                 decoration: BoxDecoration(
-                color: Colors.blue[800],
-                borderRadius: BorderRadius.only(
-                    topLeft: isExamTapped[i] && exam['testType'] == '1'?Radius.circular(20):Radius.circular(0),
-                    topRight: isExamTapped[i] && exam['testType'] == '1'?Radius.circular(20):Radius.circular(0))),
+                    color: Colors.blue[800],
+                    borderRadius: BorderRadius.only(
+                        topLeft: isExamTapped[i] && exam['testType'] == '1'
+                            ? Radius.circular(20)
+                            : Radius.circular(0),
+                        topRight: isExamTapped[i] && exam['testType'] == '1'
+                            ? Radius.circular(20)
+                            : Radius.circular(0))),
                 // color: Colors.blue[600],
-                child: isExamTapped[i] && exam['testType'] == '1'? ExamTimelinePage(title: 'Exams'):SizedBox(height: 20),
+                child: isExamTapped[i] && exam['testType'] == '1'
+                    ? ExamTimelinePage(title: 'Exams')
+                    : SizedBox(height: 20),
               )
             ],
           ),

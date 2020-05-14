@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:parent_app/components/digi_screen_title.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -15,9 +16,15 @@ class AttendanceScreen extends StatefulWidget {
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
   CalendarController _calendarController;
-  Map<DateTime, List<bool>> _events;
+  Map<DateTime, List<bool>> _events = {};
   bool isPresent = true;
   double _height = 600;
+  DateTime _selectedDay;
+  DateTime _date;
+  DateTime _startDate;
+  DateTime _endDate;
+  DateFormat dateFormat = DateFormat.E();
+  String formattedDay;
 
   @override
   void initState() {
@@ -27,25 +34,60 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       });
     });
     _calendarController = CalendarController();
-    final _selectedDay = DateTime.now();
+    _selectedDay = DateTime.now();
+    _startDate = DateTime(2020, 02, 15);
+    _endDate = DateTime(2021, 01, 12);
+    _date = _startDate;
+    final length = DateTime.now().difference(_startDate);
+    // print(length);
 
-    _events = {
-      _selectedDay.subtract(Duration(days: 30)): [true],
-      _selectedDay.subtract(Duration(days: 27)): [false],
-      _selectedDay.subtract(Duration(days: 20)): [true],
-      _selectedDay.subtract(Duration(days: 16)): [true],
-      _selectedDay.subtract(Duration(days: 10)): [true],
-      _selectedDay.subtract(Duration(days: 4)): [false],
-      _selectedDay.subtract(Duration(days: 2)): [false],
-      _selectedDay: [true],
-      _selectedDay.add(Duration(days: 1)): [true],
-      _selectedDay.add(Duration(days: 3)): [true],
-      _selectedDay.add(Duration(days: 7)): [true],
-      _selectedDay.add(Duration(days: 11)): [true],
-      _selectedDay.add(Duration(days: 17)): [true],
-      _selectedDay.add(Duration(days: 22)): [true],
-      _selectedDay.add(Duration(days: 26)): [true],
-    };
+    // _events.addAll({
+    //   List.generate(length.inDays, (index) {
+    //   _selectedDay.add(Duration(days: 1));
+    //   return
+    //   _events = Map.from({
+    //     _selectedDay: [true]
+    //   });
+    // })});
+
+    List.generate(length.inDays, (index) {
+      // print(index);
+      _date = _date.add(Duration(days: 1));
+      formattedDay = dateFormat.format(_date);
+      print(formattedDay);
+      if((formattedDay!='Sun')&&(formattedDay!='Sat')){
+        _events[_date] = [true];
+      }
+    });
+
+    // _date = DateTime.now().subtract(Duration(days: 14));
+    // _events.update(_date, (_) => [false]);
+    // _date = DateTime.now().subtract(Duration(days: 21));
+    // // _events.update(_date, (_) => [false]);
+    _events.update(DateTime(2020,05,05), (value) => [false]);
+    _events.update(DateTime(2020,04,13), (value) => [false]);
+    _events.update(DateTime(2020,04,14), (value) => [false]);
+    _events.update(DateTime(2020,03,24), (value) => [false]);
+
+    // _events.remove(DateTime(2020,06,27));
+    // _events.remove(DateTime(2020,06,27));
+
+
+    // _events.forEach((key, value) { 
+    //   print('$key : ${[value]}');
+    // });
+    
+
+    // _selectedDay: [true],
+    // _selectedDay.add(Duration(days: 1)): [true],
+    // _selectedDay.add(Duration(days: 3)): [true],
+    // _selectedDay.add(Duration(days: 7)): [true],
+    // _selectedDay.add(Duration(days: 11)): [true],
+    // _selectedDay.add(Duration(days: 17)): [true],
+    // _selectedDay.add(Duration(days: 22)): [true],
+    // _selectedDay.add(Duration(days: 26)): [true],
+    // // };
+    // _selectedDay = DateTime.now();
     super.initState();
   }
 
@@ -90,21 +132,22 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Colors.blue[400],
-                  Colors.blue[600],
-                  Colors.blue[800]
+                  Theme.of(context).primaryColor.withOpacity(0.8),
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor.withOpacity(0.8)
                 ],
                 // tileMode: TileMode.repeated,
               ),
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(34),
-                  topRight: Radius.circular(34))),
+                  topLeft: Radius.circular(34), topRight: Radius.circular(34))),
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: <Widget>[
               Expanded(
                 child: TableCalendar(
                   // rowHeight: 30,
+                  startDay: _startDate,
+                  endDay: _endDate,
                   calendarController: _calendarController,
                   events: _events,
                   formatAnimation: FormatAnimation.scale,
@@ -117,7 +160,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         color: Colors.white,
                       )),
                   headerStyle: HeaderStyle(
-                      formatButtonTextStyle: TextStyle(fontSize: 12,color: Colors.greenAccent),
+                      formatButtonTextStyle:
+                          TextStyle(fontSize: 12, color: Colors.greenAccent),
                       centerHeaderTitle: true,
                       titleTextStyle: TextStyle(
                           color: Colors.black,
@@ -153,22 +197,22 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    RaisedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/chat');
-                        },
-                        child: Text('Message Teacher')),
-                    RaisedButton(
-                        onPressed: () {}, child: Text('Contact Teacher'))
-                  ],
-                ),
-              ),
+              // SizedBox(height: 8),
+              // Container(
+              //   alignment: Alignment.bottomCenter,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: <Widget>[
+              //       RaisedButton(
+              //           onPressed: () {
+              //             Navigator.pushNamed(context, '/chat');
+              //           },
+              //           child: Text('Message Teacher')),
+              //       RaisedButton(
+              //           onPressed: () {}, child: Text('Contact Teacher'))
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: 8,
               ),

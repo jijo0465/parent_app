@@ -97,7 +97,6 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
 
   @override
   void initState() {
-
     initializeDateFormatting();
     diaryImage = Image.asset('assets/images/diary_1.png');
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -182,9 +181,8 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
             // ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(left:8,right: 8),
+                padding: EdgeInsets.only(left: 8, right: 8),
                 child: PageTurn(
-                  
                     cutoff: 0.3,
                     duration: Duration(milliseconds: 700),
                     // initialIndex: 3,
@@ -214,65 +212,71 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
       child: Column(
         children: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Expanded(child: Container()),
-              Container(
-                alignment: Alignment.center,
-                height: 80,
-                width: 80,
-                decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    backgroundBlendMode: BlendMode.overlay),
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text(
-                      selectedDate.month == 1
-                          ? 'JAN'
-                          : selectedDate.month == 2
-                              ? 'FEB'
-                              : selectedDate.month == 3
-                                  ? 'MAR'
-                                  : selectedDate.month == 4
-                                      ? 'APR'
-                                      : selectedDate.month == 5
-                                          ? 'MAY'
-                                          : selectedDate.month == 6
-                                              ? 'JUN'
-                                              : selectedDate.month == 7
-                                                  ? 'JUL'
-                                                  : selectedDate.month == 8
-                                                      ? 'AUG'
-                                                      : selectedDate.month == 9
-                                                          ? 'SEP'
-                                                          : selectedDate
-                                                                      .month ==
-                                                                  10
-                                                              ? 'OCT'
-                                                              : selectedDate
-                                                                          .month ==
-                                                                      11
-                                                                  ? 'NOV'
-                                                                  : 'DEC',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w800,
+              // Expanded(child: Container()),
+              IntrinsicHeight(
+                child: Container(
+                  alignment: Alignment.center,
+                  // height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      // backgroundBlendMode: BlendMode.colorDodge
                       ),
-                    ),
-                    // textScaleFactor: 2,),
-                    Text(
-                      '${selectedDate.day}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      SizedBox(height: 4),
+                      Text(
+                        selectedDate.month == 1
+                            ? 'JAN'
+                            : selectedDate.month == 2
+                                ? 'FEB'
+                                : selectedDate.month == 3
+                                    ? 'MAR'
+                                    : selectedDate.month == 4
+                                        ? 'APR'
+                                        : selectedDate.month == 5
+                                            ? 'MAY'
+                                            : selectedDate.month == 6
+                                                ? 'JUN'
+                                                : selectedDate.month == 7
+                                                    ? 'JUL'
+                                                    : selectedDate.month == 8
+                                                        ? 'AUG'
+                                                        : selectedDate.month ==
+                                                                9
+                                                            ? 'SEP'
+                                                            : selectedDate
+                                                                        .month ==
+                                                                    10
+                                                                ? 'OCT'
+                                                                : selectedDate
+                                                                            .month ==
+                                                                        11
+                                                                    ? 'NOV'
+                                                                    : 'DEC',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
-                      textScaleFactor: 3,
-                    ),
-                  ],
+                      // textScaleFactor: 2,),
+                      Text(
+                        '${selectedDate.day}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 38,
+                          fontWeight: FontWeight.w800,
+                        ),
+                        // textScaleFactor: 3,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

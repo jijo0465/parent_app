@@ -201,7 +201,7 @@ class _InOutScreenState extends State<InOutScreen> {
               ],
             ),
             decoration: BoxDecoration(
-                color: Colors.blue[800],
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50))),

@@ -60,7 +60,7 @@ class HomeHeader extends StatelessWidget {
                               child: Text(
                                 'Christ Nagar',
                                 style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600),
                               )),
@@ -97,7 +97,7 @@ class HomeHeader extends StatelessWidget {
                                                   studentState.selectedstudent.name,
                                                   style: TextStyle(
                                                       decoration: TextDecoration.none,
-                                                      fontSize: 20,
+                                                      fontSize: 17,
                                                       color: Colors.white),
                                                 ),
                                                 Text(
@@ -121,8 +121,8 @@ class HomeHeader extends StatelessWidget {
                                                 child: Image.asset(
                                                     studentState.selectedstudent.photoUrl,
                                                     fit: BoxFit.fill)),
-                                            height: height/2,
-                                            width: height/2,
+                                            height: height/2.5,
+                                            width: height/2.5,
                                           ),
                                         ),
                                       ),
@@ -138,7 +138,7 @@ class HomeHeader extends StatelessWidget {
                                                   'V B',
                                                   style: TextStyle(
                                                       decoration: TextDecoration.none,
-                                                      fontSize: 20,
+                                                      fontSize: 17,
                                                       color: Colors.white),
                                                 ),
                                                 Text(
@@ -167,7 +167,7 @@ class HomeHeader extends StatelessWidget {
                         ),
                         ),
                       ),
-                      SizedBox(height: 40)
+                      SizedBox(height: 20)
                     ],
                   ),
                 ),

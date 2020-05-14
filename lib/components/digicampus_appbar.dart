@@ -18,6 +18,7 @@ class DigiCampusAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color color = Theme.of(context).primaryColor;
     return Column(
       children: <Widget>[
         Container(
@@ -27,7 +28,7 @@ class DigiCampusAppbar extends StatelessWidget {
               gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.blue[600], Colors.blue[800], Colors.blue],
+            colors: [color.withOpacity(0.8), color, color.withOpacity(0.8)],
             // tileMode: TileMode.repeated,
           )),
         ),
@@ -90,7 +91,7 @@ class DigiCampusAppbar extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: [Colors.blue[300], Colors.blue[800], Colors.blue],
+                colors: [color.withOpacity(0.8), color, color.withOpacity(0.8)],
                 // tileMode: TileMode.repeated,
               ),
               borderRadius: BorderRadius.only(

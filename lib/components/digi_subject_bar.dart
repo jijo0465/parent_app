@@ -9,7 +9,7 @@ class DigiSubjectBar extends StatelessWidget {
 
   static List<Map<String, String>> subjects = [
     {'no': '0', 'sub': 'All'},
-    {'no': '1', 'sub': 'Mathematics'},
+    {'no': '1', 'sub': 'Maths'},
     {'no': '1', 'sub': 'English'},
     {'no': '2', 'sub': 'Social'},
     {'no': '3', 'sub': 'Science'},

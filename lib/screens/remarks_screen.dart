@@ -16,7 +16,7 @@ class _RemarksScreenState extends State<RemarksScreen> {
   static Map<String, dynamic> teacherDetails = {
     "id": 005,
     "teacherId": 1010,
-    "name": "Bhanumathi"
+    "name": "Linda Mathew"
   };
   static Teacher teacher = Teacher.fromMap(teacherDetails);
 

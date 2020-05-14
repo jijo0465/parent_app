@@ -111,7 +111,6 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
                       });
                     }
                   });
-                  
                   return Container(
                     height: 150,
                     child: PageView.builder(
@@ -199,7 +198,10 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
                       }
                     ),
                     decoration: BoxDecoration(
-                        color: Colors.blue[800],
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [Theme.of(context).primaryColor,Theme.of(context).primaryColor.withOpacity(0.85)]),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50),
                             topRight: Radius.circular(50))),
