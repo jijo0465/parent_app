@@ -63,7 +63,7 @@ class Student360Screen extends StatelessWidget {
                           width: 160,
                           child: DigiGauge(
                             value: 70,
-                            text: 'Sports',
+                            text: 'Value Education',
                           ),
                         ),
                       ),
@@ -87,7 +87,7 @@ class Student360Screen extends StatelessWidget {
                           width: 120,
                           child: DigiGauge(
                             value: 62,
-                            text: 'Attendance',
+                            text: 'Arts & Sports',
                           ),
                         ),
                       ),
@@ -99,7 +99,7 @@ class Student360Screen extends StatelessWidget {
                           width: 170,
                           child: DigiGauge(
                             value: 88,
-                            text: 'Language',
+                            text: 'Communication',
                           ),
                         ),
                       ),

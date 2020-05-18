@@ -29,7 +29,7 @@ class _EventsScreenState extends State<EventsScreen> {
     },
     {
       "create": "Event",
-      "name": "Quiz Competition National Level Runners",
+      "name": "Chess Competition",
       "classes": "Java",
       "dateFrom": "2020-06-07",
       "dateTo": "2020-06-07",

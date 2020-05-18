@@ -83,6 +83,7 @@ class _ExamTimelinePageState extends State<ExamTimelinePage> {
                   Text(
                     exam['time'],
                     textAlign: TextAlign.center,
+                    textScaleFactor: 0.9,
                   ),
                 ],
               ),

@@ -11,6 +11,7 @@ import 'package:parent_app/screens/student_360.dart';
 import 'package:parent_app/screens/value_education.dart';
 import 'package:parent_app/screens/scholarship_screen.dart';
 import 'package:parent_app/screens/discussions_screen.dart';
+import 'package:parent_app/screens/knowledge_base.dart';
 import 'package:parent_app/screens/events_screen.dart';
 import 'package:parent_app/screens/exams_screen.dart';
 import 'package:parent_app/screens/fee_payment_screen.dart';
@@ -79,6 +80,7 @@ class ParentApp extends StatelessWidget {
             '/classroom': (context) => ClassroomScreen(),
             '/discussions': (context) => DiscussionsScreen(),
             '/live': (context) => LiveScreen(),
+            '/notes': (context) => KnowledgeBaseScreen(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),

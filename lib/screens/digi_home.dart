@@ -63,18 +63,24 @@ class _HomeScreenState extends State<DigiHome> with TickerProviderStateMixin {
         } else {
           return Scaffold(
             bottomNavigationBar: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
                 selectedItemColor: Theme.of(context).primaryColor,
                 unselectedItemColor: Colors.grey,
                 onTap: (index) {
                   if (index == 1) Navigator.of(context).pushNamed('/chat');
+                  if (index == 2) Navigator.of(context).pushNamed('/notes');
                 },
                 items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home,),
-                    title: Text('Home'),
+                    icon: Icon(Icons.home),
+                    title: Text('Home',style: TextStyle(fontSize: 10),),
                   ),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.message), title: Text('Chat')),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.art_track),
+                    title: Text('Notes'),
+                  ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.info),
                     title: Text('About'),
@@ -268,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    SizedBox(width: 12),
+                                    SizedBox(width: 4),
                                     HomeCard(
                                       icon: Icon(
                                         CupertinoIcons.profile_circled,
@@ -295,14 +301,14 @@ class _HomePageState extends State<HomePage> {
                                             context, '/classroom');
                                       },
                                     ),
-                                    SizedBox(width: 8),
+                                    SizedBox(width: 4),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    SizedBox(width: 12),
+                                    SizedBox(width: 4),
                                     HomeCard(
                                       icon: Icon(
                                           CupertinoIcons.video_camera_solid,
@@ -317,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     HomeCard(
                                       icon: Icon(CupertinoIcons.heart_solid,
-                                          size: 35, color: Colors.red[900]),
+                                          size: 25, color: Colors.red[900]),
                                       text: 'Value\nEducation',
                                       isImportant: false,
                                       color: Colors.white.withOpacity(0.8),
@@ -329,7 +335,7 @@ class _HomePageState extends State<HomePage> {
                                     HomeCard(
                                       icon: Icon(Icons.school,
                                           size: 35, color: Color(0xff00739e)),
-                                      text: 'My\nSchool',
+                                      text: 'My School',
                                       isImportant: false,
                                       color: Colors.white.withOpacity(0.8),
                                       onPressed: () {
@@ -337,14 +343,14 @@ class _HomePageState extends State<HomePage> {
                                             context, '/mySchool');
                                       },
                                     ),
-                                    SizedBox(width: 12),
+                                    SizedBox(width: 4),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    SizedBox(width: 12),
+                                    SizedBox(width: 4),
                                     HomeCard(
                                       icon: Icon(CupertinoIcons.eye_solid,
                                           size: 40, color: Color(0xff00739e)),
@@ -367,7 +373,7 @@ class _HomePageState extends State<HomePage> {
                                       },
                                     ),
                                     SizedBox(
-                                      width: 12,
+                                      width: 4,
                                     )
                                   ],
                                 ),

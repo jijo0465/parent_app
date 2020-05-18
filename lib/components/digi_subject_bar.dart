@@ -10,11 +10,11 @@ class DigiSubjectBar extends StatelessWidget {
   static List<Map<String, String>> subjects = [
     {'no': '0', 'sub': 'All'},
     {'no': '1', 'sub': 'Maths'},
-    {'no': '1', 'sub': 'English'},
-    {'no': '2', 'sub': 'Social'},
-    {'no': '3', 'sub': 'Science'},
-    {'no': '4', 'sub': 'Malayalam'},
-    {'no': '5', 'sub': 'Hindi'}
+    {'no': '2', 'sub': 'English'},
+    {'no': '3', 'sub': 'Social'},
+    {'no': '4', 'sub': 'Science'},
+    {'no': '5', 'sub': 'Malayalam'},
+    {'no': '6', 'sub': 'Hindi'}
   ];
   static Color borderColor = Colors.deepOrange[200],
       textColor = Colors.black54,

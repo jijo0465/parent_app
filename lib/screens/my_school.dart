@@ -71,12 +71,13 @@ class _MySchoolScreenState extends State<MySchoolScreen> {
   bool isLoading = false;
   bool isStudentSelected = false;
   Student selectedStudent;
-  Student student;
-  int selectedId;
+  List<Student> studentsList = [];
+  // int selectedId;
+  int i;
 
   @override
   void initState() {
-    selectedId = 0;
+    // selectedId = 0;
     super.initState();
 
     _scrollController = new ScrollController();
@@ -112,7 +113,23 @@ class _MySchoolScreenState extends State<MySchoolScreen> {
     return Scaffold(
       body: Container(
           child: Consumer<StudentState>(builder: (context, studentState, _) {
+        studentsList.addAll(studentState.allstudents);
         selectedStudent = studentState.selectedstudent;
+        print(
+            '1: ${studentsList[0].id}, ${studentsList[1].id}, ${studentsList[2].id},');
+        if (isStudentSelected == false) {
+          for (i = 0; i < studentState.allstudents.length; i++) {
+            if (studentState.allstudents[i].id == studentState.selectedstudent.id) {
+              print('$i');
+              // selectedId = i;
+              studentsList.removeAt(i);
+              studentsList.insert(0, studentState.selectedstudent);
+              break;
+            }
+            print(
+                '2: ${studentsList[0].id}, ${studentsList[1].id}, ${studentsList[2].id},');
+          }
+        }
         return Stack(
           children: <Widget>[
             BackdropFilter(
@@ -326,7 +343,8 @@ class _MySchoolScreenState extends State<MySchoolScreen> {
             //           children: List.generate(studentState.allstudents.length,
             //               (index) {
             //             // student = studentState.allstudents[index];
-            //             student = studentState.allstudents[selectedId];
+            //             // student = studentState.allstudents[selectedId];
+
             //             return Column(
             //               children: <Widget>[
             //                 AnimatedContainer(
@@ -340,24 +358,32 @@ class _MySchoolScreenState extends State<MySchoolScreen> {
             //                     behavior: HitTestBehavior.translucent,
             //                     onTap: () {
             //                       setState(() {
-            //                         if (isStudentSelected) {
-            //                           state.setStudent(studentState.allstudents
-            //                               .elementAt(index));
-            //                           selectedId = index;
-            //                           student = studentState.allstudents[index];
-            //                         }
             //                         isStudentSelected = !isStudentSelected;
             //                       });
+            //                       // setState(() {
+            //                         // state.setStudent(studentState.allstudents
+            //                         //       .elementAt(index));
+            //                         if (isStudentSelected == true) {
+            //                           state.setStudent(
+            //                               studentsList.elementAt(index));
+            //                           // isStudentSelected = false;
+            //                           // selectedId = index;
+            //                           // student = studentState.allstudents[index];
+            //                         } 
+            //                         // else
+            //                         //   isStudentSelected = true;
+            //                       // });
             //                     },
             //                     child: Container(
             //                       child: ClipOval(
             //                           child: Image.asset(
-            //                             index == 0 ?student.photoUrl
-            //                             : index != selectedId
-            //                             ? studentState.allstudents[index].photoUrl
-            //                             : index < selectedId
-            //                             ? studentState.allstudents[index].photoUrl
-            //                             : studentState.allstudents[index-1].photoUrl,
+            //                               studentsList[index].photoUrl,
+            //                               // index == 0 ?studentsList[index].photoUrl
+            //                               // : index != selectedId
+            //                               // ? studentState.allstudents[index].photoUrl
+            //                               // : index < selectedId
+            //                               // ? studentState.allstudents[index].photoUrl
+            //                               // : studentState.allstudents[index-1].photoUrl,
             //                               fit: BoxFit.fill)),
             //                       height: _height / 1.6,
             //                       width: _height / 1.6,
