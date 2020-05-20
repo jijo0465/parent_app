@@ -14,8 +14,10 @@ import 'package:parent_app/screens/student_details_screen.dart';
 import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
-import 'student_profile_screen.dart';
 import 'dart:math';
+
+import 'home_pages/dashboard.dart';
+
 
 class DigiHome extends DrawerContent {
   DigiHome({Key key});
@@ -33,6 +35,7 @@ class _HomeScreenState extends State<DigiHome> with TickerProviderStateMixin {
     drawerController = HiddenDrawerController(
       initialPage: HomePage(
         title: 'main',
+        onPressed: (){drawerController.open();},
       ),
       items: [
         DrawerItem(
@@ -62,30 +65,36 @@ class _HomeScreenState extends State<DigiHome> with TickerProviderStateMixin {
           return LoginScreen();
         } else {
           return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: Theme.of(context).primaryColor,
-                unselectedItemColor: Colors.grey,
-                onTap: (index) {
-                  if (index == 1) Navigator.of(context).pushNamed('/chat');
-                  if (index == 2) Navigator.of(context).pushNamed('/notes');
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    title: Text('Home',style: TextStyle(fontSize: 10),),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.message), title: Text('Chat')),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.art_track),
-                    title: Text('Notes'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.info),
-                    title: Text('About'),
-                  ),
-                ]),
+            // bottomNavigationBar: SizedBox(
+            //   // height: 60,
+            //   child: BottomNavigationBar(
+            //       type: BottomNavigationBarType.fixed,
+            //       selectedItemColor: Theme.of(context).primaryColor,
+            //       unselectedItemColor: Colors.grey,
+            //       onTap: (index) {
+            //         if (index == 1) Navigator.of(context).pushNamed('/chat');
+            //         if (index == 2) Navigator.of(context).pushNamed('/notes');
+            //       },
+            //       items: [
+            //         BottomNavigationBarItem(
+            //           icon: Icon(Icons.home, size: 30,),
+            //           title: Text(
+            //             'Home',
+            //             style: TextStyle(fontSize: 10),
+            //           ),
+            //         ),
+            //         BottomNavigationBarItem(
+            //             icon: Icon(Icons.message), title: Text('Chat')),
+            //         BottomNavigationBarItem(
+            //           icon: Icon(Icons.art_track),
+            //           title: Text('Notes'),
+            //         ),
+            //         BottomNavigationBarItem(
+            //           icon: Icon(Icons.info),
+            //           title: Text('About'),
+            //         ),
+            //       ]),
+            // ),
             body: HiddenDrawer(
               controller: drawerController,
               header: Container(
@@ -150,250 +159,4 @@ class _HomeScreenState extends State<DigiHome> with TickerProviderStateMixin {
   }
 }
 
-class HomePage extends DrawerContent {
-  const HomePage({this.title, Key key}) : super(key: key);
-  final String title;
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int pageNo = 0;
-  double _height = 280.0;
-  bool stateChanged = false;
-  bool isLoading = true;
-  Student selectedStudent;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    StudentState state = Provider.of<StudentState>(context, listen: true);
-    state.addListener(() {
-      setSelectedStudent(state.selectedstudent);
-    });
-    selectedStudent = state.selectedstudent;
-
-    return Scaffold(
-        body: isLoading
-            ? Container(
-                child: Center(
-                  child: CupertinoActivityIndicator(),
-                ),
-              )
-            : Container(
-                child:
-                    Consumer<StudentState>(builder: (context, studentState, _) {
-                  selectedStudent = studentState.selectedstudent;
-                  return Stack(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [
-                          Colors.grey[300],
-                          Colors.grey[100],
-                          Colors.grey[300]
-                        ])),
-                      ),
-                      Container(
-                          child: Column(children: <Widget>[
-                        HomeHeader(
-                          onStudentTapped: () {
-                            isLoading = true;
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                transitionDuration: Duration(milliseconds: 400),
-                                pageBuilder: (_, __, ___) =>
-                                    StudentDetailsScreen(),
-                              ),
-                            ).then((value) {
-                              setState(() {
-                                isLoading = false;
-                              });
-                            });
-                          },
-                          height: _height,
-                          onDragEnd: (_) {
-                            print(_height);
-                            if (_height < 600) {
-                              setState(() {
-                                _height = 300;
-                              });
-                            }
-                          },
-                          onDrag: (dragUpdateDetails) {
-                            // print(dragUpdateDetails.globalPosition.distance);
-                            // print(dragUpdateDetails.globalPosition.dy);
-                            if (dragUpdateDetails.delta.dy > 0) {
-                              if (dragUpdateDetails.globalPosition.distance >
-                                  MediaQuery.of(context).size.height * 0.7) {
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    transitionDuration:
-                                        Duration(milliseconds: 400),
-                                    pageBuilder: (_, __, ___) =>
-                                        StudentDetailsScreen(),
-                                  ),
-                                ).then((value) {
-                                  // setState(() {
-                                  //   pageNo = StudentDetailsScreen.pageNo;
-                                  // });
-                                });
-                              } else {
-                                setState(() {
-                                  _height += dragUpdateDetails.delta.dy *
-                                      log(dragUpdateDetails
-                                              .globalPosition.distance /
-                                          175);
-                                });
-                              }
-                            }
-                            // else {
-                            //   if (_height > 251) {
-                            //     setState(() {
-                            //       _height += dragUpdateDetails.delta.dy;
-                            //     });
-                            //   }
-                            // }
-                          },
-                          onPressed: () {
-                            drawerController.open();
-                          },
-                        ),
-                        Expanded(
-                            child: Container(
-                          padding: EdgeInsets.all(12),
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(width: 4),
-                                    HomeCard(
-                                      icon: Icon(
-                                        CupertinoIcons.profile_circled,
-                                        size: 35,
-                                        color: Color(0xff00739e),
-                                      ),
-                                      text: 'Evaluate Student 360',
-                                      isImportant: false,
-                                      color: Colors.white.withOpacity(0.8),
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, '/student_360');
-                                      },
-                                    ),
-                                    SizedBox(width: 0),
-                                    HomeCard(
-                                      icon: Icon(Icons.view_carousel,
-                                          size: 35, color: Color(0xff00739e)),
-                                      text: 'Virtual Classroom',
-                                      isImportant: false,
-                                      color: Colors.white.withOpacity(0.8),
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, '/classroom');
-                                      },
-                                    ),
-                                    SizedBox(width: 4),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(width: 4),
-                                    HomeCard(
-                                      icon: Icon(
-                                          CupertinoIcons.video_camera_solid,
-                                          size: 35,
-                                          color: Colors.white),
-                                      text: 'Live Class',
-                                      isImportant: true,
-                                      color: Colors.red[400],
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/live');
-                                      },
-                                    ),
-                                    HomeCard(
-                                      icon: Icon(CupertinoIcons.heart_solid,
-                                          size: 25, color: Colors.red[900]),
-                                      text: 'Value\nEducation',
-                                      isImportant: false,
-                                      color: Colors.white.withOpacity(0.8),
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, '/value_edu');
-                                      },
-                                    ),
-                                    HomeCard(
-                                      icon: Icon(Icons.school,
-                                          size: 35, color: Color(0xff00739e)),
-                                      text: 'My School',
-                                      isImportant: false,
-                                      color: Colors.white.withOpacity(0.8),
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, '/mySchool');
-                                      },
-                                    ),
-                                    SizedBox(width: 4),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(width: 4),
-                                    HomeCard(
-                                      icon: Icon(CupertinoIcons.eye_solid,
-                                          size: 40, color: Color(0xff00739e)),
-                                      text: 'Academic Reports',
-                                      isImportant: false,
-                                      color: Colors.white.withOpacity(0.8),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/result');
-                                      },
-                                    ),
-                                    HomeCard(
-                                      icon: Icon(Icons.accessibility_new,
-                                          size: 35, color: Color(0xff00739e)),
-                                      text: 'Scholorships',
-                                      isImportant: false,
-                                      color: Colors.white.withOpacity(0.8),
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, '/scholarship');
-                                      },
-                                    ),
-                                    SizedBox(
-                                      width: 4,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
-                      ])),
-                    ],
-                  );
-                }),
-              ));
-  }
-
-  void setSelectedStudent(Student student) async {
-    selectedStudent = student;
-    if (selectedStudent != null) {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-}

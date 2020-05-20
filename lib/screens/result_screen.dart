@@ -7,7 +7,7 @@ import 'package:parent_app/components/digi_time_line.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
 import 'package:parent_app/screens/student_details_screen.dart';
 import 'package:parent_app/states/student_state.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+// import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 enum Subjects { All, Mathematics, English, Social, Science, Malayalam, Hindi }
@@ -93,13 +93,12 @@ class _ResultScreenState extends State<ResultScreen> {
                       // )),
                       Container(
                           padding: EdgeInsets.only(left: 10, right: 10),
-                          //height: 500,
                           width: MediaQuery.of(context).size.width,
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(7, (index) {
+                                children: List.generate(titleList.length, (index) {
                                   return DigiSubjectBar(
                                     index: index,
                                     isSelected: index == subjectIndex,

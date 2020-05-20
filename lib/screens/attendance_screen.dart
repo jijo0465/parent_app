@@ -28,66 +28,40 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 
   @override
   void initState() {
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         _height = 0;
       });
     });
+    // Future.delayed(Duration(milliseconds: 600)).then((value) {
+    //   setState(() {
+    //     _height = 0;
+    //   });
+    // });
+
     _calendarController = CalendarController();
     _selectedDay = DateTime.now();
     _startDate = DateTime(2020, 02, 15);
     _endDate = DateTime(2021, 01, 12);
     _date = _startDate;
     final length = DateTime.now().difference(_startDate);
-    // print(length);
-
-    // _events.addAll({
-    //   List.generate(length.inDays, (index) {
-    //   _selectedDay.add(Duration(days: 1));
-    //   return
-    //   _events = Map.from({
-    //     _selectedDay: [true]
-    //   });
-    // })});
 
     List.generate(length.inDays, (index) {
       // print(index);
       _date = _date.add(Duration(days: 1));
       formattedDay = dateFormat.format(_date);
       print(formattedDay);
-      if((formattedDay!='Sun')&&(formattedDay!='Sat')){
+      if ((formattedDay != 'Sun') && (formattedDay != 'Sat')) {
         _events[_date] = [true];
       }
     });
 
-    // _date = DateTime.now().subtract(Duration(days: 14));
-    // _events.update(_date, (_) => [false]);
-    // _date = DateTime.now().subtract(Duration(days: 21));
-    // // _events.update(_date, (_) => [false]);
-    _events.update(DateTime(2020,05,05), (value) => [false]);
-    _events.update(DateTime(2020,04,13), (value) => [false]);
-    _events.update(DateTime(2020,04,14), (value) => [false]);
-    _events.update(DateTime(2020,03,24), (value) => [false]);
+    _events.update(DateTime(2020, 05, 05), (value) => [false]);
+    _events.update(DateTime(2020, 04, 13), (value) => [false]);
+    _events.update(DateTime(2020, 04, 14), (value) => [false]);
+    _events.update(DateTime(2020, 03, 24), (value) => [false]);
 
-    // _events.remove(DateTime(2020,06,27));
-    // _events.remove(DateTime(2020,06,27));
-
-
-    // _events.forEach((key, value) { 
-    //   print('$key : ${[value]}');
-    // });
-    
-
-    // _selectedDay: [true],
-    // _selectedDay.add(Duration(days: 1)): [true],
-    // _selectedDay.add(Duration(days: 3)): [true],
-    // _selectedDay.add(Duration(days: 7)): [true],
-    // _selectedDay.add(Duration(days: 11)): [true],
-    // _selectedDay.add(Duration(days: 17)): [true],
-    // _selectedDay.add(Duration(days: 22)): [true],
-    // _selectedDay.add(Duration(days: 26)): [true],
-    // // };
-    // _selectedDay = DateTime.now();
     super.initState();
   }
 
@@ -127,6 +101,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           duration: Duration(milliseconds: 600)),
       Expanded(
         child: Container(
+          padding: EdgeInsets.only(bottom: 5),
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -141,9 +116,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(34), topRight: Radius.circular(34))),
           width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: <Widget>[
-              Expanded(
+          // child: Column(
+          //   children: <Widget>[
+              child:Expanded(
                 child: TableCalendar(
                   // rowHeight: 30,
                   startDay: _startDate,
@@ -181,43 +156,16 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           ),
                         );
                       }
-
-                      // if (holidays.isNotEmpty) {
-                      //   children.add(
-                      //     Positioned(
-                      //       right: -2,
-                      //       top: -2,
-                      //       child: _buildHolidaysMarker(),
-                      //     ),
-                      //   );
-                      // }
-
                       return children;
                     },
                   ),
                 ),
               ),
-              // SizedBox(height: 8),
-              // Container(
-              //   alignment: Alignment.bottomCenter,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     children: <Widget>[
-              //       RaisedButton(
-              //           onPressed: () {
-              //             Navigator.pushNamed(context, '/chat');
-              //           },
-              //           child: Text('Message Teacher')),
-              //       RaisedButton(
-              //           onPressed: () {}, child: Text('Contact Teacher'))
-              //     ],
-              //   ),
+              // SizedBox(
+              //   height: 8,
               // ),
-              SizedBox(
-                height: 8,
-              ),
-            ],
-          ),
+          //   ],
+          // ),
         ),
       ),
     ]));
@@ -233,34 +181,5 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     } else {
       return Icon(Icons.close, size: 20, color: Colors.red[600]);
     }
-    // AnimatedContainer(
-    // //   duration: const Duration(milliseconds: 300),
-    // //   decoration: BoxDecoration(
-    // //     shape: BoxShape.rectangle,
-    // //     color: _calendarController.isSelected(date)
-    // //         ? Colors.brown[500]
-    // //         : _calendarController.isToday(date) ? Colors.brown[300] : Colors.blue[400],
-    // //   ),
-    // //   width: 16.0,
-    // //   height: 16.0,
-    // //   child: Center(
-    // //     child: Text(
-    // //       '${events.length}',
-    // //       style: TextStyle().copyWith(
-    // //         color: Colors.white,
-    // //         fontSize: 12.0,
-    // //       ),
-    // //     ),
-    // //   ),
-    // // );
-    //       // duration: const Duration(milliseconds: 300),
-    //       // height: 3,
-    //       // width: 5,
-    //       // child: Icon(
-    //       //   Icons.check,
-    //       //   color: Colors.green,
-    //       //   size:5
-    //       // )
-    // );
   }
 }

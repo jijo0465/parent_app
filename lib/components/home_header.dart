@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:parent_app/components/page_header.dart';
 import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
 
@@ -45,37 +46,38 @@ class HomeHeader extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     // mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                            child: IconButton(
-                              onPressed: onPressed,
-                              icon: Icon(Icons.dashboard),
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                              padding: EdgeInsets.only(left: 12),
-                              child: Text(
-                                'Christ Nagar',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                              )),
-                          Container(
-                            padding: EdgeInsets.only(right: 12),
-                            child: IconButton(
-                              onPressed: () {
-                                print('Pressed');
-                              },
-                              icon: Icon(Icons.notifications),
-                              color: Colors.white,
-                            ),
-                          )
-                        ],
-                      ),
+                      SizedBox(height: 60+MediaQuery.of(context).padding.top),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: <Widget>[
+                      //     Container(
+                      //       child: IconButton(
+                      //         onPressed: onPressed,
+                      //         icon: Icon(Icons.dashboard),
+                      //         color: Colors.white,
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //         padding: EdgeInsets.only(left: 12),
+                      //         child: Text(
+                      //           'Christ Nagar',
+                      //           style: TextStyle(
+                      //               fontSize: 15,
+                      //               color: Colors.white,
+                      //               fontWeight: FontWeight.w600),
+                      //         )),
+                      //     Container(
+                      //       padding: EdgeInsets.only(right: 12),
+                      //       child: IconButton(
+                      //         onPressed: () {
+                      //           print('Pressed');
+                      //         },
+                      //         icon: Icon(Icons.notifications),
+                      //         color: Colors.white,
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
                       Expanded(
                         child: Consumer<StudentState>(
                             builder: (context, studentState, _) {

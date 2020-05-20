@@ -60,6 +60,7 @@ dependencies:
   webview_flutter: ^0.3.21
   nima: ^1.0.5
   syncfusion_flutter_gauges: ^18.1.48
+  expandable: ^4.1.4
 
 dev_dependencies:
   flutter_test:
@@ -115,6 +116,10 @@ flutter:
     - assets/sqlite/local_data_parent_app.db
     - assets/animations/superman-podium.nma
     - assets/animations/superman-podium.png
+    - assets/images/tutorial0.jpg
+    - assets/images/tutorial1.jpg
+    - assets/images/tutorial2.jpg
+    - assets/images/tutorial3.jpg
 
   #   - images/a_dot_ham.jpeg
 
