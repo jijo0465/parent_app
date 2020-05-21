@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:parent_app/screens/student_details_screen.dart';
-import 'package:parent_app/states/parent_state.dart';
 import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +59,7 @@ class DigiAppbar extends StatelessWidget {
                         Container(
                             padding: EdgeInsets.only(left: 12),
                             child: Text(
-                              'Christ Nagar',
+                              'A J Central',
                               style: TextStyle(
                                   fontSize: 17,
                                   color: Colors.white,
