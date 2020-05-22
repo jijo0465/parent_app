@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:parent_app/components/digi_drawer.dart';
 import 'package:parent_app/components/digi_navbar.dart';
 import 'package:parent_app/components/home_card.dart';
@@ -16,6 +17,7 @@ import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
 import 'package:parent_app/screens/knowledge_base.dart';
 import 'package:parent_app/screens/chat_screen.dart';
+import 'package:parent_app/screens/call.dart';
 
 class HomePage extends DrawerContent {
   const HomePage({this.onPressed, this.title, Key key}) : super(key: key);
@@ -200,9 +202,22 @@ class _HomePageState extends State<HomePage> {
                                               text: 'Live Class',
                                               isImportant: true,
                                               color: Colors.red[400],
-                                              onPressed: () {
-                                                Navigator.pushNamed(
-                                                    context, '/live');
+                                              onPressed: () async {
+                                                await Permission.camera
+                                                    .request();
+                                                await Permission.microphone
+                                                    .request();
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CallPage(
+                                                      id: selectedStudent.id,
+                                                    ),
+                                                  ),
+                                                );
+                                                // Navigator.pushNamed(
+                                                //     context, '/call');
                                               },
                                             ),
                                             HomeCard(

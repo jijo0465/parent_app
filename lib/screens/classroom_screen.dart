@@ -177,7 +177,7 @@ class _ClassroomScreenState extends State<ClassroomScreen> {
                                 onTap: (){
                                   print(hrs);
                                   hrs == (9+index) && i == 0
-                                  ? Navigator.of(context).pushNamed('/live')
+                                  ? Navigator.of(context).pushNamed('/call')
                                   : Navigator.of(context).pushNamed('/discussions');
                                 },
                                 child: Container(

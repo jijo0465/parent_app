@@ -8,6 +8,7 @@ import 'package:parent_app/screens/classroom_screen.dart';
 // import 'package:parent_app/screens/home_screen.dart';
 import 'package:parent_app/screens/my_school.dart';
 import 'package:parent_app/screens/student_360.dart';
+import 'package:parent_app/screens/call.dart';
 import 'package:parent_app/screens/value_education.dart';
 import 'package:parent_app/screens/scholarship_screen.dart';
 import 'package:parent_app/screens/discussions_screen.dart';
@@ -81,6 +82,7 @@ class ParentApp extends StatelessWidget {
             '/discussions': (context) => DiscussionsScreen(),
             '/live': (context) => LiveScreen(),
             '/notes': (context) => KnowledgeBaseScreen(),
+            '/call': (context) => CallPage(),
             // 'login': (context) => PhoneLoginScreen(),
             // 'owner_form': (context)=> OwnerFormScreen(),
             // 'buyer_form': (context)=> BuyerFormScreen(),
