@@ -29,8 +29,9 @@ class _ValueEducationScreenState extends State<ValueEducationScreen> {
   void initState() {
     videoTitle = title.first;
     _playerController =
-        VideoPlayerController.asset('assets/videos/smartschool.mp4')
+        VideoPlayerController.network('https://www.youtube.com/watch?v=0ybAHLO5taM')
           ..initialize().then((_) {
+            print('ViDEO');
             // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
             setState(() {
               _playerController.play();

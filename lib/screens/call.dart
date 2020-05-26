@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:parent_app/models/grade.dart';
 import 'package:provider/provider.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
 import 'package:parent_app/components/live_call_settings.dart';
@@ -24,6 +26,10 @@ class _CallPageState extends State<CallPage> {
   bool muted = true;
   final broadcasterUid = 3001;
   final bool isflag = true;
+  // Firestore firestore = Firestore.instance;
+  Grade grade = Grade.empty();
+  int id = 4001;
+  // int userid;
   // int id;
 
   @override
@@ -39,6 +45,7 @@ class _CallPageState extends State<CallPage> {
   @override
   void initState() {
     super.initState();
+    grade.setId(id);
     // print('${StudentState.instance().selectedstudent.id}');
     // StudentState state = Provider.of<StudentState>(context, listen: true);
     // id = state.selectedstudent.id;
@@ -71,7 +78,12 @@ class _CallPageState extends State<CallPage> {
   Future<void> _initAgoraRtcEngine() async {
     await AgoraRtcEngine.create(APP_ID);
     await AgoraRtcEngine.enableVideo();
-    await AgoraRtcEngine.joinChannel(null, 'live', null, widget.id);
+    AgoraRtcEngine.muteLocalAudioStream(muted);
+    await AgoraRtcEngine.joinChannel(
+        '006afe8cf8cb8fd494bbd8d7e1d900483baIAByyYgio6HHPtqn6oKpjpQmgdG0BTBhgX5vxbDCOE7b+q8sD1MAAAAAEABfqfzlUUfNXgEAAQBRR81e',
+        'live',
+        null,
+        0);
 
     // await AgoraRtcEngine.enableWebSdkInteroperability(true);
   }
@@ -82,6 +94,11 @@ class _CallPageState extends State<CallPage> {
       setState(() {
         final info = 'onError: $code';
         _infoStrings.add(info);
+      });
+      Future.delayed(Duration(seconds: 3)).then((value) {
+        setState(() {
+          _infoStrings.removeLast();
+        });
       });
     };
 
@@ -94,12 +111,42 @@ class _CallPageState extends State<CallPage> {
         final info = 'onJoinChannel: $channel, uid: $uid';
         _infoStrings.add(info);
       });
+      // userid = uid;
+      // DocumentReference documentReference = firestore
+      //     .collection('classroom_${grade.id}')
+      //     .document('live_session');
+      // firestore.runTransaction((transaction) async {
+      //   await transaction.update(documentReference, {
+      //     'userid': FieldValue.arrayUnion([uid])
+      //   });
+      // });
+
+      Future.delayed(Duration(seconds: 3)).then((value) {
+        setState(() {
+          _infoStrings.removeLast();
+        });
+      });
     };
 
     AgoraRtcEngine.onLeaveChannel = () {
       setState(() {
         _infoStrings.add('onLeaveChannel');
         _users.clear();
+      });
+
+      // DocumentReference documentReference = firestore
+      //     .collection('classroom_${grade.id}')
+      //     .document('live_session');
+      // firestore.runTransaction((transaction) async {
+      //   await transaction.update(documentReference, {
+      //     'userid': FieldValue.arrayRemove([userid])
+      //   });
+      // });
+
+      Future.delayed(Duration(seconds: 3)).then((value) {
+        setState(() {
+          _infoStrings.removeLast();
+        });
       });
     };
 
@@ -109,6 +156,17 @@ class _CallPageState extends State<CallPage> {
         _infoStrings.add(info);
         if (isflag) _users.add(uid);
       });
+      //   DocumentReference documentReference =
+      //     firestore.collection('classroom_${grade.id}').document('live_session');
+      // firestore.runTransaction((transaction) async {
+      //   await transaction.update(
+      //       documentReference, {'userid': FieldValue.arrayUnion([uid])});
+      // });
+      Future.delayed(Duration(seconds: 3)).then((value) {
+        setState(() {
+          _infoStrings.removeLast();
+        });
+      });
     };
 
     AgoraRtcEngine.onUserOffline = (int uid, int reason) {
@@ -116,6 +174,21 @@ class _CallPageState extends State<CallPage> {
         final info = 'userOffline: $uid';
         _infoStrings.add(info);
         _users.remove(uid);
+      });
+
+      // DocumentReference documentReference = firestore
+      //     .collection('classroom_${grade.id}')
+      //     .document('live_session');
+      // firestore.runTransaction((transaction) async {
+      //   await transaction.update(documentReference, {
+      //     'userid': FieldValue.arrayRemove([userid])
+      //   });
+      // });
+
+      Future.delayed(Duration(seconds: 3)).then((value) {
+        setState(() {
+          _infoStrings.removeLast();
+        });
       });
     };
 
@@ -128,6 +201,11 @@ class _CallPageState extends State<CallPage> {
       setState(() {
         final info = 'firstRemoteVideo: $uid ${width}x $height';
         _infoStrings.add(info);
+      });
+      Future.delayed(Duration(seconds: 3)).then((value) {
+        setState(() {
+          _infoStrings.removeLast();
+        });
       });
     };
   }
@@ -230,58 +308,104 @@ class _CallPageState extends State<CallPage> {
           //   fillColor: muted ? Colors.blueAccent : Colors.white,
           //   padding: const EdgeInsets.all(12.0),
           // ),
-          GestureDetector(
-            onLongPress: _onToggleMute,
-            onLongPressEnd: (_) {
-              _onToggleMute();
-            },
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: muted ? Colors.blueAccent : Colors.white,
-              ),
-              padding: const EdgeInsets.all(12.0),
-              child: Icon(
-                muted ? Icons.mic_off : Icons.mic,
-                color: muted ? Colors.white : Colors.blueAccent,
-                size: 20.0,
-              ),
+          // Flexible(
+          //   flex: 2,
+          //   child: GestureDetector(
+          //     onLongPress: _onToggleMute,
+          //     onLongPressEnd: (_) {
+          //       _onToggleMute();
+          //     },
+          //     child: Container(
+          //       // height: 50,
+          //       // width: 50,
+          //       decoration: BoxDecoration(
+          //         shape: BoxShape.circle,
+          //         color: muted ? Colors.blueAccent : Colors.white,
+          //       ),
+          //       padding: const EdgeInsets.all(12.0),
+          //       child: Icon(
+          //         muted ? Icons.mic_off : Icons.mic,
+          //         color: muted ? Colors.red : Colors.white,
+          //         size: 20.0,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          Flexible(
+            flex: 2,
+            child: RaisedButton(
+                shape: CircleBorder(side: BorderSide(color: Colors.black12)),
+                color: Theme.of(context).primaryColor.withOpacity(0.4),
+                onPressed: () {
+                  // setState(() {
+                  //   checkParticipants = !checkParticipants;
+                  // });
+                },
+                child: Icon(
+                  Icons.chat,
+                  color: Colors.white,
+                  size: 20.0,
+                )),
+          ),
+          Flexible(
+            flex: 2,
+            child: GestureDetector(
+              onLongPress: _onToggleMute,
+              onLongPressEnd: (_) {
+                _onToggleMute();
+              },
+              child: RaisedButton(
+                  shape: CircleBorder(side: BorderSide(color: Colors.black12)),
+                  color: Theme.of(context).primaryColor.withOpacity(0.4),
+                  onPressed: () {},
+                  child: Icon(
+                    muted ? Icons.mic_off : Icons.mic,
+                    color: muted ? Colors.red : Colors.white,
+                    size: 20,
+                  )),
             ),
           ),
-          Container(
-            height: 70,
-            width: 70,
-            child: RawMaterialButton(
+          Flexible(
+            flex: 3,
+            child: RaisedButton(
+              shape: CircleBorder(side: BorderSide(color: Colors.black12)),
+              color: Theme.of(context).primaryColor.withOpacity(0.4),
               onPressed: () => _onCallEnd(context),
               child: Icon(
                 Icons.call_end,
-                color: Colors.white,
-                size: 35.0,
+                color: Colors.red,
+                size: 40.0,
               ),
-              shape: CircleBorder(),
-              elevation: 2.0,
-              fillColor: Colors.redAccent,
-              padding: const EdgeInsets.all(15.0),
             ),
           ),
-          Container(
-            height: 50,
-            width: 50,
-            child: RawMaterialButton(
-              onPressed: _onSwitchCamera,
-              child: Icon(
-                Icons.switch_camera,
-                color: Colors.blueAccent,
-                size: 20.0,
-              ),
-              shape: CircleBorder(),
-              elevation: 2.0,
-              fillColor: Colors.white,
-              padding: const EdgeInsets.all(12.0),
-            ),
-          )
+          Flexible(
+            flex: 2,
+            child: RaisedButton(
+                shape: CircleBorder(side: BorderSide(color: Colors.black12)),
+                color: Theme.of(context).primaryColor.withOpacity(0.4),
+                onPressed: _onSwitchCamera,
+                child: Icon(
+                  Icons.switch_camera,
+                  color: Colors.white,
+                  size: 20.0,
+                )),
+          ),
+          Flexible(
+            flex: 2,
+            child: RaisedButton(
+                shape: CircleBorder(side: BorderSide(color: Colors.black12)),
+                color: Theme.of(context).primaryColor.withOpacity(0.4),
+                onPressed: () {
+                  // setState(() {
+                  //   checkParticipants = !checkParticipants;
+                  // });
+                },
+                child: Icon(
+                  Icons.group,
+                  color: Colors.white,
+                  size: 20.0,
+                )),
+          ),
         ],
       ),
     );
@@ -318,12 +442,13 @@ class _CallPageState extends State<CallPage> {
                           horizontal: 5,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.yellowAccent,
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
                           _infoStrings[index],
-                          style: TextStyle(color: Colors.blueGrey),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     )
@@ -338,6 +463,13 @@ class _CallPageState extends State<CallPage> {
   }
 
   void _onCallEnd(BuildContext context) {
+    // DocumentReference documentReference =
+    //     firestore.collection('classroom_${grade.id}').document('live_session');
+    // firestore.runTransaction((transaction) async {
+    //   await transaction.update(documentReference, {
+    //     'userid': FieldValue.arrayRemove([userid])
+    //   });
+    // });
     Navigator.pop(context);
   }
 
@@ -356,21 +488,35 @@ class _CallPageState extends State<CallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-            // SizedBox(height: 8),
-            // _viewRows(),
-            _viewVideo(),
-            _panel(),
-            _toolbar(),
-            DigiCampusAppbar(
-              icon: Icons.close,
-              onDrawerTapped: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+      body: WillPopScope(
+        onWillPop: () {
+          _onCallEnd(context);
+          return Future.value(true);
+        },
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              // SizedBox(height: 8),
+              // _viewRows(),
+              _viewVideo(),
+              _panel(),
+              _toolbar(),
+              DigiCampusAppbar(
+                icon: Icons.close,
+                onDrawerTapped: () {
+                  // DocumentReference documentReference = firestore
+                  //     .collection('classroom_${grade.id}')
+                  //     .document('live_session');
+                  // firestore.runTransaction((transaction) async {
+                  //   await transaction.update(documentReference, {
+                  //     'userid': FieldValue.arrayRemove([userid])
+                  //   });
+                  // });
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

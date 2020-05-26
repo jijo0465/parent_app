@@ -29,16 +29,16 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   void initState() {
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        _height = 0;
-      });
-    });
-    // Future.delayed(Duration(milliseconds: 600)).then((value) {
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
     //   setState(() {
     //     _height = 0;
     //   });
     // });
+    Future.delayed(Duration(milliseconds: 600)).then((value) {
+      setState(() {
+        _height = 0;
+      });
+    });
 
     _calendarController = CalendarController();
     _selectedDay = DateTime.now();
@@ -118,47 +118,45 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           width: MediaQuery.of(context).size.width,
           // child: Column(
           //   children: <Widget>[
-              child:Expanded(
-                child: TableCalendar(
-                  // rowHeight: 30,
-                  startDay: _startDate,
-                  endDay: _endDate,
-                  calendarController: _calendarController,
-                  events: _events,
-                  formatAnimation: FormatAnimation.scale,
-                  availableGestures: AvailableGestures.horizontalSwipe,
-                  calendarStyle: CalendarStyle(
-                      markersAlignment: Alignment.bottomRight,
-                      //outsideStyle:TextStyle(color:Colors.grey,fontStyle: FontStyle.italic) ,
-                      selectedColor: Theme.of(context).primaryColor,
-                      weekdayStyle: TextStyle(
-                        color: Colors.white,
-                      )),
-                  headerStyle: HeaderStyle(
-                      formatButtonTextStyle:
-                          TextStyle(fontSize: 12, color: Colors.greenAccent),
-                      centerHeaderTitle: true,
-                      titleTextStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600)),
-                  daysOfWeekStyle: DaysOfWeekStyle(
-                      weekdayStyle: TextStyle(color: Colors.blueGrey[100])),
-                  builders: CalendarBuilders(
-                    markersBuilder: (context, date, events, holidays) {
-                      final children = <Widget>[];
-                      if (events.isNotEmpty) {
-                        children.add(
-                          Positioned(
-                            right: 1,
-                            bottom: 1,
-                            child: _buildEventsMarker(date, events),
-                          ),
-                        );
-                      }
-                      return children;
-                    },
-                  ),
+              child:TableCalendar(
+                // rowHeight: 30,
+                startDay: _startDate,
+                endDay: _endDate,
+                calendarController: _calendarController,
+                events: _events,
+                formatAnimation: FormatAnimation.scale,
+                availableGestures: AvailableGestures.horizontalSwipe,
+                calendarStyle: CalendarStyle(
+                    markersAlignment: Alignment.bottomRight,
+                    //outsideStyle:TextStyle(color:Colors.grey,fontStyle: FontStyle.italic) ,
+                    selectedColor: Theme.of(context).primaryColor,
+                    weekdayStyle: TextStyle(
+                      color: Colors.white,
+                    )),
+                headerStyle: HeaderStyle(
+                    formatButtonTextStyle:
+                        TextStyle(fontSize: 12, color: Colors.greenAccent),
+                    centerHeaderTitle: true,
+                    titleTextStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600)),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(color: Colors.blueGrey[100])),
+                builders: CalendarBuilders(
+                  markersBuilder: (context, date, events, holidays) {
+                    final children = <Widget>[];
+                    if (events.isNotEmpty) {
+                      children.add(
+                        Positioned(
+                          right: 1,
+                          bottom: 1,
+                          child: _buildEventsMarker(date, events),
+                        ),
+                      );
+                    }
+                    return children;
+                  },
                 ),
               ),
               // SizedBox(
