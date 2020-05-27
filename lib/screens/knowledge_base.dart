@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:expandable/expandable.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
 import 'package:parent_app/components/digi_subject_bar.dart';
+import 'package:parent_app/components/digi_knowledgedb_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:parent_app/models/grade.dart';
 
@@ -293,73 +294,88 @@ class _KnowledgeBaseScreenState extends State<KnowledgeBaseScreen> {
                                           break;
                                         default:
                                       }
-                                      return Container(
-                                        padding: EdgeInsets.only(bottom: 10),
-                                        margin: EdgeInsets.only(right: 10, left: 12),
-                                        height: 80,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                          style: BorderStyle.solid,
-                                          color: Theme.of(context).primaryColor,
-                                        )),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              height: 80,
-                                              width: 120,
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(
-                                                          'assets/images/tutorial$trlImageIndex.jpg'),
-                                                      fit: BoxFit.fill)),
-                                            ),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              children: <Widget>[
-                                                Text(
-                                                    subjectItem['chapter']
-                                                            [index]['topics']
-                                                        [idx]['name'],
-                                                    style: TextStyle(
-                                                        fontSize: 16)),
-                                                Row(
-                                                  children: <Widget>[
-                                                    Container(
-                                                        child: Icon(
-                                                      Icons.brightness_1,
-                                                      size: 10,
-                                                      color: Colors.grey,
-                                                    )),
-                                                    Text('V',
-                                                        style: TextStyle(
-                                                            fontSize: 10)),
-                                                    Container(
-                                                        child: Icon(
-                                                      Icons.brightness_1,
-                                                      size: 10,
-                                                      color: Colors.grey,
-                                                    )),
-                                                    Text(
-                                                        '${titleList[subjectIndex]}',
-                                                        style: TextStyle(
-                                                            fontSize: 10)),
-                                                    Container(
-                                                        child: Icon(
-                                                      Icons.timer,
-                                                      size: 10,
-                                                      color: Colors.grey,
-                                                    )),
-                                                    Text('10 min',
-                                                        style: TextStyle(
-                                                            fontSize: 10)),
-                                                  ],
-                                                ),
-                                                Text('Description of the topic')
-                                              ],
-                                            )
-                                          ],
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      KnowledgeDbPlayer(
+                                                          url: subjectItem['chapter']
+                                                                  [index]['topics']
+                                                              [idx]['url'])));
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(bottom: 10),
+                                          margin: EdgeInsets.only(
+                                              right: 10, left: 12),
+                                          height: 80,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                            style: BorderStyle.solid,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          )),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                height: 80,
+                                                width: 120,
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            'assets/images/tutorial$trlImageIndex.jpg'),
+                                                        fit: BoxFit.fill)),
+                                              ),
+                                              SizedBox(width: 10),
+                                              Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                      subjectItem['chapter']
+                                                              [index]['topics']
+                                                          [idx]['name'],
+                                                      style: TextStyle(
+                                                          fontSize: 16)),
+                                                  Row(
+                                                    children: <Widget>[
+                                                      Container(
+                                                          child: Icon(
+                                                        Icons.brightness_1,
+                                                        size: 10,
+                                                        color: Colors.grey,
+                                                      )),
+                                                      Text('V',
+                                                          style: TextStyle(
+                                                              fontSize: 10)),
+                                                      Container(
+                                                          child: Icon(
+                                                        Icons.brightness_1,
+                                                        size: 10,
+                                                        color: Colors.grey,
+                                                      )),
+                                                      Text(
+                                                          '${titleList[subjectIndex]}',
+                                                          style: TextStyle(
+                                                              fontSize: 10)),
+                                                      Container(
+                                                          child: Icon(
+                                                        Icons.timer,
+                                                        size: 10,
+                                                        color: Colors.grey,
+                                                      )),
+                                                      Text('10 min',
+                                                          style: TextStyle(
+                                                              fontSize: 10)),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                      'Description of the topic')
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       );
                                     })

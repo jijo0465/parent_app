@@ -39,7 +39,7 @@ class Exam
     this._scoredMarks = scoredMarks;
   }
   
-  setIsUpcomg(bool isUpcoming) {
+  setIsUpcoming(bool isUpcoming) {
     this._isUpcoming = isUpcoming;
   }
 

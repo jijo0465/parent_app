@@ -30,8 +30,12 @@ import 'package:parent_app/states/login_state.dart';
 import 'package:parent_app/states/parent_state.dart';
 import 'package:parent_app/states/student_state.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(ParentApp());
+void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(ParentApp());
+}
 
 class ParentApp extends StatelessWidget {
   @override

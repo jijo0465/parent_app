@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:parent_app/components/digicampus_appbar.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ValueEducationScreen extends StatefulWidget {
   const ValueEducationScreen({Key key}) : super(key: key);
@@ -10,7 +12,8 @@ class ValueEducationScreen extends StatefulWidget {
 }
 
 class _ValueEducationScreenState extends State<ValueEducationScreen> {
-  VideoPlayerController _playerController;
+  // VideoPlayerController _playerController;
+  YoutubePlayerController _playerController;
   List<String> title = [
     'Care and Compassion',
     'Honesty',
@@ -28,18 +31,22 @@ class _ValueEducationScreenState extends State<ValueEducationScreen> {
   @override
   void initState() {
     videoTitle = title.first;
-    _playerController =
-        VideoPlayerController.network('https://www.youtube.com/watch?v=0ybAHLO5taM')
-          ..initialize().then((_) {
-            print('ViDEO');
-            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-            setState(() {
-              _playerController.play();
-            });
-          });
-    // for (videoIndex = 0; videoIndex < title.length; videoIndex++)
-    //   _height[videoIndex] = 50.0;
-    // _height[0] = 60.0;
+    _playerController = YoutubePlayerController(initialVideoId: '0ybAHLO5taM'
+        // YoutubePlayer.convertUrlToId(
+        //     'https://www.youtube.com/watch?v=0ybAHLO5taM')
+        );
+    // _playerController = VideoPlayerController.network(
+    //     'https://digicampus.s3.us-east-2.amazonaws.com/b2608273bd44b9b78f790aac40ea776c_live.m3u8')
+    //   ..initialize().then((_) {
+    //     print('ViDEO');
+    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //     setState(() {
+    //       _playerController.play();
+    //     });
+    //   });
+    for (videoIndex = 0; videoIndex < title.length; videoIndex++)
+      _height[videoIndex] = 50.0;
+    _height[0] = 60.0;
     super.initState();
   }
 
@@ -65,29 +72,25 @@ class _ValueEducationScreenState extends State<ValueEducationScreen> {
         child: Stack(
           children: <Widget>[
             Center(
-              child: _playerController.value.initialized
-                  ? AspectRatio(
-                      aspectRatio: _playerController.value.aspectRatio,
-                      child: VideoPlayer(_playerController),
-                    )
-                  : Container(),
-            ),
-            Center(
-              child: FloatingActionButton(
-                onPressed: () {
-                  setState(() {
-                    _playerController.value.isPlaying
-                        ? _playerController.pause()
-                        : _playerController.play();
-                  });
-                },
-                child: Icon(
-                  _playerController.value.isPlaying
-                      ? Icons.pause
-                      : Icons.play_arrow,
-                ),
-              ),
-            )
+                child: YoutubePlayer(
+              controller: _playerController,
+            ))
+            // Center(
+            //   child: FloatingActionButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         _playerController.value.isPlaying
+            //             ? _playerController.pause()
+            //             : _playerController.play();
+            //       });
+            //     },
+            //     child: Icon(
+            //       _playerController.value.isPlaying
+            //           ? Icons.pause
+            //           : Icons.play_arrow,
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),
@@ -105,6 +108,7 @@ class _ValueEducationScreenState extends State<ValueEducationScreen> {
                   _height[index] = 75;
                 });
                 _playerController.seekTo(Duration(minutes: 0));
+                // _youtubePlayerController.seekTo(Duration(minutes: 0));
               },
               child: AnimatedContainer(
                   duration: Duration(milliseconds: 400),
