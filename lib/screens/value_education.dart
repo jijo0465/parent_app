@@ -31,9 +31,8 @@ class _ValueEducationScreenState extends State<ValueEducationScreen> {
   @override
   void initState() {
     videoTitle = title.first;
-    _playerController = YoutubePlayerController(initialVideoId: '0ybAHLO5taM'
-        // YoutubePlayer.convertUrlToId(
-        //     'https://www.youtube.com/watch?v=0ybAHLO5taM')
+    _playerController = YoutubePlayerController(initialVideoId: YoutubePlayer.convertUrlToId(
+            'https://www.youtube.com/watch?v=J-2ODoJUnXw')
         );
     // _playerController = VideoPlayerController.network(
     //     'https://digicampus.s3.us-east-2.amazonaws.com/b2608273bd44b9b78f790aac40ea776c_live.m3u8')

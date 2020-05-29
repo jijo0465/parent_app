@@ -80,7 +80,7 @@ class _CallPageState extends State<CallPage> {
     await AgoraRtcEngine.enableVideo();
     AgoraRtcEngine.muteLocalAudioStream(muted);
     await AgoraRtcEngine.joinChannel(
-        '006afe8cf8cb8fd494bbd8d7e1d900483baIAByyYgio6HHPtqn6oKpjpQmgdG0BTBhgX5vxbDCOE7b+q8sD1MAAAAAEABfqfzlUUfNXgEAAQBRR81e',
+        '006afe8cf8cb8fd494bbd8d7e1d900483baIACSZiNJ2hQaSB+xmyM1ebHLSiDRTL6QVAKekTjc0zECEq8sD1MAAAAAEABfqfzlkmnQXgEAAQCRadBe',
         'live',
         null,
         0);

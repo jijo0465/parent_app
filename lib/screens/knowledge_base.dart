@@ -294,7 +294,10 @@ class _KnowledgeBaseScreenState extends State<KnowledgeBaseScreen> {
                                           break;
                                         default:
                                       }
-                                      return GestureDetector(
+                                      return (subjectItem['chapter']
+                                                                  [index]['topics']
+                                                              [idx]['shown'])
+                                      ?GestureDetector(
                                         onTap: () {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
@@ -377,7 +380,8 @@ class _KnowledgeBaseScreenState extends State<KnowledgeBaseScreen> {
                                             ],
                                           ),
                                         ),
-                                      );
+                                      )
+                                      :Container();
                                     })
                                         // ],
                                         ),
