@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:video_player/video_player.dart';
+//import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class KnowledgeDbPlayer extends StatefulWidget {
   final String url;
@@ -10,22 +11,22 @@ class KnowledgeDbPlayer extends StatefulWidget {
 }
 
 class _KnowledgeDbPlayerState extends State<KnowledgeDbPlayer> {
-  YoutubePlayerController _controller;
+//  YoutubePlayerController _controller;
   @override
   void initState() {
-    _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.url),
+//    _controller = YoutubePlayerController(
+//      initialVideoId: YoutubePlayer.convertUrlToId(widget.url),
       
-    );
+//    );
     
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+//  @override
+//  void dispose() {
+////    _controller.dispose();
+//    super.dispose();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,9 @@ class _KnowledgeDbPlayerState extends State<KnowledgeDbPlayer> {
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          child: YoutubePlayer(
-            
-            controller: _controller,
+          child: 
+          VideoPlayer(
+            VideoPlayerController.asset('assets/videos/smartschool.mp4'),
           ),
         ),
       ),

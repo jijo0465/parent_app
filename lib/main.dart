@@ -33,13 +33,14 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(ParentApp());
 }
 
 class ParentApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<LoginState>(
@@ -87,9 +88,6 @@ class ParentApp extends StatelessWidget {
             '/live': (context) => LiveScreen(),
             '/notes': (context) => KnowledgeBaseScreen(),
             '/call': (context) => CallPage(),
-            // 'login': (context) => PhoneLoginScreen(),
-            // 'owner_form': (context)=> OwnerFormScreen(),
-            // 'buyer_form': (context)=> BuyerFormScreen(),
           },
         ));
   }

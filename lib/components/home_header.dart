@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -11,6 +13,7 @@ class HomeHeader extends StatelessWidget {
   final ValueChanged<DragEndDetails> onDragEnd;
   final ValueChanged<DragUpdateDetails> onDrag;
   final double height;
+  final double roundnessFactor;
   final VoidCallback onStudentTapped;
   const HomeHeader(
       {Key key,
@@ -18,18 +21,20 @@ class HomeHeader extends StatelessWidget {
       this.onDragEnd,
       this.onDrag,
       this.height,
-      this.onStudentTapped})
+      this.onStudentTapped,
+        this.roundnessFactor})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onVerticalDragEnd: onDragEnd,
         onVerticalDragUpdate: onDrag,
         child: ClipPath(
-            clipper: BackgroundClipper(),
+            clipper: BackgroundClipper(roundnessFactor),
             child: AnimatedContainer(
               height: height,
               width: double.infinity,
@@ -46,41 +51,12 @@ class HomeHeader extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     // mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: 60+MediaQuery.of(context).padding.top),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: <Widget>[
-                      //     Container(
-                      //       child: IconButton(
-                      //         onPressed: onPressed,
-                      //         icon: Icon(Icons.dashboard),
-                      //         color: Colors.white,
-                      //       ),
-                      //     ),
-                      //     Container(
-                      //         padding: EdgeInsets.only(left: 12),
-                      //         child: Text(
-                      //           'Christ Nagar',
-                      //           style: TextStyle(
-                      //               fontSize: 15,
-                      //               color: Colors.white,
-                      //               fontWeight: FontWeight.w600),
-                      //         )),
-                      //     Container(
-                      //       padding: EdgeInsets.only(right: 12),
-                      //       child: IconButton(
-                      //         onPressed: () {
-                      //           print('Pressed');
-                      //         },
-                      //         icon: Icon(Icons.notifications),
-                      //         color: Colors.white,
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
+                      SizedBox(height: 30+MediaQuery.of(context).padding.top),
+
                       Expanded(
                         child: Consumer<StudentState>(
                             builder: (context, studentState, _) {
+                              print(studentState.selectedstudent.photoUrl);
                           return studentState.selectedstudent == null
                               ? Container()
                               : IntrinsicHeight(
@@ -88,63 +64,61 @@ class HomeHeader extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Expanded(
-                                        flex: 1,
                                         child: Container(
-                                            padding: EdgeInsets.only(left: 12),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                              children: <Widget>[
-                                                Text(
-                                                  studentState.selectedstudent.name,
-                                                  style: TextStyle(
-                                                      decoration: TextDecoration.none,
-                                                      fontSize: 17,
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  'Id : 224578',
-                                                  style: TextStyle(
-                                                      decoration: TextDecoration.none,
-                                                      fontSize: 11,
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            )
-                                            ),
-                                      ),
-                                          SizedBox(width: 12,),
-                                      Hero(
-                                        tag: studentState.selectedstudent.id.toString(),
-                                        child: GestureDetector(
-                                          onTap: onStudentTapped,
-                                          child: Container(
-                                            child: ClipOval(
-                                                child: Image.asset(
-                                                    studentState.selectedstudent.photoUrl,
-                                                    fit: BoxFit.fill)),
-                                            height: height/2.5,
-                                            width: height/2.5,
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            titleCase(studentState.selectedstudent.name)
+                                            ,
+                                            textAlign: TextAlign.end,
+                                            style: TextStyle(
+
+                                                decoration: TextDecoration.none,
+                                                fontSize: 15,
+                                                color: Colors.white),
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 12,),
+                                          SizedBox(width: 4,),
                                       Expanded(
-                                        flex: 1,
+                                        child: Hero(
+                                          tag: studentState.selectedstudent.id.toString(),
+                                          child: GestureDetector(
+                                            onTap: onStudentTapped,
+                                            child: Container(
+                                              child: ClipOval(
+                                                  child: studentState.selectedstudent.photoUrl==null||
+                                                      studentState.selectedstudent.photoUrl==''?
+                                                  Image.asset('assets/images/user.png',color: Colors.black87,):
+
+                                                      Image(image: FileImage(File(studentState.selectedstudent.photoUrl)),fit: BoxFit.cover,)
+//                                                  File(studentState.selectedstudent.photoUrl)
+//                                                  Image.asset(
+//                                                      studentState.selectedstudent.photoUrl,
+//                                                      fit: BoxFit.cover)
+                                              ),
+                                              height: height/2.5*1-log(height),
+                                              width: height/2.5*1-log(height),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 4,),
+                                      Expanded(
                                         child: Container(
+//                                        width: 120,
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  'V B',
+                                                  '${studentState.selectedstudent.grade.standardInRoman}  ${studentState.selectedstudent.grade.division}',
                                                   style: TextStyle(
                                                       decoration: TextDecoration.none,
                                                       fontSize: 17,
                                                       color: Colors.white),
                                                 ),
                                                 Text(
-                                                  'Present : 80%',
+                                                  'Present : 0%',
                                                   style: TextStyle(
                                                       decoration: TextDecoration.none,
                                                       fontSize: 11,
@@ -178,12 +152,25 @@ class HomeHeader extends StatelessWidget {
       ),
     );
   }
+  String titleCase(String text) {
+    text = text.toLowerCase();
+    if (text.length <= 1) return text.toUpperCase();
+    var words = text.split(' ');
+    var capitalized = words.map((word) {
+      var first = word.substring(0, 1).toUpperCase();
+      var rest = word.substring(1);
+      return '$first$rest';
+    });
+    return capitalized.join(' ');
+  }
 }
 
 class BackgroundClipper extends CustomClipper<Path> {
+  double roundnessFactor ;
+
+  BackgroundClipper(this.roundnessFactor);
   @override
   Path getClip(Size size) {
-    var roundnessFactor = 40.0;
     var path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);

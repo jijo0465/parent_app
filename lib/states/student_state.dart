@@ -7,10 +7,10 @@ class StudentState with ChangeNotifier {
   Student _selectedStudent;
 
   StudentState.instance() {
-    DigiLocalSql().getAllStudents().then((value) {
-      _students = value;
-      setAllStudents(_students);
-    });
+//    DigiLocalSql().getAllStudents().then((value) {
+//      _students = value;
+//      setAllStudents(_students);
+//    });
   }
 
   List<Student> get allstudents => _students;
@@ -26,6 +26,11 @@ class StudentState with ChangeNotifier {
     this._selectedStudent = students.first;
     print(_selectedStudent.name);
     // this.setStudent(students.first);
+    notifyListeners();
+  }
+
+  setPhotoUrl(String url)async{
+    this._selectedStudent.photoUrl = url;
     notifyListeners();
   }
 }

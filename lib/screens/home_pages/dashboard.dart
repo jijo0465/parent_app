@@ -1,7 +1,12 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:parent_app/components/digi_alert.dart';
+import 'package:parent_app/components/digi_appbar.dart';
+import 'package:parent_app/components/digicampus_appbar.dart';
+import 'package:parent_app/screens/student_profile_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:parent_app/components/digi_drawer.dart';
 import 'package:parent_app/components/digi_navbar.dart';
@@ -18,6 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:parent_app/screens/knowledge_base.dart';
 import 'package:parent_app/screens/chat_screen.dart';
 import 'package:parent_app/screens/call.dart';
+import 'package:parent_app/screens/icons.dart';
 
 class HomePage extends DrawerContent {
   const HomePage({this.onPressed, this.title, Key key}) : super(key: key);
@@ -30,23 +36,32 @@ class HomePage extends DrawerContent {
 
 class _HomePageState extends State<HomePage> {
   int navState = 0;
-  double _height = 280.0;
+  double _height = 260.0;
   bool stateChanged = false;
-  bool isLoading = true;
+  bool isLoading = false;
   Student selectedStudent;
   PageController _pageController;
+  bool showSubscribeAlert = false;
+  double roundnessFactor = 40.0;
+  Firestore firestore = Firestore.instance;
   @override
   void initState() {
+
+    _height = 0.0;
+//    setHeight();
     _pageController = PageController(initialPage: 0, keepPage: true);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if(_height == 0.0){
+      setHeight(context);
+    }
     StudentState state = Provider.of<StudentState>(context, listen: true);
-    state.addListener(() {
-      setSelectedStudent(state.selectedstudent);
-    });
+//    state.addListener(() {
+//      setSelectedStudent(state.selectedstudent);
+//    });
     selectedStudent = state.selectedstudent;
 
     return Scaffold(
@@ -59,6 +74,7 @@ class _HomePageState extends State<HomePage> {
             : Stack(
                 children: <Widget>[
                   PageView(
+                    physics: NeverScrollableScrollPhysics(),
                     controller: _pageController,
                     children: <Widget>[
                       Container(
@@ -78,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                               Container(
                                   child: Column(children: <Widget>[
                                 HomeHeader(
+                                  roundnessFactor: roundnessFactor,
                                   onStudentTapped: () {
                                     isLoading = true;
                                     Navigator.push(
@@ -99,18 +116,21 @@ class _HomePageState extends State<HomePage> {
                                     print(_height);
                                     if (_height < 600) {
                                       setState(() {
-                                        _height = 300;
+                                        roundnessFactor = 40;
+                                        _height = MediaQuery.of(context).size.height*0.4;
                                       });
                                     }
                                   },
-                                  onDrag: (dragUpdateDetails) {
-                                    // print(dragUpdateDetails.globalPosition.distance);
+                                  onDrag: (dragUpdateDetails) async {
+
+                                     print(dragUpdateDetails.globalPosition.distance);
                                     // print(dragUpdateDetails.globalPosition.dy);
                                     if (dragUpdateDetails.delta.dy > 0) {
                                       if (dragUpdateDetails
                                               .globalPosition.distance >
                                           MediaQuery.of(context).size.height *
                                               0.7) {
+//                                        roundnessFactor = 40;
                                         Navigator.push(
                                           context,
                                           PageRouteBuilder(
@@ -118,14 +138,17 @@ class _HomePageState extends State<HomePage> {
                                                 Duration(milliseconds: 400),
                                             pageBuilder: (_, __, ___) =>
                                                 StudentDetailsScreen(),
+//                                          StudentProfileScreen()
                                           ),
                                         ).then((value) {
-                                          // setState(() {
-                                          //   pageNo = StudentDetailsScreen.pageNo;
-                                          // });
+                                           setState(() {
+                                             roundnessFactor = 40;
+                                             _height = MediaQuery.of(context).size.height*0.4;
+                                           });
                                         });
                                       } else {
                                         setState(() {
+                                          roundnessFactor = roundnessFactor - dragUpdateDetails.delta.dy;
                                           _height +=
                                               dragUpdateDetails.delta.dy *
                                                   log(dragUpdateDetails
@@ -158,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                                             SizedBox(width: 4),
                                             HomeCard(
                                               icon: Icon(
-                                                CupertinoIcons.profile_circled,
+                                                DigiIcons.student360_alt,
                                                 size: 35,
                                                 color: Color(0xff00739e),
                                               ),
@@ -173,8 +196,8 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                             SizedBox(width: 0),
                                             HomeCard(
-                                              icon: Icon(Icons.view_carousel,
-                                                  size: 35,
+                                              icon: Icon(DigiIcons.virtual_class,
+                                                  size: 40,
                                                   color: Color(0xff00739e)),
                                               text: 'Virtual Classroom',
                                               isImportant: false,
@@ -199,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                                                       .video_camera_solid,
                                                   size: 35,
                                                   color: Colors.white),
-                                              text: 'Live Class',
+                                              text: 'Enter Live Class',
                                               isImportant: true,
                                               color: Colors.red[400],
                                               onPressed: () async {
@@ -207,15 +230,27 @@ class _HomePageState extends State<HomePage> {
                                                     .request();
                                                 await Permission.microphone
                                                     .request();
+                                                await Permission.storage.request();
+                                                DocumentSnapshot ds = await firestore.collection('live').document('grade_${state.selectedstudent.grade.standard}').get();
+                                                if(ds['liveBroadcastChannelId']!=null){
+//                                                  await Permission.
+                                                  print(ds['liveBroadcastChannelId']);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         CallPage(
-                                                      id: selectedStudent.id,
+                                                          grade:studentState.selectedstudent.grade.standard,
+                                                          broadcastUid: ds['liveBroadcastChannelId'],
+                                                      name: selectedStudent.name,
                                                     ),
                                                   ),
-                                                );
+                                                );}
+                                                else
+                                                  Scaffold.of(context).showSnackBar(SnackBar(
+
+                                                    content: Text('Teacher has not entered class'),
+                                                  ));
                                                 // Navigator.pushNamed(
                                                 //     context, '/call');
                                               },
@@ -235,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                                               },
                                             ),
                                             HomeCard(
-                                              icon: Icon(Icons.school,
+                                              icon: Icon(DigiIcons.school,
                                                   size: 35,
                                                   color: Color(0xff00739e)),
                                               text: 'My School',
@@ -257,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                                             SizedBox(width: 4),
                                             HomeCard(
                                               icon: Icon(
-                                                  CupertinoIcons.eye_solid,
+                                                  DigiIcons.noun_analytics_1014757,
                                                   size: 40,
                                                   color: Color(0xff00739e)),
                                               text: 'Academic Reports',
@@ -271,8 +306,8 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                             HomeCard(
                                               icon: Icon(
-                                                  Icons.accessibility_new,
-                                                  size: 35,
+                                                  DigiIcons.school_alt,
+                                                  size: 45,
                                                   color: Color(0xff00739e)),
                                               text: 'Scholorships',
                                               isImportant: false,
@@ -289,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height: 64)
+                                      SizedBox(height: 40)
                                     ],
                                   ),
                                 )),
@@ -299,25 +334,27 @@ class _HomePageState extends State<HomePage> {
                         }),
                       ),
                       KnowledgeBaseScreen(),
-                      ChatScreen()
+                      ChatPage()
                     ],
                   ),
-                  PageHeader(
-                    onPressed: widget.onPressed,
-                  ),
+//                  PageHeader(
+//                    onPressed: widget.onPressed,
+//                  ),
+                  DigiCampusAppbar(icon: null,onDrawerTapped: widget.onPressed,title: 'Santhinikethanam',),
                   Positioned(
-                      bottom: 4,
+                      bottom: 0,
                       child: DigiBottomNavBar(
                         selected: navState,
                         onChanged: (value) async {
-                          await _pageController.animateToPage(value,
+                          _pageController.animateToPage(value,
                               duration: Duration(milliseconds: 400),
                               curve: Curves.linear);
                           setState(() {
                             navState = value;
                           });
                         },
-                      ))
+                      )),
+
                 ],
               ));
   }
@@ -329,5 +366,14 @@ class _HomePageState extends State<HomePage> {
         isLoading = false;
       });
     }
+  }
+
+  Future<void> setHeight(BuildContext context) async {
+
+    setState(() {
+      _height = MediaQuery.of(context).size.height*0.40;
+    });
+
+
   }
 }
