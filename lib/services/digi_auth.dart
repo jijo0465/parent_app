@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 
 class DigiAuth{
   SharedPreferences _prfs;
+
   Future<Student> signIn(String parentId, String password) async {
     _prfs = await SharedPreferences.getInstance();
     Parent parent;
@@ -24,7 +25,7 @@ class DigiAuth{
 
       if (response.body != null) {
         final Map body = json.decode(response.body);
-          print(body);
+          print(response.body);
           student = Student.fromMap(body);
 
       }
