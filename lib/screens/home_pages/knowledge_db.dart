@@ -16,7 +16,7 @@ class _KnowledgeDatabaseState extends State<KnowledgeDatabase> {
         Container(
            child: Center(child: Text('this is knowledge db')),
         ),
-        DigiAlert(title: 'Santhinikethanam',icon: Icons.info_outline,)
+        DigiAlert(title: 'Demo School',icon: Icons.info_outline,)
       ],
     );
   }

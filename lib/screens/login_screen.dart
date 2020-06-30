@@ -36,10 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
                         elevation: 1,
                         color: Colors.white,
-                        child: Image.asset('assets/images/school_logo.jpeg')),
+                        child: Image.asset('assets/images/logo.jpg')),
                   ),
                   Container(
-                    child: Text('Santhinikethanam Central School',style: TextStyle(color: Colors.black87,fontSize: 11),),
+                    child: Text('Demo School',style: TextStyle(color: Colors.black87,fontSize: 11),),
                   ),
                   SizedBox(
                     height: 20,

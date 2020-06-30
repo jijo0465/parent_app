@@ -105,6 +105,7 @@ class _SchoolBusScreenState extends State<SchoolBusScreen> {
                 children: <Widget>[
                   Column(children: <Widget>[
                     DigiCampusAppbar(
+                      title: 'School Bus',
                       icon: Icons.close,
                       onDrawerTapped: () {
                         Navigator.of(context).pop();

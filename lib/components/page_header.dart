@@ -43,7 +43,7 @@ class PageHeader extends StatelessWidget {
               Container(
                   padding: EdgeInsets.only(left: 12),
                   child: Text(
-                    'Santhinikethanam',
+                    'Demo School',
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,

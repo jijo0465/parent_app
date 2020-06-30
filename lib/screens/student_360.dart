@@ -20,13 +20,13 @@ class Student360Screen extends StatelessWidget {
           Container(color: Theme.of(context).primaryColor.withOpacity(0.15)),
           Column(
             children: <Widget>[
-              !showSubscribeAlert? DigiCampusAppbar(
+               DigiCampusAppbar(
                 title:'Student 360',
                 icon: Icons.close,
                 onDrawerTapped: () {
                   Navigator.of(context).pop();
                 },
-              ):Container(),
+              ),
               SizedBox(height: 8),
               Expanded(
                 child: Container(
@@ -126,7 +126,7 @@ class Student360Screen extends StatelessWidget {
               ),
             ],
           ),
-          showSubscribeAlert?DigiAlert(title: 'Student 360',text: 'AI-based insights are in sight! Just subscribe.',icon: DigiIcons.student360_alt,):Container()
+          //showSubscribeAlert?DigiAlert(title: 'Student 360',text: 'AI-based insights are in sight! Just subscribe.',icon: DigiIcons.student360_alt,):Container()
         ],
       ),
     );

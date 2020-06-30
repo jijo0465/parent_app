@@ -86,6 +86,7 @@ class _EventsScreenState extends State<EventsScreen> {
           child: Column(
             children: [
               DigiCampusAppbar(
+                title: 'Events',
                 icon: Icons.close,
                 onDrawerTapped: () {
                   Navigator.of(context).pop();

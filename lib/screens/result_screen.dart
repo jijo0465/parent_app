@@ -270,6 +270,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                   Consumer<StudentState>(builder: (context, studentState, _) {
                     return DigiCampusAppbar(
+                      title: 'Academics',
                       icon: Icons.close,
                       onDrawerTapped: () {
                         Navigator.of(context).pop();
@@ -290,7 +291,7 @@ class _ResultScreenState extends State<ResultScreen> {
 //                      },
                     );
                   }),
-                  DigiAlert(title: 'Academics',text: 'On course to success? Subscribe to know.',icon: DigiIcons.noun_analytics_1014757,)
+                 // DigiAlert(title: 'Academics',text: 'On course to success? Subscribe to know.',icon: DigiIcons.noun_analytics_1014757,)
                 ],
               ),
 

@@ -12,6 +12,7 @@ class TimetableScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           DigiCampusAppbar(
+            title: 'Time table',
             icon: Icons.close,
             onDrawerTapped: () {
               Navigator.of(context).pop();

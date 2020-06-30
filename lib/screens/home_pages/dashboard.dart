@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
 //                  PageHeader(
 //                    onPressed: widget.onPressed,
 //                  ),
-                  DigiCampusAppbar(icon: null,onDrawerTapped: widget.onPressed,title: 'Santhinikethanam',),
+                  DigiCampusAppbar(icon: null,onDrawerTapped: widget.onPressed,title: 'Demo School',),
                   Positioned(
                       bottom: 0,
                       child: DigiBottomNavBar(

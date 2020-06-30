@@ -42,6 +42,7 @@ class _RemarksScreenState extends State<RemarksScreen> {
           child: Column(
             children: <Widget>[
               DigiCampusAppbar(
+                title: 'Remarks',
                   icon: Icons.close,
                   onDrawerTapped: () {
                     Navigator.of(context).pop();

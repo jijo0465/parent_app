@@ -98,6 +98,7 @@ class _HomeworksScreenState extends State<HomeworksScreen> {
                   child: Column(
                 children: <Widget>[
                   DigiCampusAppbar(
+                    title: 'Homeworks',
                     icon: Icons.close,
                     onDrawerTapped: () {
                       Navigator.of(context).pop();

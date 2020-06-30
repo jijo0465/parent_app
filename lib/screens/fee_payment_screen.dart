@@ -41,6 +41,7 @@ class _FeePaymentScreenState extends State<FeePaymentScreen> {
       body: Column(
         children: <Widget>[
           DigiCampusAppbar(
+            title: 'Fees',
             icon: Icons.close,
             onDrawerTapped: () {
               Navigator.of(context).pop();

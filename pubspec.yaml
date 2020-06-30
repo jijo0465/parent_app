@@ -130,6 +130,7 @@ flutter:
     - assets/images/raised_hand.png
     - assets/images/school_logo.jpeg
     - assets/images/user.png
+    - assets/images/logo.jpg
 
   fonts:
     - family: Poppins

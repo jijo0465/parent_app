@@ -148,6 +148,7 @@ class _SchoolDiaryScreenState extends State<SchoolDiaryScreen>
         child: Column(
           children: <Widget>[
             DigiCampusAppbar(
+              title: 'School Diary',
               icon: Icons.close,
               onDrawerTapped: () {
                 Navigator.of(context).pop();

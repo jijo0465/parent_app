@@ -89,6 +89,7 @@ class _ExamScreenState extends State<ExamScreen> {
         body: Container(
             child: Column(children: <Widget>[
       DigiCampusAppbar(
+        title: 'Exams',
         icon: Icons.close,
         onDrawerTapped: () {
           Navigator.of(context).pop();

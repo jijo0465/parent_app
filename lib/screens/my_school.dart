@@ -140,7 +140,7 @@ class _MySchoolScreenState extends State<MySchoolScreen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    DigiCampusAppbar(title:'Santhinikethanam',icon: Icons.close,onDrawerTapped: (){
+                    DigiCampusAppbar(title:'Demo School',icon: Icons.close,onDrawerTapped: (){
                       Navigator.of(context).pop();
                     },),
                     SizedBox(height: 12),
@@ -259,7 +259,7 @@ class _MySchoolScreenState extends State<MySchoolScreen> {
             Container(
               color: isStudentSelected ? Colors.black.withOpacity(0.6) : null,
             ),
-            DigiAlert(title: 'Santhinikethanam',text: 'Subscribe for the complete digital school experience!', icon: DigiIcons.school_alt,)
+           // DigiAlert(title: 'Demo School',text: 'Subscribe for the complete digital school experience!', icon: DigiIcons.school_alt,)
             // Container(
             //     width: MediaQuery.of(context).size.width,
             //     child: Row(children: <Widget>[

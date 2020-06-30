@@ -173,7 +173,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             ),
       ),
     ]),
-            DigiAlert(title: 'Attendance',text: 'Subscribe for the complete digital school experience!',icon: DigiIcons.school_alt,)
+            //DigiAlert(title: 'Attendance',text: 'Subscribe for the complete digital school experience!',icon: DigiIcons.school_alt,)
           ],
         ));
   }

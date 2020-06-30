@@ -84,6 +84,7 @@ class _ScholarshipScreenState extends State<ScholarshipScreen> {
               child: Column(
                 children: [
                   DigiCampusAppbar(
+                    title: 'Global Scholarships',
                     icon: Icons.close,
                     onDrawerTapped: () {
                       Navigator.of(context).pop();
@@ -211,7 +212,7 @@ class _ScholarshipScreenState extends State<ScholarshipScreen> {
                   )
                 ],
               )),
-          DigiAlert(title:'Global Scholorships',text:'Boost opportunities with a whole subscription!',icon: DigiIcons.scholarship,)
+         // DigiAlert(title:'Global Scholorships',text:'Boost opportunities with a whole subscription!',icon: DigiIcons.scholarship,)
         ],
       ),
     );

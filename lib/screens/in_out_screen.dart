@@ -67,6 +67,7 @@ class _InOutScreenState extends State<InOutScreen> {
         body: Stack(children: <Widget>[
       Column(children: [
         DigiCampusAppbar(
+          title: 'In/Out',
           icon: Icons.close,
           onDrawerTapped: () {
             Navigator.of(context).pop();
